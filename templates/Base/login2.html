@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+{% block menu %}
+{% endblock %}
+{% block topbar %}
+{% endblock %}
+{% block contenido %}
+<div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-5 col-lg-5 col-md-10">
+
+                <div class="card o-hidden border-2 shadow-lg my-5">
+                    <div class="card-body p-5">
+                        <!-- Nested Row within Card Body -->
+                        <div class="">
+                            <div class=""></div>
+                            <div class="">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Bienvenido!</h1>
+                                    </div>
+                                    <form action="" method="POST">
+                                        {% for message in messages %}
+                                        <h6 style="color:#ff0000">{{message}}</h6>
+                                        {% endfor %}
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <input type="email" name="email" class="form-control form-control-user"                                
+                                                placeholder="Ingrese su Email..."/>
+                                        </div> 
+                                        <div class="form-group">
+                                        <input type="password" class="form-control form-control-user" name="password" placeholder="Ingrese Contraseña"/>
+                                        </div>
+                                        <input type="submit" class="btn btn-primary btn-user btn-block" name="Login" value="Ingresar"/>
+                                        </form>
+                                        <hr>
+                                        <div class="text-center">
+                                            <a class="btn btn-success" href="{% url 'registerapp:register' %}">No tiene Cuenta? Registrese!</a>
+                                        </div>
+                                        
+                                    </form>
+                                    <div class="form-group"></div>
+                                    <!--<div class="text-center">
+                                        <a class="font-weight-bold font-italic" href="forgot-password.html">Forgot Password?</a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="font-weight-bold font-italic" href="register.html">Create an Account!</a>
+                                    </div>
+                                    -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    {% endblock%}
+

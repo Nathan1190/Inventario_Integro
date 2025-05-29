@@ -1,0 +1,18 @@
+from django.db import models
+from empleados.models import Empleados
+
+class Empleados_History(models.Model):
+    empleado = models.ForeignKey(Empleados, on_delete=models.CASCADE, related_name='historial')
+    timestamp= models.DateTimeField(auto_now_add=True)
+
+    nombre_cambio = models.CharField(max_length=50)
+    cargo_cambio = models.CharField(max_length=90)
+    dependencia_cambio = models.CharField(max_length=80)
+    contacto_cambio = models.CharField(max_length=120)
+    activo_cambio = models.BooleanField()
+    creado_fecha_cambio = models.DateTimeField()
+    fecha_de_modificacion_cambio = models.DateTimeField()
+    eliminado_cambio = models.BooleanField()
+
+    def __str__(self):
+        return f"Historial de {self.empleado.nombre} @ {self.timestamp:%Y-%m-%d %H:%M:%S}"

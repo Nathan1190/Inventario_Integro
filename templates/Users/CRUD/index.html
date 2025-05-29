@@ -1,0 +1,88 @@
+{% extends 'base\base.html' %}
+{% block estilos %}
+    
+{% endblock %}
+{% block contenido %}
+    
+<div class="card">
+    <h5 class="card-header card text-white bg-primary mb-3">Empleados Registrados</h5>
+    <div class="card-body">
+      <h5 class="card-title"></h5>
+   
+    <div>
+        <a href="{% url 'users:users_create' %}" class="btn btn-success">
+            <i class="bi bi-person-add"></i>
+            Agregar Empleados
+        </a>
+    </div>
+    <div class="table table-striped"></div>
+    <table id="dataTable" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Acciones</th>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Direccion</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Telefono</th>
+                <th>Fecha de Contratacion</th>
+                <th>Genero</th>
+                <th>Salario</th>
+                <th>Tipo de Documento</th>
+                <th>Sucursal</th>
+                <th>Estado Civil</th>
+                <th>Horario de Trabajo</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for Users in usuarios %}   
+            <tr>
+                <td>
+                    <a href="{% url 'users:users_edit' Users.id %}" class="btn btn-primary">
+                        <i class="bi bi-pencil-square"> </i>
+                        
+                    </a>
+                    <a href="{% url 'users:users_delete' Users.id %}" class="btn btn-danger">
+                        <i class="bi bi-trash"></i>
+                        
+                    </a>
+                </td>
+                <td>{{Users.id}}</td>
+                <td>{{Users.nombre}}</td>
+                <td>{{Users.apellido}}</td>
+                <td>{{Users.direccion}}</td>
+                <td>{{Users.fecha_de_nacimiento|date:"d/m/Y"}}</td>
+                <td>{{Users.telefono}}</td>
+                <td>{{Users.fecha_de_contratatacion|date:"d/m/Y"}}</td>
+                <td>{{Users.genero}}</td>
+                <td>{{Users.salario}}</td>
+                <td>{{Users.tipo_de_documento}}</td>
+                <td>{{Users.sucursal}}</td>
+                <td>{{Users.estado_civil}}</td>
+                <td>{{Users.horario_trabajo}}</td>
+            </tr>
+        {% endfor %}   
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+{% load static %}
+<script src="{% static '/base/vendor/jquery/jquery.js' %}"></script>
+
+<script>
+    $(document).ready(function() {
+
+        // Call the dataTables jQuery plugin
+        $(document).ready(function() {
+        $('#dataTable').DataTable();
+  });
+  
+    });
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,173 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+   
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Formulario de Empleados</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="">Nombre:</label>
+                    {{ form.nombre }}
+
+                    {% if form.nombre.errors %}
+                    <div class="text-danger">
+                        {{ form.nombre.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    <label for="">Apellido:</label>
+                    {{ form.apellido }}
+
+                    {% if form.apellido.errors %}
+                    <div class="text-danger">
+                        {{ form.apellido.errors }}
+                    </div>
+                    {% endif %}
+
+                    
+                </div>
+                <div class="form-group">
+                    <label for="">Direccion:</label>
+                    {{ form.direccion }}
+
+                    {% if form.direccion.errors %}
+                    <div class="text-danger">
+                        {{ form.direccion.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    <label for="">Fecha de Nacimiento:</label>
+                    
+                    {{ form.fecha_de_nacimiento }}
+
+                    {% if form.fecha_de_nacimiento.errors %}
+                    <div class="text-danger">
+                        {{ form.fecha_de_nacimiento.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="">Telefono:</label>
+                    
+                    {{ form.telefono }}
+
+                    {% if form.telefono.errors %}
+                    <div class="text-danger">
+                        {{ form.telefono.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="">Fecha de Contratatacion:</label>
+                    
+                    {{ form.fecha_de_contratatacion }}
+
+                    {% if form.fecha_de_contratatacion.errors %}
+                    <div class="text-danger">
+                        {{ form.fecha_de_contratatacion.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    <label for="">Genero:</label>
+                    
+                    {{ form.genero }}
+
+                    {% if form.genero.errors %}
+                    <div class="text-danger">
+                        {{ form.genero.errors }}
+                    </div>
+                    {% endif %}
+
+
+                </div>
+                <div class="form-group">
+                    <label for="">Salario:</label>
+                    
+                    {{ form.salario }}
+
+                    {% if form.salario.errors %}
+                    <div class="text-danger">
+                        {{ form.salario.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    <label for="">Tipo de Documento:</label>
+                    
+                    {{ form.tipo_de_documento }}
+
+                    {% if form.tipo_de_documento.errors %}
+                    <div class="text-danger">
+                        {{ form.tipo_de_documento.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                <div class="form-group">
+                    <label for="">Sucursal:</label>
+                    
+                    {{ form.sucursal }}
+
+                    {% if form.sucursal.errors %}
+                    <div class="text-danger">
+                        {{ form.sucursal.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                <div class="form-group">
+                    <label for="">Estado Civil:</label>
+                    
+                    {{ form.estado_civil }}
+
+                    {% if form.estado_civil.errors %}
+                    <div class="text-danger">
+                        {{ form.estado_civil.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                
+
+                <div class="form-group">
+                    <label for="">Horario de Trabajo:</label>
+                    
+                    {{ form.horario_trabajo }}
+
+                    {% if form.horario_trabajo.errors %}
+                    <div class="text-danger">
+                        {{ form.horario_trabajo.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+            <div class="table table-striped"></div>
+    <a href="{% url 'users:home_users' %}" class="btn btn-danger">Cancelar</a>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

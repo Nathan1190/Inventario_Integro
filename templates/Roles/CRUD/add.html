@@ -1,0 +1,60 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+  <div class="card mb-4">
+    <h5 class="card-header bg-gradient-success text-white">Crear Nuevo Rol</h5>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        <div class="row g-3">
+          <div class="col-md-4">
+            {{ form.nombre.label_tag }}  
+            {{ form.nombre }}
+          </div>
+          <div class="col-md-4">
+            {{ form.descripcion.label_tag }}  
+            {{ form.descripcion }}
+          </div>
+          
+        </div>
+        
+        <div class="row g-3 mt-3">
+          
+            <label for="{{ form.users.id_for_label }}" class="form-label fw-bold text-warning mb-1">
+                Usuarios asignados
+            </label>
+            {{ form.users }}
+          
+          <div class="row g-3 mt-3">
+            
+            <label for="{{ form.pantallas.id_for_label }}" class="form-label fw-bold text-warning mb-1">
+                Pantallas activas
+            </label>
+            {{ form.pantallas }}
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">
+          <i class="bi bi-person-add"></i> Agregar Rol
+        </button>
+        <a href="{% url 'roles:home_roles' %}" class="btn btn-secondary mt-3">Cancelar</a>
+      </form>
+    </div>
+  </div>
+  {% block javascript %}
+  {{ block.super }}
+  <script>
+    $(document).ready(function() {
+      // Inicializa todos los selects con clase .dual-listbox
+      $('select.dual-listbox').bootstrapDualListbox({
+        nonSelectedListLabel: 'Disponibles',
+        selectedListLabel:    'Seleccionados',
+        preserveSelectionOnMove: true,
+        moveOnSelect: false,
+        filterPlaceHolder: 'Buscar…',
+        infoTextEmpty: 'Nada disponible',
+        infoText: 'Mostrando {0}',
+      });
+    });
+  </script>
+{% endblock %}
+
+{% endblock %}

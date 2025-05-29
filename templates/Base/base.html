@@ -1,0 +1,289 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Inventario Integro</title>
+
+    <!-- Custom fonts for this template-->  
+    <link href="{% static 'base/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+
+    <!-- Dual Listbox CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap4-duallistbox/4.0.2/bootstrap-duallistbox.min.css"
+    />
+    
+
+    <!-- Template CSS -->
+    <link href="{% static 'base/css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+    {% block estilos %}{% endblock %}
+
+    <!-- Dark mode overrides -->
+    <style>
+      body {
+        background-color: #e0e0e0;
+        color: #e0e0e0;
+      }
+      /* Sidebar */
+      .navbar-nav.sidebar {
+        background-image: #fffff !important;
+      }
+      .sidebar .sidebar-brand, .sidebar .sidebar-heading, .sidebar .nav-link {
+        color: #1863AB !important;
+      }
+      .nav-link:hover {
+        background-color: #1863AB !important;
+      }
+      /* Topbar */
+      .navbar-nav .nav-item .nav-link, .navbar-dark {
+        color: #1e1e1e !important;
+        background-color:rgb(255, 255, 255) !important;
+      }
+
+      .nav-item .nav-link:hover{
+        color: #e0e0e0 !important;
+        background-color: #1863AB !important;
+      }
+
+      /* Cards */
+      .card, .card-group .card {
+        background-color: #e0e0e0;
+        border: none;
+        
+      }
+      .card .card-header {
+        background-color: #fffff;
+         
+      }
+      /* Tables */
+      .table, .table-responsive {
+        background-color: #fffff;
+      }
+      .table thead th {
+        background-color: #fffff;
+        
+        border-color: #e0e0e0;
+      }
+      .table tbody tr {
+        border-bottom: 1px solid #2c2c2c;
+      }
+      /* Footer and scroll */
+      .sticky-footer.bg-white {
+        background-color: #343a40 !important;
+        
+      }
+      .scroll-to-top {
+        background-color: #2c2c2c !important;
+      }
+      /* Modals & Dropdowns */
+      .modal-content {
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+      }
+      
+
+      /* Icon Color */
+      .menu-icon {
+        color: #3e6389 !important;
+        transition: color 0.2s ease;
+      }
+
+
+      .nav-link:hover .menu-icon {
+        color: #fff !important;
+      }
+
+    </style>
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper" >
+
+    {% block menu %}
+
+    <!-- Flash messages -->
+    {% if messages %}
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          {% for msg in messages %}
+            alert("{{ msg|escapejs }}");
+          {% endfor %}
+        });
+      </script>
+    {% endif %}
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
+        <div class="sidebar-brand-icon rotate-n-15"></div>
+        <div class="sidebar-brand-text mx-3">Inventario Íntegro</div>
+      </a>
+
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">
+          <i class="fas fa-fw fa-tachometer-alt menu-icon"></i>
+          
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <hr class="sidebar-divider">
+
+      <div class="sidebar-heading">Paginas</div>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="true">
+          <i class="fas fa-fw fa-folder menu-icon"></i>
+          <span>Paginas</span>
+        </a>
+        <div id="collapsePages" class="collapse" data-bs-parent="#accordionSidebar">
+          <div class="bg-white collapse-inner rounded ">
+            <h6 class="collapse-header">Paginas:</h6>
+            <a class="collapse-item" href="{% url 'roles:home_roles' %}">Roles</a>
+            <a class="collapse-item" href="{% url 'roles_history:home_roles_history' %}">Historial de Roles</a>
+            <a class="collapse-item" href="{% url 'empleados:home_empleados' %}">Empleados</a>
+            <a class="collapse-item" href="{% url 'empleados_history:home_empleados_history' %}">Historial de Empleados</a>
+          </div>
+        </div>
+      </li>
+
+      <hr class="sidebar-divider d-none d-md-block">
+
+      
+
+    </ul>
+    <!-- End of Sidebar -->
+    {% endblock %}
+
+    {% block topbar %}
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content" style="">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-dark topbar mb-4 static-top shadow">
+
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                
+                <span class="me-2 d-none d-lg-inline  small ">{{ user.username }}</span>
+                <i class="bi bi-person-circle menu-icon text-dark"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in">
+                {% if user.is_authenticated %}
+                <li>
+                    <i class="bi fa-sm fa-fw me-2"></i>{{ user.username }}
+                  </li>
+                  <li><a class="dropdown-item text-dark" href="{% url 'loginapp:logout' %}">
+                    <i class="bi bi-box-arrow-right fa-sm fa-fw me-2"></i>Cerrar sesión
+                  </a></li>
+                {% endif %}
+              </ul>
+            </li>
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+      {% endblock %}
+
+      <!-- Begin Page Content - contenido de la pantalla principal -->
+      <div class="container-fluid">
+
+        {% block contenido %}
+
+        <div className="Conteiner-home">
+            <center> <h1> Bienvenidos al Inventario Íntegro
+            <h4 className="Display-p">Encuentra todo lo que necesitas!</h4>
+            </h1></center>
+            <hr/>
+        </div>
+            <div className="image">
+            <!--<img src="{% static '/base/img/banner.jpg' %}" alt="Image1" />  -->
+            </div>
+      <!-- /.container-fluid -->
+
+    </div>
+
+        {% endblock %}
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-dark text-light">
+      <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+          <span>Copyright &copy; UFTF {{ now|date:"Y" }}</span>
+        </div>
+      </div>
+    </footer>
+    <!-- End of Footer -->
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded text-light" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-light">
+          <h5 class="modal-title">Listo para salir?</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-light">Selecciona "Cerrar sesión" para finalizar la sesión actual.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+          <a class="btn btn-danger" href="{% url 'loginapp:logout' %}">Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+  {% block javascript %}
+    <!-- Dual Listbox JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap4-duallistbox/4.0.2/jquery.bootstrap-duallistbox.min.js"></script>
+
+  <script>
+    
+  </script>
+  {% endblock %}
+</body>
+
+</html>

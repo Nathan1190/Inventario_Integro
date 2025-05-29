@@ -1,0 +1,112 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+
+  <!-- CDN CSS de intl-tel-input -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"
+  />
+
+
+   
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Formulario de Empleados</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="">Nombre:</label>
+                    {{ form.nombre }}
+
+                    {% if form.nombre.errors %}
+                    <div class="text-danger">
+                        {{ form.nombre.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    <label for="">Cargo:</label>
+                    {{ form.cargo }}
+
+                    {% if form.cargo.errors %}
+                    <div class="text-danger">
+                        {{ form.cargo.errors }}
+                    </div>
+                    {% endif %}
+                    
+                </div>
+                <div class="form-group">
+                    <label for="">Dependencia:</label>
+                    {{ form.dependencia }}
+
+                    {% if form.dependencia.errors %}
+                    <div class="text-danger">
+                        {{ form.dependencia.errors }}
+                    </div>
+                    {% endif %}
+                    
+                </div>
+                <div class="form-group">
+                    <label for="">Contacto:</label>
+                    {{ form.contacto }}
+
+                    {% if form.contacto.errors %}
+                    <div class="text-danger">
+                        {{ form.contacto.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    <label for="">Activo:</label>
+                    
+                    {{ form.activo }}
+
+                    {% if form.activo.errors %}
+                    <div class="text-danger">
+                        {{ form.activo.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                
+
+                
+                
+                
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+            <div class="table table-striped"></div>
+    <a href="{% url 'empleados:home_empleados' %}" class="btn btn-danger">Cancelar</a>
+        </div>
+        </div>
+    {% block javascript %}
+  {{ block.super }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const input = document.querySelector('#id_contacto');
+      if (!input) return;
+
+      const iti = window.intlTelInput(input, {
+        initialCountry: 'hn',        // <— fuerza +504
+        separateDialCode: true,      
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js'
+      });
+
+      // Al enviar, reemplaza el valor por el número E.164 completo
+      input.form.addEventListener('submit', () => {
+        input.value = iti.getNumber();
+      });
+    });
+  </script>
+{% endblock %}
+
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base\base.html' %}
+{% block estilos %}
+    
+{% endblock %}
+{% block contenido %}
+    
+<div class="card">
+    <h5 class="card-header card text-white bg-primary mb-3">Ejemplo</h5>
+    <div class="card-body">
+      <h5 class="card-title"></h5>
+   
+    <div>
+        <a href="" class="btn btn-success">
+            <i class="bi bi-person-add"></i>
+            Agregar
+        </a>
+    </div>
+    <div class="table table-striped"></div>
+    <table id="empleados" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Acciones</th>
+                <th>Ejemplo</th>
+                <th>Ejemplo</th>
+                <th>Ejemplo</th>
+                <th>Ejemplo</th>
+                <th>Ejemplo</th>
+                <th>Ejemplo</th>
+                <th>Ejemplo</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for empleado in empleados %}   
+            <tr>
+                <td>
+                    <a href="" class="btn btn-primary">
+                        <i class="bi bi-pencil-square"></i>
+                        
+                    </a>
+                    <a href="" class="btn btn-danger">
+                        <i class="bi bi-trash"></i>
+                        
+                    </a>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        {% endfor %}   
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %}
+{% block javascript %}
+    
+    <script>
+        var table = new DataTable('#empleados', {
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json',
+    },
+});
+    </script>
+{% endblock %}

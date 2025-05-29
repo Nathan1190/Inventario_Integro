@@ -1,0 +1,158 @@
+{% extends 'base/base.html' %}
+{% block menu %}
+{% endblock %}
+{% block topbar %}
+{% endblock %}
+{% block contenido %}
+{% load static %}
+
+{% load static %}
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-8">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                     <!-- IMAGEN EN LA PANTALLA DE REGISTRO <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> -->
+                    <!-- <div class="col-lg-7"> -->
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Cree una Cuenta!</h1>
+                            </div>
+                            <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" name="first_name" class="form-control form-control-user" id="exampleFirstName"
+                                            placeholder="Primer Nombre" required>
+                                    </div>
+                                    {% for message in messages %}
+                                        <ul>
+                                        {% if 'first_name_error' in message.tags %}
+                                            <li style="color:#ff0000">{{ message }}</li>
+                                        {% endif %}
+                                        </ul>
+                                    {% endfor %}
+                                    <div class="col-sm-6">
+                                        <input type="text" name="last_name" class="form-control form-control-user" id="exampleLastName"
+                                            placeholder="Apellido" required>
+                                    </div>
+                                    {% for message in messages %}
+                                        <ul>
+                                        {% if 'last_name_error' in message.tags %}
+                                            <li style="color:#ff0000">{{ message }}</li>
+                                        {% endif %}
+                                        </ul>
+                                    {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                    <input type="text"  name="username" class="form-control form-control-user" placeholder="Nombre de Usuario" required>
+                                    {% for message in messages %}
+                                        <ul>
+                                        {% if 'username_exists' in message.tags %}
+                                            <li style="color:#ff0000">{{ message }}</li>
+                                        {% endif %}
+                                        </ul>
+                                    {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                    <input type="email"  name="email" class="form-control form-control-user" id="exampleInputEmail"
+                                        placeholder="Correo Elecronico" required>
+                                    {% for message in messages %}
+                                        <ul>
+                                        {% if 'email_error' in message.tags %}
+                                            <li style="color:#ff0000">{{ message }}</li>
+                                        {% endif %}
+                                        </ul>
+                                    {% endfor %}
+                            </div>
+                            <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <div class="password-toggle">
+                                            <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña" required>
+                                            <span class="toggle-btn" onclick="togglePasswordVisibility('exampleInputPassword')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                    <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"/>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {% for message in messages %}
+                                            <ul>
+                                            {% if 'password_error' in message.tags %}
+                                                <li style="color:#ff0000">{{ message }}</li>
+                                            {% endif %}
+                                            </ul>
+                                    {% endfor %}
+                                    <div class="col-sm-6">
+                                        <div class="password-toggle">
+                                            <input type="password" name="password2" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Verifique la Contraseña" required>
+                                            <span class="toggle-btn" onclick="togglePasswordVisibility2('exampleRepeatPassword')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                    <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"/>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {% for message in messages %}
+                                            <ul>
+                                            {% if 'password_error' in message.tags %}
+                                                <li style="color:#ff0000">{{ message }}</li>
+                                            {% endif %}
+                                            </ul>
+                                    {% endfor %}
+                            </div>
+                            <input type="submit" class="btn btn-primary btn-user btn-block" name="Register" value="Registrarse"/>
+                            </form>
+                        <hr>
+                            <div class="text-center">
+                                <a class="btn btn-success" href="{% url 'loginapp:login' %}">Ya tiene una cuenta? Ingrese!</a>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function togglePasswordVisibility(inputId) {
+            var passwordField = document.getElementById(inputId);
+            
+            // Toggle password visibility
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+    </script>
+    <script>
+        function togglePasswordVisibility2(inputId) {
+            var passwordField = document.getElementById(inputId);
+            
+            // Toggle password visibility
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+    </script>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static '/base/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static '/base/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static '/base/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static '/base/js/sb-admin-2.min.js' %}"></script>
+    {% block javascript %}
+    {% endblock%}
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+
+{% block contenido %}
+   
+
+<div class="card mb-4">
+    <h5 class="card-header bg-gradient-danger text-white">
+      ELIMINAR EMPLEADO: {{ form.instance.nombre }}
+    </h5>
+    <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="form-group">
+                    <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+                    {{ form.nombre }}
+                    
+                    {% if form.nombre.errors %}
+                    <div class="text-danger">
+                        {{ form.nombre.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.cargo.id_for_label }}">Cargo:</label>
+                    {{ form.cargo }}
+                    
+                    {% if form.cargo.errors %}
+                    <div class="text-danger">
+                        {{ form.cargo.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.dependencia.id_for_label }}">Dependencia:</label>
+                    {{ form.dependencia }}
+
+                    {% if form.dependencia.errors %}
+                    <div class="text-danger">
+                        {{ form.dependencia.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.contacto.id_for_label }}">Contacto:</label>
+                    {{ form.contacto }}
+
+                    {% if form.contacto.errors %}
+                    <div class="text-danger">
+                        {{ form.contacto.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.activo.id_for_label }}">Activo:</label>
+                    {{ form.activo }}
+
+                    {% if form.activo.errors %}
+                    <div class="text-danger">
+                        {{ form.activo.errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                
+               
+
+                <button type="submit" class="btn btn-danger">ELIMINAR</button>
+            </form>
+            <div class="table table-striped"></div>
+    <a href="{% url 'empleados:home_empleados' %}" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
