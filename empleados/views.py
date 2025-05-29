@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .forms import *
-from .models import *
+from .models import Empleados
 from roles.mixins import PantallaRequiredMixin
 
 class EmpleadosList(PantallaRequiredMixin, ListView):
@@ -27,8 +27,7 @@ class EmpleadosCreate(PantallaRequiredMixin, CreateView):
     success_url = reverse_lazy('empleados:home_empleados')  
 
     def form_valid(self, form):
-        
-        return super().form_valid(form)
+        response = super().form_valid(form)
 
     def form_invalid(self, form):
         

@@ -33,8 +33,9 @@ urlpatterns = [
 
     path('roles/',include('roles.urls', namespace='roles')),
 
-
     path('empleados/',include('empleados.urls', namespace='empleados')),
+    
+    path('cargos/',include('cargos.urls', namespace='cargos')),
 
 
 

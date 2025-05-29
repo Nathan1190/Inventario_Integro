@@ -17,13 +17,11 @@ class FormEmpleados(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Ingrese el nombre completo (ej. Mario Luis)'
             }),
-            'cargo': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Ingrese el cargo (ej. Gerente de Logística)'
+            'cargo': forms.Select(attrs={
+                'class': 'form-control select2'
             }),
-            'dependencia': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Ingrese la dependencia (ej. Recursos Humanos)'
+            'dependencia': forms.Select(attrs={
+                'class': 'form-control select2'
             }),
             'contacto': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -53,9 +51,8 @@ class FormEmpleadosDELETE(forms.ModelForm):
                 'placeholder': 'Ingrese el nombre completo (ej. Mario Luis)',
                 'readonly': True,
             }),
-            'cargo': forms.TextInput(attrs={
+            'cargo': forms.Select(attrs={
                 'class': 'form-control',
-                'placeholder': 'Ingrese el cargo (ej. Gerente de Logística)',
                 'readonly': True,
             }),
             'dependencia': forms.TextInput(attrs={

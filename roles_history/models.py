@@ -1,8 +1,16 @@
 from django.db import models
 from roles.models import Roles
+from django.conf import settings
 # Create your models here.
 class Roles_History(models.Model):
     rol                     = models.ForeignKey(Roles, on_delete=models.CASCADE, related_name='historial')
+    changed_by              = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Modificado por"
+    )
     timestamp               = models.DateTimeField(auto_now_add=True)
 
     nombre_cambio           = models.CharField(max_length=50)
@@ -15,3 +23,5 @@ class Roles_History(models.Model):
 
     def __str__(self):
         return f"Historial de {self.rol.nombre} @ {self.timestamp:%Y-%m-%d %H:%M:%S}"
+    
+

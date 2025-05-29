@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'loginapp',
     'empleados',
     'empleados_history',
+    'cargos',
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'core.middleware.CurrentUserMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 

@@ -11,7 +11,7 @@
    
 
 <div class="card mb-4">
-    <h5 class="card-header bg-gradient-success text-white">Crear Nuevo Empleado</h5>
+    <h5 class="card-header bg-gradient-success text-white">Crear Nuevo Cargo</h5>
     <div class="card-body">
             <form method="post">
                 {% csrf_token %}
@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Cargo:</label>
-                    {{ form.cargo }}
+                    {{ form.descripcion }}
 
                     {% if form.cargo.errors %}
                     <div class="text-danger">
@@ -38,40 +38,8 @@
                     {% endif %}
                     
                 </div>
-                <div class="form-group">
-                    <label for="">Dependencia:</label>
-                    {{ form.dependencia }}
-
-                    {% if form.dependencia.errors %}
-                    <div class="text-danger">
-                        {{ form.dependencia.errors }}
-                    </div>
-                    {% endif %}
-                    
-                </div>
-                <div class="form-group">
-                    <label for="">Contacto:</label>
-                    {{ form.contacto }}
-
-                    {% if form.contacto.errors %}
-                    <div class="text-danger">
-                        {{ form.contacto.errors }}
-                    </div>
-                    {% endif %}
-
-                </div>
-                <div class="form-group">
-                    <label for="">Activo:</label>
-                    
-                    {{ form.activo }}
-
-                    {% if form.activo.errors %}
-                    <div class="text-danger">
-                        {{ form.activo.errors }}
-                    </div>
-                    {% endif %}
-
-                </div>
+                
+                
                 
 
                 
@@ -80,26 +48,14 @@
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
             <div class="table table-striped"></div>
-    <a href="{% url 'empleados:home_empleados' %}" class="btn btn-danger">Cancelar</a>
+    <a href="{% url 'cargos:home_cargos' %}" class="btn btn-danger">Cancelar</a>
         </div>
         </div>
     {% block javascript %}
   {{ block.super }}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function(){
-    // Inicializa todos los selects con clase .select2
-    $('.select2').select2({
-      
-      theme: 'classic',    
-      width: '100%',           
-      placeholder: 'Selecciona una opción',
-      allowClear: true         // añade la X para limpiar la selección
-    });
-  });
-</script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+  
+
   <script>
     document.addEventListener('DOMContentLoaded', function(){
       const input = document.querySelector('#id_contacto');

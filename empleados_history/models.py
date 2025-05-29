@@ -1,8 +1,16 @@
 from django.db import models
 from empleados.models import Empleados
+from django.conf import settings
 
 class Empleados_History(models.Model):
     empleado = models.ForeignKey(Empleados, on_delete=models.CASCADE, related_name='historial')
+    changed_by              = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Modificado por"
+    )
     timestamp= models.DateTimeField(auto_now_add=True)
 
     nombre_cambio = models.CharField(max_length=50)
@@ -15,4 +23,5 @@ class Empleados_History(models.Model):
     eliminado_cambio = models.BooleanField()
 
     def __str__(self):
-        return f"Historial de {self.empleado.nombre} @ {self.timestamp:%Y-%m-%d %H:%M:%S}"
+        user = self.changed_by.username if self.changed_by else "Desconocido"
+        return f"Historial de {self.empleado.nombre} por {user} @ {self.timestamp:%Y-%m-%d %H:%M:%S}"

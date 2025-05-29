@@ -1,14 +1,11 @@
 # your_app/models.py
-
 from django.db import models
 from django.core.validators import RegexValidator, MinLengthValidator, MaxLengthValidator
-from cargos.models import Cargos 
+from django.db.models.signals import pre_save
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from core.middleware import get_current_user
 
-
-class Empleados(models.Model):
+class Cargos(models.Model):
     # ─── Validadores comunes ───
     # Sólo letras y espacios (luego convertimos a mayúsculas)
     regex_letras_espacios = RegexValidator(
@@ -29,21 +26,10 @@ class Empleados(models.Model):
     # ─── Campos ───
     nombre = models.CharField(
         max_length=120,
-        validators=[regex_letras_espacios, MinLengthValidator(2), MaxLengthValidator(120)]
     )
-    cargo = models.ForeignKey(
-        Cargos,
-        on_delete=models.PROTECT,
-    )
-    dependencia = models.CharField(
-        max_length=80,
-        validators=[regex_letras_espacios, min2, max80]
-    )
-    contacto = models.CharField(
+    descripcion = models.CharField(
         max_length=120,
-        validators=[regex_contacto, max120]
     )
-    activo = models.BooleanField(default=False)
     creado_fecha = models.DateTimeField(auto_now_add=True)
     fecha_de_modificacion = models.DateTimeField(auto_now=True)
     eliminado = models.BooleanField(default=False)
@@ -54,7 +40,7 @@ class Empleados(models.Model):
     def clean(self):
         # Este método se llama antes de save() y durante form.is_valid()
         # Normaliza los campos de texto:
-        for field in ['nombre', 'cargo', 'dependencia', 'contacto']:
+        for field in ['nombre', 'descripcion']:
             val = getattr(self, field, '')
             if isinstance(val, str):
                 # Strip espacios y convierte a mayúsculas
@@ -65,20 +51,18 @@ class Empleados(models.Model):
         self.clean()
         super().save(*args, **kwargs)
 
-@receiver(post_save, sender=Empleados)
-def create_empleado_history(sender, instance, created, **kwargs):
-    from empleados_history.models import Empleados_History
-    user = get_current_user()  
-    Empleados_History.objects.create(
-        empleado                     = instance,
-        changed_by                   = user,
-        nombre_cambio                = instance.nombre,
-        cargo_cambio                 = str(instance.cargo),
-        dependencia_cambio           = instance.dependencia,
-        contacto_cambio              = instance.contacto,
-        activo_cambio                = instance.activo,
-        creado_fecha_cambio          = instance.creado_fecha,
-        fecha_de_modificacion_cambio = instance.fecha_de_modificacion,
-        eliminado_cambio             = instance.eliminado
-    )
-
+#@receiver(post_save, sender=Cargos)
+#def create_empleados_history(sender, instance, created, **kwargs):
+#    from empleados_history.models import Empleados_History
+    # Volcamos todo en el history
+#    Empleados_History.objects.create(
+#        empleado                        = instance,
+#        nombre_cambio              = instance.nombre,
+#        cargo_cambio              = instance.cargo,
+#        dependencia_cambio         = instance.dependencia,
+#        contacto_cambio         = instance.contacto,
+#        activo_cambio         = instance.activo,
+#        creado_fecha_cambio   = instance.creado_fecha,
+#        fecha_de_modificacion_cambio= instance.fecha_de_modificacion,
+#        eliminado_cambio           = instance.eliminado,
+#    )

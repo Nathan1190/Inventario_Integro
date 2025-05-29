@@ -9,6 +9,7 @@ from django.db.models.signals import pre_save
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
+from core.middleware import get_current_user
 
 
 User = get_user_model()
@@ -113,13 +114,13 @@ class Roles(models.Model):
 @receiver(post_save, sender=Roles)
 def create_roles_history(sender, instance, created, **kwargs):
     from roles_history.models import Roles_History
-    # Extraemos usuarios y pantallas como cadenas
+    user = get_user_model()
     usuarios = ",".join(u.username for u in instance.users.all())
     pantallas= ",".join(p.identificador for p in instance.pantallas.all())
 
-    # Volcamos todo en el history
     Roles_History.objects.create(
         rol                        = instance,
+        changed_by                 = user,
         nombre_cambio              = instance.nombre,
         descripcion_cambio         = instance.descripcion,
         eliminado_cambio           = instance.eliminado,

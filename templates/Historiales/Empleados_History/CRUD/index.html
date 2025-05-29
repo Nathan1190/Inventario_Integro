@@ -42,55 +42,61 @@
     <li>
       <div class="form-check dropdown-item">
         <input class="form-check-input toggle-col" type="checkbox" data-col="2" id="col-2">
-        <label class="form-check-label" for="col-2">Timestamp</label>
+        <label class="form-check-label" for="col-2">Cambio hecho por:</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
         <input class="form-check-input toggle-col" type="checkbox" data-col="3" id="col-3">
-        <label class="form-check-label" for="col-3">CAMBIO Nombre</label>
+        <label class="form-check-label" for="col-3">Timestamp</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
-        <input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4" >
-        <label class="form-check-label" for="col-4">CAMBIO Cargo</label>
+        <input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4">
+        <label class="form-check-label" for="col-4">CAMBIO Nombre</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
-        <input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5">
-        <label class="form-check-label" for="col-5">CAMBIO Dependencia</label>
+        <input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5" >
+        <label class="form-check-label" for="col-5">CAMBIO Cargo</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
         <input class="form-check-input toggle-col" type="checkbox" data-col="6" id="col-6">
-        <label class="form-check-label" for="col-6">CAMBIO Contacto</label>
+        <label class="form-check-label" for="col-6">CAMBIO Dependencia</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
         <input class="form-check-input toggle-col" type="checkbox" data-col="7" id="col-7">
-        <label class="form-check-label" for="col-7">CAMBIO Activo</label>
+        <label class="form-check-label" for="col-7">CAMBIO Contacto</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
         <input class="form-check-input toggle-col" type="checkbox" data-col="8" id="col-8">
-        <label class="form-check-label" for="col-8">CAMBIO Fecha de Creacion</label>
+        <label class="form-check-label" for="col-8">CAMBIO Activo</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
         <input class="form-check-input toggle-col" type="checkbox" data-col="9" id="col-9">
-        <label class="form-check-label" for="col-9">CAMBIO Fecha de Modificacion</label>
+        <label class="form-check-label" for="col-9">CAMBIO Fecha de Creacion</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
         <input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10">
-        <label class="form-check-label" for="col-10">CAMBIO Eliminado</label>
+        <label class="form-check-label" for="col-10">CAMBIO Fecha de Modificacion</label>
+      </div>
+    </li>
+    <li>
+      <div class="form-check dropdown-item">
+        <input class="form-check-input toggle-col" type="checkbox" data-col="11" id="col-11">
+        <label class="form-check-label" for="col-11">CAMBIO Eliminado</label>
       </div>
     </li>
   </ul>
@@ -103,6 +109,7 @@
             <tr>
                 <th>ID</th>
                 <th>Empleado ID</th>
+                <th>Cambio Hecho Por:</th>
                 <th>Timestamp</th>
                 <th>CAMBIO Nombre</th>
                 <th>CAMBIO Cargo</th>
@@ -119,6 +126,7 @@
             <tr>
                 <td>{{empleados_history.id}}</td>
                 <td>{{empleados_history.empleado_id}}</td>
+                <td>{{empleados_history.changed_by}}</td>
                 <td>{{empleados_history.timestamp|date:"j F Y, H:i:s"}}</td>
                 <td>{{empleados_history.nombre_cambio}}</td>
                 <td>{{empleados_history.cargo_cambio}}</td>
