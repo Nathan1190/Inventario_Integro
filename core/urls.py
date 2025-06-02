@@ -49,4 +49,6 @@ urlpatterns = [
     path('empleados_history/',include('empleados_history.urls', namespace='empleados_history')),
 
     path('cargos_history/',include('cargos_history.urls', namespace='cargos_history')),
+    
+    path('dependencias_history/',include('dependencias_history.urls', namespace='dependencias_history')),
 ]
