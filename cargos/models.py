@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator, MinLengthValidator, MaxLength
 from django.db.models.signals import pre_save
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from core.middleware import get_current_user
 
 class Cargos(models.Model):
     # ─── Validadores comunes ───
@@ -50,3 +51,17 @@ class Cargos(models.Model):
         # Asegurarse de limpiar antes de guardar
         self.clean()
         super().save(*args, **kwargs)
+
+@receiver(post_save, sender=Cargos)
+def create_cargo_history(sender, instance, created, **kwargs):
+    from cargos_history.models import Cargos_History
+    user = get_current_user()
+    Cargos_History.objects.create(
+        cargo=instance,
+        changed_by=user,
+        nombre_cambio=instance.nombre,
+        descripcion_cambio=instance.descripcion,
+        eliminado_cambio=instance.eliminado,
+        creado_fecha_cambio=instance.creado_fecha,
+        fecha_de_modificacion_cambio=instance.fecha_de_modificacion,
+    )

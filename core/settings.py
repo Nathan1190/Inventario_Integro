@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'cargos',
     'dependencias',
     'ubicaciones',
+    'cargos_history',
 ]
 
 MIDDLEWARE = [

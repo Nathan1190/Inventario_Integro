@@ -1,0 +1,166 @@
+
+{% extends 'base\base.html' %}
+
+{% block estilos %}
+{% endblock %}
+
+{% block contenido %}
+<div class="card">
+    <h5 class="card-header card text-center text-white bg-gradient-success mb-1">
+        HISTORIAL DE CARGOS
+    </h5>
+    <div class="card-body">
+
+        <div class="table table-striped"></div>
+        <div class="mb-2"></div>
+
+        <div class="dropdown mb-3 text-right">
+            <button 
+                class="btn btn-secondary dropdown-toggle" 
+                type="button" 
+                id="columnDropdown" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false">
+                Columnas
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="columnDropdown">
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="0" id="col-0">
+                        <label class="form-check-label" for="col-0">ID</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="1" id="col-1">
+                        <label class="form-check-label" for="col-1">Cargo ID</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="2" id="col-2">
+                        <label class="form-check-label" for="col-2">Cambio hecho por</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="3" id="col-3">
+                        <label class="form-check-label" for="col-3">Timestamp</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4">
+                        <label class="form-check-label" for="col-4">CAMBIO Nombre</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5">
+                        <label class="form-check-label" for="col-5">CAMBIO Descripción</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="6" id="col-6">
+                        <label class="form-check-label" for="col-6">CAMBIO Eliminado</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="7" id="col-7">
+                        <label class="form-check-label" for="col-7">CAMBIO Fecha de Creación</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="8" id="col-8">
+                        <label class="form-check-label" for="col-8">CAMBIO Fecha de Modificación</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <table id="dataTable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cargo ID</th>
+                    <th>Cambio hecho por</th>
+                    <th>Timestamp</th>
+                    <th>CAMBIO Nombre</th>
+                    <th>CAMBIO Descripción</th>
+                    <th>CAMBIO Eliminado</th>
+                    <th>CAMBIO Fecha de Creación</th>
+                    <th>CAMBIO Fecha de Modificación</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for h in Cargos_History %}
+                <tr>
+                    <td>{{ h.id }}</td>
+                    <td>{{ h.cargo_id }}</td>
+                    <td>{{ h.changed_by }}</td>
+                    <td>{{ h.timestamp|date:"j F Y, H:i:s" }}</td>
+                    <td>{{ h.nombre_cambio }}</td>
+                    <td>{{ h.descripcion_cambio }}</td>
+                    <td>{{ h.eliminado_cambio|yesno:"Sí,No" }}</td>
+                    <td>{{ h.creado_fecha_cambio|date:"j F Y, H:i:s" }}</td>
+                    <td>{{ h.fecha_de_modificacion_cambio|date:"j F Y, H:i:s" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% load static %}
+<script src="{% static '/base/vendor/jquery/jquery.js' %}"></script>
+
+<script>
+  $(document).ready(function() {
+    var table = $('#dataTable').DataTable({
+      order: [[3, 'desc']],
+      language: {
+        decimal:        "",
+        emptyTable:     "No hay datos disponibles",
+        info:           "Mostrando _START_ a _END_ de _TOTAL_ registros",
+        infoEmpty:      "Mostrando 0 a 0 de 0 registros",
+        infoFiltered:   "(filtrado de _MAX_ registros totales)",
+        lengthMenu:     "Mostrar _MENU_ registros",
+        loadingRecords: "Cargando...",
+        processing:     "Procesando...",
+        search:         "Buscar:",
+        zeroRecords:    "No se encontraron registros",
+        paginate: {
+          first:    "Primero",
+          last:     "Último",
+          next:     "Siguiente",
+          previous: "Anterior"
+        },
+        aria: {
+          sortAscending:  ": activar orden ascendente",
+          sortDescending: ": activar orden descendente"
+        },
+        buttons: {
+          colvis: "Columnas"
+        }
+      },
+      columnDefs: [
+        { targets: [0], visible: false }  // Oculta el ID por defecto
+      ]
+    });
+
+    // Inicializa checkboxes según visibilidad
+    $('.toggle-col').each(function(){
+      var idx = $(this).data('col');
+      $(this).prop('checked', table.column(idx).visible());
+    });
+
+    // Al cambiar un checkbox, oculta o muestra la columna
+    $('.toggle-col').on('change', function(){
+      table.column($(this).data('col')).visible(this.checked);
+    });
+  });
+</script>
+{% endblock %}
