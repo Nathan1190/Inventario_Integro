@@ -42,7 +42,7 @@
     <!-- Dark mode overrides -->
     <style>
       body {
-        background-color: #e0e0e0;
+        background: linear-gradient(165deg,rgba(42, 123, 155, 1) 0%, rgba(0, 31, 100, 1) 50%, rgba(0, 4, 57, 1) 100%);
         color: #e0e0e0;
       }
       /* Sidebar */
@@ -50,15 +50,15 @@
         background-image: #fffff !important;
       }
       .sidebar .sidebar-brand, .sidebar .sidebar-heading, .sidebar .nav-link {
-        color: #1863AB !important;
+        color: #e0e0e0 !important;
       }
       .nav-link:hover {
-        background-color: #1863AB !important;
+        background-color: #001F64 !important;
       }
       /* Topbar */
       .navbar-nav .nav-item .nav-link, .navbar-dark {
         color: #1e1e1e !important;
-        background-color:rgb(255, 255, 255) !important;
+        background-color: #e0e0e0 !important;
       }
 
       .nav-item .nav-link:hover{
@@ -102,13 +102,11 @@
         color: #e0e0e0;
       }
       
-
       /* Icon Color */
       .menu-icon {
         color: #3e6389 !important;
         transition: color 0.2s ease;
       }
-
 
       .nav-link:hover .menu-icon {
         color: #fff !important;
@@ -141,7 +139,7 @@
       <!-- Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
         <div class="sidebar-brand-icon rotate-n-15"></div>
-        <div class="sidebar-brand-text mx-3">Inventario Íntegro</div>
+        <div class="sidebar-brand-text text-light mx-3">Inventario Íntegro</div>
       </a>
 
       <hr class="sidebar-divider my-0">
@@ -171,6 +169,8 @@
             <a class="collapse-item" href="{% url 'empleados:home_empleados' %}">Empleados</a>
             <a class="collapse-item" href="{% url 'empleados_history:home_empleados_history' %}">Historial de Empleados</a>
             <a class="collapse-item" href="{% url 'cargos:home_cargos' %}">Cargos</a>
+            <a class="collapse-item" href="{% url 'dependencias:home_dependencias' %}">Dependencias</a>
+            <a class="collapse-item" href="{% url 'ubicaciones:home_ubicaciones' %}">Ubicaciones</a>
           </div>
         </div>
       </li>

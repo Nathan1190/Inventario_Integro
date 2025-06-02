@@ -5,7 +5,7 @@ from django.db.models.signals import pre_save
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-class Cargos(models.Model):
+class Dependencias(models.Model):
     # ─── Validadores comunes ───
     # Sólo letras y espacios (luego convertimos a mayúsculas)
     regex_letras_espacios = RegexValidator(
@@ -50,3 +50,4 @@ class Cargos(models.Model):
         # Asegurarse de limpiar antes de guardar
         self.clean()
         super().save(*args, **kwargs)
+

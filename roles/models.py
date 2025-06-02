@@ -114,7 +114,7 @@ class Roles(models.Model):
 @receiver(post_save, sender=Roles)
 def create_roles_history(sender, instance, created, **kwargs):
     from roles_history.models import Roles_History
-    user = get_user_model()
+    user = get_current_user()
     usuarios = ",".join(u.username for u in instance.users.all())
     pantallas= ",".join(p.identificador for p in instance.pantallas.all())
 

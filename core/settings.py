@@ -63,6 +63,8 @@ INSTALLED_APPS = [
     'empleados',
     'empleados_history',
     'cargos',
+    'dependencias',
+    'ubicaciones',
 ]
 
 MIDDLEWARE = [

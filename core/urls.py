@@ -37,6 +37,10 @@ urlpatterns = [
     
     path('cargos/',include('cargos.urls', namespace='cargos')),
 
+    path('dependencias/',include('dependencias.urls', namespace='dependencias')),
+    
+    path('ubicaciones/',include('ubicaciones.urls', namespace='ubicaciones')),
+
 
 
 

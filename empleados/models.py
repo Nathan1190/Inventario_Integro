@@ -3,6 +3,7 @@
 from django.db import models
 from django.core.validators import RegexValidator, MinLengthValidator, MaxLengthValidator
 from cargos.models import Cargos 
+from dependencias.models import Dependencias  
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from core.middleware import get_current_user
@@ -35,9 +36,9 @@ class Empleados(models.Model):
         Cargos,
         on_delete=models.PROTECT,
     )
-    dependencia = models.CharField(
-        max_length=80,
-        validators=[regex_letras_espacios, min2, max80]
+    dependencia = models.ForeignKey(
+        Dependencias,
+        on_delete=models.PROTECT,
     )
     contacto = models.CharField(
         max_length=120,
@@ -74,7 +75,7 @@ def create_empleado_history(sender, instance, created, **kwargs):
         changed_by                   = user,
         nombre_cambio                = instance.nombre,
         cargo_cambio                 = str(instance.cargo),
-        dependencia_cambio           = instance.dependencia,
+        dependencia_cambio           = str(instance.dependencia),
         contacto_cambio              = instance.contacto,
         activo_cambio                = instance.activo,
         creado_fecha_cambio          = instance.creado_fecha,
