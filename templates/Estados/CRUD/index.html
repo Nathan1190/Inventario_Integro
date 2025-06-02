@@ -1,0 +1,83 @@
+{% extends 'base\\base.html' %}
+
+{% block contenido %}
+<div class="card">
+  <h5 class="card-header card text-center text-white bg-gradient-success mb-1">
+    Listado de Estados
+  </h5>
+
+  <div class="card-body">
+
+    <a href="{% url 'estados:estados_create' %}" class="btn btn-success mb-3">
+      <i class="bi bi-plus-circle"></i> Agregar Estado
+    </a>
+
+    <!-- Dropdown de columnas -->
+    
+      
+
+    <!-- DataTable -->
+    <table id="dataTable" class="table table-striped" style="width:100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripcion</th>
+          <th>Color</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in Estados %}
+        <tr>
+          <td>{{ e.id }}</td>
+          <td>{{ e.nombre }}</td>
+          <td>{{ e.descripcion }}</td>
+          <td>
+            {% if e.color_hex %}
+              <span class="badge"
+                    style="background:{{ e.color_hex }}; color:#fff;">{{ e.color_hex }}</span>
+            {% else %}
+              —
+            {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'estados:estados_edit' e.id %}" class="btn btn-primary btn-sm">
+              <i class="bi bi-pencil-square"></i> Editar
+            </a>
+            <a href="{% url 'estados:estados_delete' e.id %}" class="btn btn-danger btn-sm">
+              <i class="bi bi-trash"></i> Eliminar
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% load static %}
+<script src="{% static '/base/vendor/jquery/jquery.js' %}"></script>
+
+<script>
+$(function () {
+  var table = $('#dataTable').DataTable({
+    language: {
+      decimal:"", emptyTable:"No hay datos disponibles",
+      info:"Mostrando _START_-_END_ de _TOTAL_",
+      infoEmpty:"Mostrando 0-0 de 0", infoFiltered:"(filtrado de _MAX_)",
+      lengthMenu:"Mostrar _MENU_", loadingRecords:"Cargando…",
+      processing:"Procesando…", search:"Buscar:",
+      zeroRecords:"No se encontraron registros",
+      paginate:{ first:"Primero", last:"Último", next:"Siguiente", previous:"Anterior" },
+      buttons:{ colvis:"Columnas" }
+    },
+    columnDefs:[ { targets:[0], visible:false } ] // Oculta ID al inicio
+  });
+
+  $('.toggle-col').each(function(){
+    var idx=$(this).data('col'); $(this).prop('checked', table.column(idx).visible());
+  }).on('change',function(){ table.column($(this).data('col')).visible(this.checked);});
+});
+</script>
+{% endblock %}

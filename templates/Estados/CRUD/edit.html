@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% block contenido %}
+<div class="card mb-4">
+  <h5 class="card-header bg-gradient-primary text-white">
+    Editar Estado: {{ form.instance.nombre }}
+  </h5>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div class="form-group">
+        <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+        {{ form.nombre }}
+        {% if form.nombre.errors %}<div class="text-danger">{{ form.nombre.errors }}</div>{% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.descripcion.id_for_label }}">Descripcion:</label>
+        {{ form.descripcion }}
+        {% if form.descripcion.errors %}<div class="text-danger">{{ form.descripcion.errors }}</div>{% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.color_hex.id_for_label }}">Color:</label>
+        {{ form.color_hex }}
+        {% if form.color_hex.errors %}<div class="text-danger">{{ form.color_hex.errors }}</div>{% endif %}
+      </div>
+
+      
+
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{% url 'estados:home_estados' %}" class="btn btn-danger">Cancelar</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

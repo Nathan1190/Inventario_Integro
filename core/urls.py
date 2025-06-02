@@ -41,6 +41,8 @@ urlpatterns = [
     
     path('ubicaciones/',include('ubicaciones.urls', namespace='ubicaciones')),
 
+    path('estados/',include('estados.urls', namespace='estados')),
+
 
 
 

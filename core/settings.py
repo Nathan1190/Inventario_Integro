@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'ubicaciones',
     'cargos_history',
     'dependencias_history',
+    'estados',
 ]
 
 MIDDLEWARE = [
