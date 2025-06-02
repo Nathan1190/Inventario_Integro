@@ -7,117 +7,108 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"
   />
 
-
-   
-
 <div class="card mb-4">
-    <h5 class="card-header bg-gradient-success text-white">Crear Nuevo Empleado</h5>
-    <div class="card-body">
-            <form method="post">
-                {% csrf_token %}
-                
-                <div class="form-group">
-                    <label for="">Nombre:</label>
-                    {{ form.nombre }}
+  <h5 class="card-header bg-gradient-success text-white">Crear Nuevo Empleado</h5>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <label for="">Nombre:</label>
+        {{ form.nombre }}
+        {% if form.nombre.errors %}
+        <div class="text-danger">{{ form.nombre.errors }}</div>
+        {% endif %}
+      </div>
 
-                    {% if form.nombre.errors %}
-                    <div class="text-danger">
-                        {{ form.nombre.errors }}
-                    </div>
-                    {% endif %}
+      <div class="form-group">
+        <label for="">Cargo:</label>
+        {{ form.cargo }}
+        {% if form.cargo.errors %}
+        <div class="text-danger">{{ form.cargo.errors }}</div>
+        {% endif %}
+      </div>
 
-                </div>
-                <div class="form-group">
-                    <label for="">Cargo:</label>
-                    {{ form.cargo }}
+      <div class="form-group">
+        <label for="">Dependencia:</label>
+        {{ form.dependencia }}
+        {% if form.dependencia.errors %}
+        <div class="text-danger">{{ form.dependencia.errors }}</div>
+        {% endif %}
+      </div>
 
-                    {% if form.cargo.errors %}
-                    <div class="text-danger">
-                        {{ form.cargo.errors }}
-                    </div>
-                    {% endif %}
-                    
-                </div>
-                <div class="form-group">
-                    <label for="">Dependencia:</label>
-                    {{ form.dependencia }}
+      <div class="form-group">
+        <label for="">Contacto:</label>
+        {{ form.contacto }}
+        {% if form.contacto.errors %}
+        <div class="text-danger">{{ form.contacto.errors }}</div>
+        {% endif %}
+      </div>
 
-                    {% if form.dependencia.errors %}
-                    <div class="text-danger">
-                        {{ form.dependencia.errors }}
-                    </div>
-                    {% endif %}
-                    
-                </div>
-                <div class="form-group">
-                    <label for="">Contacto:</label>
-                    {{ form.contacto }}
+      <!-- Nuevo campo: Correo institucional -->
+      <div class="form-group">
+        <label for="">Correo institucional:</label>
+        {{ form.correo_inst }}
+        {% if form.correo_inst.errors %}
+        <div class="text-danger">{{ form.correo_inst.errors }}</div>
+        {% endif %}
+      </div>
 
-                    {% if form.contacto.errors %}
-                    <div class="text-danger">
-                        {{ form.contacto.errors }}
-                    </div>
-                    {% endif %}
+      <!-- Nuevo campo: Código de empleado -->
+      <div class="form-group">
+        <label for="">Código de empleado:</label>
+        {{ form.codigo_empleado }}
+        {% if form.codigo_empleado.errors %}
+        <div class="text-danger">{{ form.codigo_empleado.errors }}</div>
+        {% endif %}
+      </div>
 
-                </div>
-                <div class="form-group">
-                    <label for="">Activo:</label>
-                    
-                    {{ form.activo }}
+      <div class="form-group">
+        <label for="">Activo:</label>
+        {{ form.activo }}
+        {% if form.activo.errors %}
+        <div class="text-danger">{{ form.activo.errors }}</div>
+        {% endif %}
+      </div>
 
-                    {% if form.activo.errors %}
-                    <div class="text-danger">
-                        {{ form.activo.errors }}
-                    </div>
-                    {% endif %}
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
 
-                </div>
-                
+    <div class="table table-striped"></div>
+    <a href="{% url 'empleados:home_empleados' %}" class="btn btn-danger mt-2">Cancelar</a>
+  </div>
+</div>
 
-                
-                
-                
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            </form>
-            <div class="table table-striped"></div>
-    <a href="{% url 'empleados:home_empleados' %}" class="btn btn-danger">Cancelar</a>
-        </div>
-        </div>
-    {% block javascript %}
+{% block javascript %}
   {{ block.super }}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function(){
-    // Inicializa todos los selects con clase .select2
-    $('.select2').select2({
-      
-      theme: 'classic',    
-      width: '100%',           
-      placeholder: 'Selecciona una opción',
-      allowClear: true         // añade la X para limpiar la selección
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      // Inicializa todos los selects con clase .select2
+      $('.select2').select2({
+        theme: 'classic',    
+        width: '100%',           
+        placeholder: 'Selecciona una opción',
+        allowClear: true      
+      });
     });
-  });
-</script>
+  </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function(){
       const input = document.querySelector('#id_contacto');
       if (!input) return;
-
       const iti = window.intlTelInput(input, {
-        initialCountry: 'hn',        // <— fuerza +504
-        separateDialCode: true,      
+        initialCountry: 'hn',
+        separateDialCode: true,
         utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js'
       });
-
-      // Al enviar, reemplaza el valor por el número E.164 completo
       input.form.addEventListener('submit', () => {
         input.value = iti.getNumber();
       });
     });
   </script>
 {% endblock %}
-
 
 {% endblock %}

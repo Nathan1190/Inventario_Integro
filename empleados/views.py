@@ -27,7 +27,7 @@ class EmpleadosCreate(PantallaRequiredMixin, CreateView):
     success_url = reverse_lazy('empleados:home_empleados')  
 
     def form_valid(self, form):
-        response = super().form_valid(form)
+        return super().form_valid(form)
 
     def form_invalid(self, form):
         
