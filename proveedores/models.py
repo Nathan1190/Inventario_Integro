@@ -1,5 +1,8 @@
 from django.db import models
 from django.core.validators import RegexValidator, MinLengthValidator, MaxLengthValidator, EmailValidator
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from core.middleware import get_current_user
 
 class Proveedores(models.Model):
     # ─── Validadores comunes ───
@@ -77,3 +80,21 @@ class Proveedores(models.Model):
         # Asegurarnos de limpiar antes de guardar
         self.clean()
         super().save(*args, **kwargs)
+
+@receiver(post_save, sender=Proveedores)
+def create_proveedor_history(sender, instance, created, **kwargs):
+    from proveedores_history.models import Proveedores_History
+    user = get_current_user()  
+    Proveedores_History.objects.create(
+        proveedor                    = instance,
+        changed_by                   = user,
+        nombre_cambio                = instance.nombre,
+        descripcion_cambio           = instance.descripcion,
+        telefono_cambio              = instance.telefono,
+        correo_cambio                = instance.correo,
+        direccion_cambio             = instance.direccion,
+        activo_cambio                = instance.activo,
+        creado_fecha_cambio          = instance.creado_fecha,
+        fecha_de_modificacion_cambio = instance.fecha_de_modificacion,
+        eliminado_cambio             = instance.eliminado
+    )

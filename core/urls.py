@@ -57,4 +57,6 @@ urlpatterns = [
     path('dependencias_history/',include('dependencias_history.urls', namespace='dependencias_history')),
 
     path('estados_history/',include('estados_history.urls', namespace='estados_history')),
+
+    path('proveedores_history/',include('proveedores_history.urls', namespace='proveedores_history')),
 ]
