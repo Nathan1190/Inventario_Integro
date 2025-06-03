@@ -7,12 +7,12 @@
 {% block contenido %}
 
 <div class="card">
-    <h5 class="card-header card text-center text-white bg-gradient-success mb-1">LISTADO DE EMPLEADOS</h5>
+    <h5 class="card-header card text-center text-white bg-gradient-success mb-1">LISTADO DE PROVEEDORES</h5>
     <div class="card-body">
         <div>
-            <a href="{% url 'empleados:empleados_create' %}" class="btn btn-success">
+            <a href="{% url 'proveedores:proveedores_create' %}" class="btn btn-success">
                 <i class="bi bi-person-add"></i>
-                Agregar Empleados
+                Agregar Proveedores
             </a>
             <hr>
         </div>
@@ -45,55 +45,49 @@
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="2" id="col-2">
-                        <label class="form-check-label" for="col-2">Cargo</label>
+                        <label class="form-check-label" for="col-2">Descripcion</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="3" id="col-3">
-                        <label class="form-check-label" for="col-3">Dependencia</label>
+                        <label class="form-check-label" for="col-3">Telefono</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4" >
-                        <label class="form-check-label" for="col-4">Contacto</label>
+                        <label class="form-check-label" for="col-4">Correo</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5">
-                        <label class="form-check-label" for="col-5">Correo Institucional</label>
+                        <label class="form-check-label" for="col-5">Direccion</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="6" id="col-6">
-                        <label class="form-check-label" for="col-6">Código Empleado</label>
+                        <label class="form-check-label" for="col-6">Activo</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="7" id="col-7">
-                        <label class="form-check-label" for="col-7">Activo</label>
+                        <label class="form-check-label" for="col-7">Fecha de Creación</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
-                        <input class="form-check-input toggle-col" type="checkbox" data-col="8" id="col-8">
-                        <label class="form-check-label" for="col-8">Fecha de Creación</label>
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="8" id="col-8" >
+                        <label class="form-check-label" for="col-8">Fecha de Modificación</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
-                        <input class="form-check-input toggle-col" type="checkbox" data-col="9" id="col-9" >
-                        <label class="form-check-label" for="col-9">Fecha de Modificación</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="form-check dropdown-item">
-                        <input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10">
-                        <label class="form-check-label" for="col-10">Acciones</label>
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="9" id="col-9">
+                        <label class="form-check-label" for="col-9">Acciones</label>
                     </div>
                 </li>
             </ul>
@@ -104,11 +98,10 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Cargo</th>
-                    <th>Dependencia</th>
-                    <th>Contacto</th>
-                    <th>Correo Institucional</th>
-                    <th>Código Empleado</th>
+                    <th>Descripcion</th>
+                    <th>Telefono</th>
+                    <th>Correo</th>
+                    <th>Direccion</th>
                     <th>Activo</th>
                     <th>Fecha de Creación</th>
                     <th>Fecha de Modificación</th>
@@ -116,23 +109,22 @@
                 </tr>
             </thead>
             <tbody>
-                {% for empleados in Empleados %}
+                {% for proveedores in Proveedores %}
                 <tr>
-                    <td>{{ empleados.id }}</td>
-                    <td>{{ empleados.nombre }}</td>
-                    <td>{{ empleados.cargo }}</td>
-                    <td>{{ empleados.dependencia }}</td>
-                    <td>{{ empleados.contacto }}</td>
-                    <td>{{ empleados.correo_inst }}</td>
-                    <td>{{ empleados.codigo_empleado }}</td>
-                    <td>{{ empleados.activo|yesno:"Activo,Inactivo" }}</td>
-                    <td>{{ empleados.creado_fecha|date:"j F Y, H:i:s" }}</td>
-                    <td>{{ empleados.fecha_de_modificacion|date:"j F Y, H:i:s" }}</td>
+                    <td>{{ proveedores.id }}</td>
+                    <td>{{ proveedores.nombre }}</td>
+                    <td>{{ proveedores.descripcion }}</td>
+                    <td>{{ proveedores.telefono }}</td>
+                    <td>{{ proveedores.correo }}</td>
+                    <td>{{ proveedores.direccion }}</td>
+                    <td>{{ proveedores.activo|yesno:"Activo,Inactivo" }}</td>
+                    <td>{{ proveedores.creado_fecha|date:"j F Y, H:i:s" }}</td>
+                    <td>{{ proveedores.fecha_de_modificacion|date:"j F Y, H:i:s" }}</td>
                     <td>
-                        <a href="{% url 'empleados:empleados_edit' empleados.id %}" class="btn btn-primary">
+                        <a href="{% url 'proveedores:proveedores_edit' proveedores.id %}" class="btn btn-primary">
                             <i class="bi bi-pencil-square"> Modificar </i>
                         </a>
-                        <a href="{% url 'empleados:empleados_delete' empleados.id %}" class="btn btn-danger">
+                        <a href="{% url 'proveedores:proveedores_delete' proveedores.id %}" class="btn btn-danger">
                             <i class="bi bi-trash"> Eliminar</i>
                         </a>
                     </td>
@@ -175,8 +167,8 @@
         }
       },
       columnDefs: [
-        { targets: [0, 4, 5, 6, 8, 9], visible: false } // columnas ocultas al inicio: ID, Contacto, Correo, Código, Fecha creación, Fecha modificación
-      ]
+        { targets: [7, 8], visible: false } 
+        ]
     });
 
     // Inicializa checkboxes según visibilidad

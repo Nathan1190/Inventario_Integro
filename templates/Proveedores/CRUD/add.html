@@ -1,0 +1,105 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+
+  <!-- CDN CSS de intl-tel-input -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"
+  />
+
+<div class="card mb-4">
+  <h5 class="card-header bg-gradient-success text-white">Crear Nuevo Proveedor</h5>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <label for="">Nombre:</label>
+        {{ form.nombre }}
+        {% if form.nombre.errors %}
+        <div class="text-danger">{{ form.nombre.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="">Descripcion:</label>
+        {{ form.descripcion }}
+        {% if form.descripcion.errors %}
+        <div class="text-danger">{{ form.descripcion.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="">Telefono:</label>
+        {{ form.telefono }}
+        {% if form.telefono.errors %}
+        <div class="text-danger">{{ form.telefono.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="">Correo:</label>
+        {{ form.correo }}
+        {% if form.correo.errors %}
+        <div class="text-danger">{{ form.correo.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="">Direccion:</label>
+        {{ form.direccion }}
+        {% if form.direccion.errors %}
+        <div class="text-danger">{{ form.direccion.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="">Activo:</label>
+        {{ form.activo }}
+        {% if form.activo.errors %}
+        <div class="text-danger">{{ form.activo.errors }}</div>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+
+    <div class="table table-striped"></div>
+    <a href="{% url 'proveedores:home_proveedores' %}" class="btn btn-danger mt-2">Cancelar</a>
+  </div>
+</div>
+
+{% block javascript %}
+  {{ block.super }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      // Inicializa todos los selects con clase .select2
+      $('.select2').select2({
+        theme: 'classic',    
+        width: '100%',           
+        placeholder: 'Selecciona una opción',
+        allowClear: true      
+      });
+    });
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const input = document.querySelector('#id_telefono');
+      if (!input) return;
+      const iti = window.intlTelInput(input, {
+        initialCountry: 'hn',
+        separateDialCode: true,
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js'
+      });
+      input.form.addEventListener('submit', () => {
+        input.value = iti.getNumber();
+      });
+    });
+  </script>
+  
+{% endblock %}
+
+{% endblock %}

@@ -94,7 +94,7 @@ class FormEmpleadosDELETE(forms.ModelForm):
             }),
             'contacto': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': '+504 1234-5678',
+                'placeholder': '1234-5678',
             }),
             'correo_inst': forms.EmailInput(attrs={
                 'class': 'form-control',

@@ -1,0 +1,94 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+
+  <!-- CDN CSS de intl-tel-input -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"
+  />
+
+<div class="card mb-4">
+  <h5 class="card-header bg-gradient-danger text-white">
+    ELIMINAR PROVEEDOR: {{ form.instance.nombre }}
+  </h5>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div class="form-group">
+        <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+        {{ form.nombre }}
+        {% if form.nombre.errors %}
+        <div class="text-danger">{{ form.nombre.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.descripcion.id_for_label }}">Descripcion:</label>
+        {{ form.descripcion }}
+        {% if form.descripcion.errors %}
+        <div class="text-danger">{{ form.descripcion.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.telefono.id_for_label }}">Telefono:</label>
+        {{ form.telefono }}
+        {% if form.telefono.errors %}
+        <div class="text-danger">{{ form.telefono.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.correo.id_for_label }}">Correo:</label>
+        {{ form.correo }}
+        {% if form.correo.errors %}
+        <div class="text-danger">{{ form.correo.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.direccion.id_for_label }}">Direccion:</label>
+        {{ form.direccion }}
+        {% if form.direccion.errors %}
+        <div class="text-danger">{{ form.direccion.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.activo.id_for_label }}">Activo:</label>
+        {{ form.activo }}
+        {% if form.activo.errors %}
+        <div class="text-danger">{{ form.activo.errors }}</div>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn btn-danger">ELIMINAR</button>
+    </form>
+
+    <div class="table table-striped"></div>
+    <a href="{% url 'proveedores:home_proveedores' %}" class="btn btn-danger mt-2">Cancelar</a>
+  </div>
+</div>
+
+{% block javascript %}
+  {{ block.super }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const input = document.querySelector('#id_telefono');
+      if (!input) return;
+      const iti = window.intlTelInput(input, {
+        initialCountry: 'hn',
+        separateDialCode: true,
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js'
+      });
+      input.form.addEventListener('submit', () => {
+        input.value = iti.getNumber();
+      });
+    });
+  </script>
+{% endblock %}
+
+{% endblock %}

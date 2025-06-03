@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'dependencias_history',
     'estados',
     'estados_history',
+    'proveedores',
 ]
 
 MIDDLEWARE = [
