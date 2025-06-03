@@ -214,6 +214,9 @@
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-dark topbar mb-4 static-top shadow">
+            <button id="sidebarToggleTop" class="btn btn-link btn-sidebar-toggle">
+                <i class="fa fa-bars fa-lg"></i>
+            </button>
 
           <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown no-arrow">
@@ -303,6 +306,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+  <script src="{% static '/base/js/sb-admin-2.min.js' %}"></script>
+
 
   {% block javascript %}
     <!-- Dual Listbox JS -->
