@@ -165,17 +165,29 @@
           <div class="bg-white collapse-inner rounded ">
             <h6 class="collapse-header">Paginas:</h6>
             <a class="collapse-item" href="{% url 'roles:home_roles' %}">Roles</a>
-            <a class="collapse-item" href="{% url 'roles_history:home_roles_history' %}">Historial de Roles</a>
             <a class="collapse-item" href="{% url 'empleados:home_empleados' %}">Empleados</a>
-            <a class="collapse-item" href="{% url 'empleados_history:home_empleados_history' %}">Historial de Empleados</a>
             <a class="collapse-item" href="{% url 'cargos:home_cargos' %}">Cargos</a>
             <a class="collapse-item" href="{% url 'dependencias:home_dependencias' %}">Dependencias</a>
             <a class="collapse-item" href="{% url 'ubicaciones:home_ubicaciones' %}">Ubicaciones</a>
+            <a class="collapse-item" href="{% url 'estados:home_estados' %}">Estados</a>
+            <a class="collapse-item" href="{% url 'proveedores:home_proveedores' %}">Proveedores</a>
+          </div>
+        </div>
+
+        <hr class="sidebar-divider">
+        <div class="sidebar-heading">Historiales</div>
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="true">
+          <i class="fas fa-fw fa-folder menu-icon"></i>
+          <span>Historiales</span>
+        </a>
+        <div id="collapsePages2" class="collapse" data-bs-parent="#accordionSidebar">
+          <div class="bg-white collapse-inner rounded ">
+            <h6 class="collapse-header">Historiales:</h6>
+            <a class="collapse-item" href="{% url 'roles_history:home_roles_history' %}">Historial de Roles</a>
+            <a class="collapse-item" href="{% url 'empleados_history:home_empleados_history' %}">Historial de Empleados</a>
             <a class="collapse-item" href="{% url 'cargos_history:home_cargos_history' %}">Historial de Cargos</a>
             <a class="collapse-item" href="{% url 'dependencias_history:home_dependencias_history' %}">Historial de Dependencias</a>
-            <a class="collapse-item" href="{% url 'estados:home_estados' %}">Estados</a>
             <a class="collapse-item" href="{% url 'estados_history:home_estados_history' %}">Historial de Estados</a>
-            <a class="collapse-item" href="{% url 'proveedores:home_proveedores' %}">Proveedores</a>
           </div>
         </div>
       </li>
