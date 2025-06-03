@@ -14,7 +14,48 @@
 
     <!-- Dropdown de columnas -->
     
-      
+      <div class="dropdown mb-3 text-right">
+            <button 
+                class="btn btn-secondary dropdown-toggle" 
+                type="button" 
+                id="columnDropdown" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false">
+                Columnas
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="columnDropdown">
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="0" id="col-0" >
+                        <label class="form-check-label" for="col-0">ID</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="1" id="col-1">
+                        <label class="form-check-label" for="col-1">Nombre</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="2" id="col-2">
+                        <label class="form-check-label" for="col-2">Descripcion</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="3" id="col-3">
+                        <label class="form-check-label" for="col-3">Color</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4" >
+                        <label class="form-check-label" for="col-4">Acciones</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
     <!-- DataTable -->
     <table id="dataTable" class="table table-striped" style="width:100%">
@@ -72,7 +113,7 @@ $(function () {
       paginate:{ first:"Primero", last:"Último", next:"Siguiente", previous:"Anterior" },
       buttons:{ colvis:"Columnas" }
     },
-    columnDefs:[ { targets:[0], visible:false } ] // Oculta ID al inicio
+    columnDefs:[ { targets:[0], visible:false } ] 
   });
 
   $('.toggle-col').each(function(){

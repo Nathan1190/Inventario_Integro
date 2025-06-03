@@ -21,8 +21,8 @@ class Empleados_History(models.Model):
     cargo_cambio                  = models.CharField(max_length=90)
     dependencia_cambio            = models.CharField(max_length=80)
     contacto_cambio               = models.CharField(max_length=120)
-    correo_inst_cambio            = models.CharField(max_length=100)   # nuevo campo
-    codigo_empleado_cambio        = models.CharField(max_length=4)     # nuevo campo
+    correo_inst_cambio            = models.CharField(max_length=100)   
+    codigo_empleado_cambio        = models.CharField(max_length=4)     
     activo_cambio                 = models.BooleanField()
     creado_fecha_cambio           = models.DateTimeField()
     fecha_de_modificacion_cambio  = models.DateTimeField()

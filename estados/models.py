@@ -29,6 +29,22 @@ class Estados(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+@receiver(post_save, sender=Estados)
+def create_estado_history(sender, instance, created, **kwargs):
+    from estados_history.models import Estados_History
+    user = get_current_user()  
+    Estados_History.objects.create(
+        estado                       = instance,
+        changed_by                   = user,
+        nombre_cambio                = instance.nombre,
+        color_hex_cambio             = instance.color_hex,
+        descripcion_cambio           = instance.descripcion,
+        creado_en_cambio             = instance.creado_en,
+        actualizado_en_cambio        = instance.actualizado_en,
+        eliminado_cambio             = instance.eliminado
+    )
+
 
 
 
