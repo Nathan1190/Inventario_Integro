@@ -59,7 +59,6 @@ class Empleados(models.Model):
         validators=[regex_contacto, max120]
     )
 
-    # NUEVOS CAMPOS:
     correo_inst = models.CharField(
         "Correo institucional",
         max_length=100,
@@ -84,37 +83,25 @@ class Empleados(models.Model):
         return f"{self.codigo_empleado} - {self.nombre}"
 
     def clean(self):
-        # Este método se llama antes de save() y durante form.is_valid()
-        # Normaliza los campos de texto:
-        # - nombre, cargo y dependencia ya se manejan en mayúsculas
-        # - contacto se deja tal cual (números)
-        # - correo_inst: minúsculas
-        # - codigo_empleado: sin espacios
         super_clean = super().clean() if hasattr(super(), 'clean') else None
 
-        # Nombre, cargo y dependencia a mayúsculas
         for field in ['nombre']:
             val = getattr(self, field, '')
             if isinstance(val, str):
                 setattr(self, field, val.strip().upper())
 
-        # Correo institucional a minúsculas y sin espacios
         if isinstance(self.correo_inst, str):
             self.correo_inst = self.correo_inst.strip().lower()
 
-        # Código de empleado: sólo dígitos, sin espacios
         if isinstance(self.codigo_empleado, str):
             self.codigo_empleado = self.codigo_empleado.strip()
 
-        # Contacto: ya validado por el RegexValidator; no necesita mayúsculas
-        # Eliminar posibles espacios extra
         if isinstance(self.contacto, str):
             self.contacto = self.contacto.strip()
 
         return super_clean
 
     def save(self, *args, **kwargs):
-        # Asegurarse de limpiar antes de guardar
         self.clean()
         super().save(*args, **kwargs)
 

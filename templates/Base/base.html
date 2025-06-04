@@ -164,13 +164,27 @@
         <div id="collapsePages" class="collapse" data-bs-parent="#accordionSidebar">
           <div class="bg-white collapse-inner rounded ">
             <h6 class="collapse-header">Paginas:</h6>
+            {% if request.user|has_pantalla:'0000' %}
             <a class="collapse-item" href="{% url 'roles:home_roles' %}">Roles</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0002' %}
             <a class="collapse-item" href="{% url 'empleados:home_empleados' %}">Empleados</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0004' %}
             <a class="collapse-item" href="{% url 'cargos:home_cargos' %}">Cargos</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0005' %}
             <a class="collapse-item" href="{% url 'dependencias:home_dependencias' %}">Dependencias</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0006' %}
             <a class="collapse-item" href="{% url 'ubicaciones:home_ubicaciones' %}">Ubicaciones</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0009' %}
             <a class="collapse-item" href="{% url 'estados:home_estados' %}">Estados</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0010' %}
             <a class="collapse-item" href="{% url 'proveedores:home_proveedores' %}">Proveedores</a>
+            {% endif %}
           </div>
         </div>
       </li>
@@ -186,12 +200,24 @@
         <div id="collapsePages2" class="collapse" data-bs-parent="#accordionSidebar">
           <div class="bg-white collapse-inner rounded ">
             <h6 class="collapse-header">Historiales:</h6>
+            {% if request.user|has_pantalla:'0001' %}
             <a class="collapse-item" href="{% url 'roles_history:home_roles_history' %}">Historial de Roles</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0003' %}
             <a class="collapse-item" href="{% url 'empleados_history:home_empleados_history' %}">Historial de Empleados</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0007' %}
             <a class="collapse-item" href="{% url 'cargos_history:home_cargos_history' %}">Historial de Cargos</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0008' %}
             <a class="collapse-item" href="{% url 'dependencias_history:home_dependencias_history' %}">Historial de Dependencias</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0010' %}
             <a class="collapse-item" href="{% url 'estados_history:home_estados_history' %}">Historial de Estados</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0011' %}
             <a class="collapse-item" href="{% url 'proveedores_history:home_proveedores_history' %}">Historial de Proveedores</a>
+            {% endif %}
           </div>
         </div>
       </li>
