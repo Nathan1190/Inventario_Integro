@@ -57,11 +57,11 @@ def create_cargo_history(sender, instance, created, **kwargs):
     from cargos_history.models import Cargos_History
     user = get_current_user()
     Cargos_History.objects.create(
-        cargo=instance,
-        changed_by=user,
-        nombre_cambio=instance.nombre,
-        descripcion_cambio=instance.descripcion,
-        eliminado_cambio=instance.eliminado,
-        creado_fecha_cambio=instance.creado_fecha,
-        fecha_de_modificacion_cambio=instance.fecha_de_modificacion,
+        cargo                        = instance,
+        changed_by                   = user,
+        nombre_cambio                = instance.nombre,
+        descripcion_cambio           = instance.descripcion,
+        eliminado_cambio             = instance.eliminado,
+        creado_fecha_cambio          = instance.creado_fecha,
+        fecha_de_modificacion_cambio = instance.fecha_de_modificacion,
     )

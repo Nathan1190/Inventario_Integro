@@ -45,6 +45,9 @@ urlpatterns = [
     
     path('proveedores/',include('proveedores.urls', namespace='proveedores')),
 
+    path('categorias/',include('categorias.urls', namespace='categorias')),
+
+
 
 
 
@@ -59,4 +62,6 @@ urlpatterns = [
     path('estados_history/',include('estados_history.urls', namespace='estados_history')),
 
     path('proveedores_history/',include('proveedores_history.urls', namespace='proveedores_history')),
+
+    path('categorias_history/',include('categorias_history.urls', namespace='categorias_history')),
 ]
