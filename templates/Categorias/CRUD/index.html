@@ -1,4 +1,4 @@
-{% extends 'base\base.html' %}
+{% extends 'base\\base.html' %}
 
 {% block estilos %}
 
@@ -14,6 +14,10 @@
             <a href="{% url 'categorias:categorias_create' %}" class="btn btn-success">
                 <i class="bi bi-person-add"></i>
                 Agregar Categorias
+            </a>
+            <a href="#" id="export-pdf" class="btn btn-danger">
+                <i class="bi bi-file-earmark-pdf"></i>
+                PDF
             </a>
             <hr>
         </div>
@@ -31,49 +35,57 @@
     Columnas
   </button>
   <ul class="dropdown-menu" aria-labelledby="columnDropdown">
-    <li>
+    <li style="display: none;">
       <div class="form-check dropdown-item">
-        <input class="form-check-input toggle-col" type="checkbox" data-col="0" id="col-0" >
-        <label class="form-check-label" for="col-0">ID</label>
+        <input class="form-check-input" type="checkbox" data-col="0" id="col-0" checked>
+        <label class="form-check-label" for="col-0">checkbox</label>
       </div>
     </li>
     <li>
-      <li>
       <div class="form-check dropdown-item">
-        <input class="form-check-input toggle-col" type="checkbox" data-col="1" id="col-1">
-        <label class="form-check-label" for="col-1">Nombre</label>
+        <input class="form-check-input toggle-col" type="checkbox" data-col="1" id="col-1" >
+        <label class="form-check-label" for="col-1">ID</label>
       </div>
     </li>
+    <li>
       <div class="form-check dropdown-item">
         <input class="form-check-input toggle-col" type="checkbox" data-col="2" id="col-2">
-        <label class="form-check-label" for="col-2">Descripcion</label>
+        <label class="form-check-label" for="col-2">Nombre</label>
       </div>
     </li>
-          <div class="form-check dropdown-item">
+    <li>
+      <div class="form-check dropdown-item">
         <input class="form-check-input toggle-col" type="checkbox" data-col="3" id="col-3">
-        <label class="form-check-label" for="col-3">Creado</label>
+        <label class="form-check-label" for="col-3">Descripcion</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
-        <input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4" >
-        <label class="form-check-label" for="col-4">Modificado</label>
+        <input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4">
+        <label class="form-check-label" for="col-4">Creado</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
-        <input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5">
-        <label class="form-check-label" for="col-5">Acciones</label>
+        <input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5" >
+        <label class="form-check-label" for="col-5">Modificado</label>
+      </div>
+    </li>
+    <li>
+      <div class="form-check dropdown-item">
+        <input class="form-check-input toggle-col" type="checkbox" data-col="6" id="col-6">
+        <label class="form-check-label" for="col-6">Acciones</label>
       </div>
     </li>
   </ul>
 </div>
 
 
-<table id="dataTable" class="table table-striped" style="width:100%"> 
+<table id="dataTable" class="table table-striped" style="width:100%">
 
         <thead>
             <tr>
+                <th><input type="checkbox" id="select-all"></th>
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Descripcion</th>
@@ -83,8 +95,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for categorias in Categorias %}   
-            <tr>
+        {% for categorias in Categorias %}
+            <tr data-id="{{ categorias.id }}">
+                <td><input type="checkbox" class="row-select"></td>
                 <td>{{categorias.id}}</td>
                 <td>{{categorias.nombre}}</td>
                 <td>{{categorias.descripcion}}</td>
@@ -93,15 +106,15 @@
                 <td>
                     <a href="{% url 'categorias:categorias_edit' categorias.id %}" class="btn btn-primary">
                         <i class="bi bi-pencil-square"> Modificar </i>
-                        
+
                     </a>
                     <a href="{% url 'categorias:categorias_delete' categorias.id %}" class="btn btn-danger">
                         <i class="bi bi-trash"> Eliminar</i>
-                        
+
                     </a>
                 </td>
             </tr>
-        {% endfor %}   
+        {% endfor %}
         </tbody>
     </table>
 </div>
@@ -109,8 +122,6 @@
 
 {% load static %}
 <script src="{% static '/base/vendor/jquery/jquery.js' %}"></script>
-
-
 
 <script>
   $(document).ready(function() {
@@ -141,7 +152,8 @@
         }
       },
       columnDefs: [
-        { targets: [0, 3, 4], visible: false } // columnas ocultas al inicio
+        { orderable: false, searchable: false, targets: 0 },
+        { targets: [1, 4, 5], visible: false } // columnas ocultas al inicio
       ]
     });
     // Inicializa checkboxes según visibilidad
@@ -152,6 +164,44 @@
     // Al cambiar un checkbox, oculta o muestra la columna
     $('.toggle-col').on('change', function(){
       table.column($(this).data('col')).visible(this.checked);
+    });
+
+    $('#select-all').on('change', function(){
+      $('.row-select').prop('checked', this.checked);
+    });
+
+    $('#export-pdf').on('click', function(e){
+      e.preventDefault();
+      var cols = [];
+      $('.toggle-col').each(function(){
+        var idx = $(this).data('col');
+        if (idx <= 7 && $(this).prop('checked')) {
+          cols.push(idx);
+        }
+      });
+
+      var ids = [];
+      table.rows({ search: 'applied' }).every(function(){
+        var $row = $(this.node());
+        if ($row.find('.row-select').prop('checked')) {
+          ids.push($row.data('id'));
+        }
+      });
+      if (!ids.length) {
+        table.rows({ search: 'applied' }).every(function(){
+          ids.push($(this.node()).data('id'));
+        });
+      }
+
+      var params = [];
+      if (cols.length) params.push('cols=' + cols.join(','));
+      if (ids.length) params.push('ids=' + ids.join(','));
+
+      var url = "{% url 'categorias:categorias_pdf' %}";
+      if (params.length) {
+        url += '?' + params.join('&');
+      }
+      window.location.href = url;
     });
   });
 </script>
