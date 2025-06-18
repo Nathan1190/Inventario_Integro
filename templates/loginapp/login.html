@@ -1,3 +1,4 @@
+{% load static %}
 <style>
 /* --- Fondo con imagen y overlay oscura --- */
 body {
@@ -7,7 +8,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  background: url("static/assets/img/Fondo.png") no-repeat center center fixed;
   position: relative;
   font-family: sans-serif;
 }
@@ -16,8 +17,11 @@ body {
 body::before {
   content: "";
   position: absolute;
+  min-width: 100vw;
+  min-height: 100vh;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: url("../../static/assets/img/Fondo.png") no-repeat;
+  background-size: cover;
   z-index: 0;
 }
 

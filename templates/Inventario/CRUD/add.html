@@ -1,0 +1,161 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+
+<!-- CDN CSS de intl-tel-input -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"
+/>
+<div class="card mb-4">
+    <h5 class="card-header bg-gradient-success text-white">
+        Crear Nuevo Bien Nacional
+    </h5>
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+                <div class="form-group mb-3">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="input-group">
+                        {{ field }}
+                        {% if field.name == 'compania' %}
+                            <button class="btn btn-outline-primary btn-sm ms-2" type="button" data-bs-toggle="modal" data-bs-target="#modalCompania">
+                                + Agregar compañía
+                            </button>
+                        {% elif field.name == 'manufacturera' %}
+                            <button class="btn btn-outline-primary btn-sm ms-2" type="button" data-bs-toggle="modal" data-bs-target="#modalManufacturera">
+                                + Agregar manufacturera
+                            </button>
+                        {% elif field.name == 'fabricante' %}
+                            <button class="btn btn-outline-primary btn-sm ms-2" type="button" data-bs-toggle="modal" data-bs-target="#modalFabricante">
+                                + Agregar fabricante
+                            </button>
+                        {% endif %}
+                    </div>
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="text-danger">{{ field.errors }}</div>
+                    {% endif %}
+                    {% if field.name == 'imagen' %}
+                        <div class="form-text text-info">La imagen debe ser jpg, jpeg, png o webp y no debe superar los 2MB.</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+        <a href="{% url 'inventario:home_bienesnacionales' %}" class="btn btn-danger mt-3">Cancelar</a>
+
+        <!-- Modal para agregar Compañía -->
+        <div class="modal fade" id="modalCompania" tabindex="-1" aria-labelledby="modalCompaniaLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCompaniaLabel">Agregar Compañía</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ compania_form.as_p }}
+                            <button type="submit" name="crear_compania" class="btn btn-success btn-sm">Guardar compañía</button>
+                        </form>
+                        {% if compania_added %}
+                            <div class="alert alert-success mt-2">¡Compañía creada! Selecciónala en el formulario.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para agregar Manufacturera -->
+        <div class="modal fade" id="modalManufacturera" tabindex="-1" aria-labelledby="modalManufactureraLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalManufactureraLabel">Agregar Manufacturera</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ manufacturera_form.as_p }}
+                            <button type="submit" name="crear_manufacturera" class="btn btn-success btn-sm">Guardar manufacturera</button>
+                        </form>
+                        {% if manufacturera_added %}
+                            <div class="alert alert-success mt-2">¡Manufacturera creada! Selecciónala en el formulario.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para agregar Fabricante -->
+        <div class="modal fade" id="modalFabricante" tabindex="-1" aria-labelledby="modalFabricanteLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalFabricanteLabel">Agregar Fabricante</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ fabricante_form.as_p }}
+                            <button type="submit" name="crear_fabricante" class="btn btn-success btn-sm">Guardar fabricante</button>
+                        </form>
+                        {% if fabricante_added %}
+                            <div class="alert alert-success mt-2">¡Fabricante creado! Selecciónalo en el formulario.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function(){
+                $('.select2').select2({
+                    theme: 'classic',
+                    width: '100%',
+                    placeholder: 'Selecciona una opción',
+                    allowClear: true
+                });
+            });
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function(){
+                const input = document.querySelector('#id_telefono');
+                if (!input) return;
+                const iti = window.intlTelInput(input, {
+                    initialCountry: 'hn',
+                    separateDialCode: true,
+                    utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js'
+                });
+                input.form.addEventListener('submit', () => {
+                    input.value = iti.getNumber();
+                });
+            });
+        </script>
+        {% block javascript %}
+            {{ block.super }}
+            <script>
+                $(document).ready(function() {
+                    $('select.dual-listbox').bootstrapDualListbox({
+                        nonSelectedListLabel: 'Disponibles',
+                        selectedListLabel:    'Seleccionados',
+                        preserveSelectionOnMove: true,
+                        moveOnSelect: false,
+                        filterPlaceHolder: 'Buscar…',
+                        infoTextEmpty: 'Nada disponible',
+                        infoText: 'Mostrando {0}',
+                    });
+                });
+            </script>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

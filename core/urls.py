@@ -21,6 +21,8 @@ from . import views
 from .views import *
 from .views import HomeView
 from django.views.generic import RedirectView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -47,6 +49,10 @@ urlpatterns = [
 
     path('categorias/',include('categorias.urls', namespace='categorias')),
 
+    path('inventario/',include('inventario.urls', namespace='inventario')),
+
+    path('subcategorias/',include('subcategorias.urls', namespace='subcategorias')),
+
 
 
 
@@ -64,4 +70,7 @@ urlpatterns = [
     path('proveedores_history/',include('proveedores_history.urls', namespace='proveedores_history')),
 
     path('categorias_history/',include('categorias_history.urls', namespace='categorias_history')),
-]
+
+    path('subcategorias_history/',include('subcategorias_history.urls', namespace='subcategorias_history')),
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

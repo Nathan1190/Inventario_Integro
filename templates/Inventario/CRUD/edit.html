@@ -1,0 +1,47 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+<div class="card mb-4">
+    <h5 class="card-header bg-gradient-primary text-white">
+        Editar Bien Nacional: {{ form.instance.nombre_bien }}
+    </h5>
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+                <div class="form-group mb-3">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="input-group">
+                        {{ field }}
+                        {% if field.name == 'compania' %}
+                            <a href="{% url 'manufacturera_create' %}" target="_blank" class="btn btn-outline-primary btn-sm ms-2">+ Agregar compañía</a>
+                        {% elif field.name == 'manufacturera' %}
+                            <a href="{% url 'manufacturera_create' %}" target="_blank" class="btn btn-outline-primary btn-sm ms-2">+ Agregar manufacturera</a>
+                        {% elif field.name == 'fabricante' %}
+                            <a href="{% url 'fabricante_create' %}" target="_blank" class="btn btn-outline-primary btn-sm ms-2">+ Agregar fabricante</a>
+                        {% endif %}
+                    </div>
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="text-danger">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                    {% if field.name == 'imagen' %}
+                        <div class="form-text text-info">La imagen debe ser jpg, jpeg, png o webp y no debe superar los 2MB.</div>
+                        {% if form.instance.imagen %}
+                            <div class="mt-2">
+                                <span class="fw-bold">Imagen actual:</span><br>
+                                <img src="{{ form.instance.imagen.url }}" alt="Imagen actual" style="max-width: 100px; max-height: 100px;">
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        </form>
+        <a href="{% url 'inventario:home_bienes' %}" class="btn btn-danger mt-3">Cancelar</a>
+    </div>
+</div>
+{% endblock %}

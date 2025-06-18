@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, shrink-to-fit=yes">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -31,6 +31,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css"
       rel="stylesheet"
     />
+    
 
     
 
@@ -43,7 +44,7 @@
     <style>
       body {
         background: linear-gradient(165deg,rgba(42, 123, 155, 1) 0%, rgba(0, 31, 100, 1) 50%, rgba(0, 4, 57, 1) 100%);
-        color: #e0e0e0;
+        
       }
       /* Sidebar */
       .navbar-nav.sidebar {
@@ -90,6 +91,9 @@
       }
       /* Footer and scroll */
       .sticky-footer.bg-white {
+        display: grid;
+        min-height: 100dvh;
+        grid-template-rows: auto 1fr auto;
         background-color: #343a40 !important;
         
       }
@@ -100,6 +104,7 @@
       .modal-content {
         background-color: #1e1e1e;
         color: #e0e0e0;
+        grid-template-rows: auto 1fr auto;
       }
       
       /* Icon Color */
@@ -188,6 +193,12 @@
             {% if request.user|has_pantalla:'0012' %}
             <a class="collapse-item" href="{% url 'categorias:home_categorias' %}">Categorias</a>
             {% endif %}
+            {% if request.user|has_pantalla:'0014' %}
+            <a class="collapse-item" href="{% url 'inventario:home_bienesnacionales' %}">Bienes Nacionales</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0016' %}
+            <a class="collapse-item" href="{% url 'subcategorias:home_subcategorias' %}">Sub Categorias</a>
+            {% endif %}
             
           </div>
         </div>
@@ -216,7 +227,7 @@
             {% if request.user|has_pantalla:'0008' %}
             <a class="collapse-item" href="{% url 'dependencias_history:home_dependencias_history' %}">Historial de Dependencias</a>
             {% endif %}
-            {% if request.user|has_pantalla:'0010' %}
+            {% if request.user|has_pantalla:'0015' %}
             <a class="collapse-item" href="{% url 'estados_history:home_estados_history' %}">Historial de Estados</a>
             {% endif %}
             {% if request.user|has_pantalla:'0011' %}
@@ -224,6 +235,9 @@
             {% endif %}
             {% if request.user|has_pantalla:'0013' %}
             <a class="collapse-item" href="{% url 'categorias_history:home_categorias_history' %}">Historial de Categorias</a>
+            {% endif %}
+            {% if request.user|has_pantalla:'0017' %}
+            <a class="collapse-item" href="{% url 'subcategorias_history:home_subcategorias_history' %}">Historial de Sub Categorias</a>
             {% endif %}
           </div>
         </div>
@@ -238,11 +252,11 @@
     {% endblock %}
 
     {% block topbar %}
-
     <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content-wrapper" class="d-flex flex-column" style="">
 
       <!-- Main Content -->
+       
       <div id="content" style="">
 
         <!-- Topbar -->
@@ -255,7 +269,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
                 
-                <span class="me-2 d-none d-lg-inline  small ">{{ user.username }}</span>
+                <span class="me-2 d-none d-lg-inline small ">{{ user.username }}</span>
                 <i class="bi bi-person-circle menu-icon text-dark"></i>
               </a>
               <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in">
@@ -276,6 +290,7 @@
       {% endblock %}
 
       <!-- Begin Page Content - contenido de la pantalla principal -->
+       <div id="content-wrapper" class="card-body d-flex flex-column">
       <div class="container-fluid">
 
         {% block contenido %}
@@ -297,18 +312,12 @@
     <!-- End of Main Content -->
 
     <!-- Footer -->
-    <footer class="sticky-footer bg-dark text-light">
-      <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-          <span>Copyright &copy; UFTF {{ now|date:"Y" }}</span>
-        </div>
-      </div>
-    </footer>
+    
     <!-- End of Footer -->
 
   </div>
   <!-- End of Content Wrapper -->
-
+  
   </div>
   <!-- End of Page Wrapper -->
 
@@ -347,6 +356,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap4-duallistbox/4.0.2/jquery.bootstrap-duallistbox.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+
 
     
 

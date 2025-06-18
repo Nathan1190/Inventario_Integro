@@ -1,0 +1,319 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+<div class="card">
+    <h5 class="card-header card text-center text-white bg-gradient-success mb-1">INVENTARIO GENERAL</h5>
+    <div class="card-body">
+        <div>
+            <a href="{% url 'inventario:biennacional_create' %}" class="btn btn-success">
+                <i class="bi bi-person-add"></i>
+                Agregar Bien
+            </a>
+            <a href="#" id="export-pdf" class="btn btn-danger">
+                <i class="bi bi-file-earmark-pdf"></i>
+                PDF
+            </a>
+            <div class="modal fade" id="pdfExportModal" tabindex="-1" aria-labelledby="pdfExportModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="pdfExportModalLabel">Exportar PDF</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <p>¿En qué formato deseas exportar el PDF?</p>
+                            <button type="button" class="btn btn-outline-primary me-2" id="pdf-vertical">Carta (Vertical)</button>
+                            <div id="pdf-export-error" style="display:none; color: red; font-weight: bold; margin-top: 10px;"></div>
+                            <button type="button" class="btn btn-outline-secondary" id="pdf-horizontal">Horizontal (Apaisado)</button>
+                            <div id="pdf-export-error" style="display:none; color: red; font-weight: bold; margin-top: 10px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="table table-striped"></div>
+        <div class="dropdown mb-3 text-right">
+            <button 
+                class="btn btn-secondary dropdown-toggle" 
+                type="button" 
+                id="columnDropdown" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false">
+                Columnas
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="columnDropdown">
+                <li style="display: none;">
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input" type="checkbox" data-col="0" id="col-0" checked>
+                        <label class="form-check-label" for="col-0">checkbox</label>
+                    </div>
+                </li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="1" id="col-1"><label class="form-check-label" for="col-1">ID</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="2" id="col-2"><label class="form-check-label" for="col-2">Imagen</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="3" id="col-3"><label class="form-check-label" for="col-3">Numero de Inventario</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4"><label class="form-check-label" for="col-4">Nombre del Bien</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5"><label class="form-check-label" for="col-5">Categoría</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="6" id="col-6"><label class="form-check-label" for="col-6">Subcategoría</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="7" id="col-7"><label class="form-check-label" for="col-7">Compañía</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="8" id="col-8"><label class="form-check-label" for="col-8">Manufacturera</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="9" id="col-9"><label class="form-check-label" for="col-9">Fabricante</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10"><label class="form-check-label" for="col-10">Proveedor</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="11" id="col-11"><label class="form-check-label" for="col-11">Serial</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="12" id="col-12"><label class="form-check-label" for="col-12">Unidad de Medida</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="13" id="col-13"><label class="form-check-label" for="col-13">Modelo</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="14" id="col-14"><label class="form-check-label" for="col-14">Ubicación</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="15" id="col-15"><label class="form-check-label" for="col-15">Estado</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="16" id="col-16"><label class="form-check-label" for="col-16">Total</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="17" id="col-17"><label class="form-check-label" for="col-17">Disponible</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="18" id="col-18"><label class="form-check-label" for="col-18">Cantidad Mínima</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="19" id="col-19"><label class="form-check-label" for="col-19">Numero de la Orden</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="20" id="col-20"><label class="form-check-label" for="col-20">Numero de Factura</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="21" id="col-21"><label class="form-check-label" for="col-21">Responsable del bien</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="22" id="col-22"><label class="form-check-label" for="col-22">Costo de Compra</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="23" id="col-23"><label class="form-check-label" for="col-23">Fecha de Compra</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="24" id="col-24"><label class="form-check-label" for="col-24">Notas</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="25" id="col-25"><label class="form-check-label" for="col-25">Fecha de Creacion</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="26" id="col-26"><label class="form-check-label" for="col-26">Fecha de Modificacion</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="27" id="col-27"><label class="form-check-label" for="col-27">Acciones</label></div></li>
+            </ul>
+        </div>
+        <div style="overflow-x:auto; width:100%;">
+            <table id="dataTable" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="select-all"></th>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Numero de Inventario</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Subcategoría</th>
+                        <th>Compañía</th>
+                        <th>Manufacturera</th>
+                        <th>Fabricante</th>
+                        <th>Proveedor</th>
+                        <th>Serial</th>
+                        <th>Unidad de Medida</th>
+                        <th>Modelo</th>
+                        <th>Ubicación</th>
+                        <th>Estado</th>
+                        <th>Total</th>
+                        <th>Disponible</th>
+                        <th>Cantidad Mínima</th>
+                        <th>Numero de Orden</th>
+                        <th>Numero de Factura</th>
+                        <th>Responsable</th>
+                        <th>Costo de Compra</th>
+                        <th>Fecha de Compra</th>
+                        <th>Notas</th>
+                        <th>Fecha de Creacion</th>
+                        <th>Fecha de Modificacion</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bien in Bienes %}
+                    <tr data-id="{{ bien.id }}">
+                        <td><input type="checkbox" class="row-select"></td>
+                        <td>{{ bien.id }}</td>
+                        <td>
+                            {% if bien.imagen_url %}
+                                <img src="{{ bien.imagen_url }}" alt="Imagen" style="max-width: 70px; max-height: 70px;">
+                            {% else %}
+                                <span class="text-muted">Sin imagen</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ bien.numero_inventario }}</td>
+                        <td>{{ bien.nombre_bien }}</td>
+                        <td>{{ bien.categoria_nombre }}</td>
+                        <td>
+                            {% if bien.subcategoria_nombre %}
+                                {{ bien.subcategoria_nombre }}
+                            {% else %}
+                                <span class="text-muted">Sin subcategoría</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ bien.compania_nombre  }}</td>
+                        <td>{{ bien.manufacturera_nombre }}</td>
+                        <td>{{ bien.fabricante_nombre }}</td>
+                        <td>{{ bien.proveedor }}</td>
+                        <td>{{ bien.serial }}</td>
+                        <td>{{ bien.unidad_medida }}</td>
+                        <td>{{ bien.numero_modelo }}</td>
+                        <td>{{ bien.ubicacion }}</td>
+                        <td>
+                            {% for estado in bien.estado_fisico.all %}
+                                <span class="badge" style="background:{{ estado.color_hex|default:'#666' }}; color:#fff;">
+                                {{ bien.estado_fisico }}
+                                </span>
+                            {% empty %}
+                                <span class="text-muted">Sin estado</span>
+                            {% endfor %}
+                        </td>
+                        <td>{{ bien.total }}</td>
+                        <td>{{ bien.disponibles }}</td>
+                        <td>{{ bien.cantidad_minima }}</td>
+                        <td>{{ bien.numero_orden }}</td>
+                        <td>{{ bien.numero_factura }}</td>
+                        <td>{% if bien.responsable %}{{ bien.responsable }}{% else %}<span class="text-muted">No asignado</span>{% endif %}</td>
+                        <td>
+                            {% if bien.costo_compra %}
+                                L. {{ bien.costo_compra|floatformat:2 }}
+                            {% else %}
+                                <span class="text-muted">No especificado</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ bien.fecha_compra|date:"d/m/Y" }}</td>
+                        <td>{{ bien.notas|date:"d/m/Y" }}</td>
+                        <td>{{ bien.creado|date:"d/m/Y" }}</td>
+                        <td>{{ bien.modificado|date:"d/m/Y" }}</td>
+                        <td>
+                            <a href="" class="btn btn-primary btn-sm" title="Editar">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a href="" class="btn btn-danger btn-sm" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+        </div>
+    </div>
+</div>
+
+{% load static %}
+<script src="{% static '/base/vendor/jquery/jquery.js' %}"></script>
+<script>
+$(document).ready(function() {
+    var table = $('#dataTable').DataTable({
+        language: {
+            decimal:        "",
+            emptyTable:     "No hay datos disponibles",
+            info:           "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            infoEmpty:      "Mostrando 0 a 0 de 0 registros",
+            infoFiltered:   "(filtrado de _MAX_ registros totales)",
+            lengthMenu:     "Mostrar _MENU_ registros",
+            loadingRecords: "Cargando...",
+            processing:     "Procesando...",
+            search:         "Buscar:",
+            zeroRecords:    "No se encontraron registros",
+            paginate: {
+                first:    "Primero",
+                last:     "Último",
+                next:     "Siguiente",
+                previous: "Anterior"
+            },
+            aria: {
+                sortAscending:  ": activar orden ascendente",
+                sortDescending: ": activar orden descendente"
+            },
+            buttons: {
+                colvis: "Columnas"
+            }
+        },
+        columnDefs: [
+            { orderable: false, searchable: false, targets: 0 },
+            { targets: [1, 3, 8, 10, 11, 12, 13, 14, 19, 21, 23, 24, 25, 26], visible: false } // Ajusta los targets después de insertar la nueva columna
+        ]
+    });
+    // Inicializa checkboxes según visibilidad
+    $('.toggle-col').each(function(){
+        var idx = $(this).data('col');
+        $(this).prop('checked', table.column(idx).visible());
+    });
+    // Al cambiar un checkbox, oculta o muestra la columna
+    $('.toggle-col').on('change', function(){
+        table.column($(this).data('col')).visible(this.checked);
+    });
+
+    $('#select-all').on('change', function(){
+        $('.row-select').prop('checked', this.checked);
+    });
+
+    $('#export-pdf').on('click', function(e){
+        e.preventDefault();
+        var cols = [];
+        $('.toggle-col').each(function(){
+            var idx = $(this).data('col');
+            if (idx <= 27 && $(this).prop('checked')) {
+                cols.push(idx);
+            }
+        });
+
+        window.selectedPdfCols = cols;
+        window.selectedPdfIds = [];
+        table.rows({ search: 'applied' }).every(function(){
+            var $row = $(this.node());
+            if ($row.find('.row-select').prop('checked')) {
+                window.selectedPdfIds.push($row.data('id'));
+            }
+        });
+        if (!window.selectedPdfIds.length) {
+            table.rows({ search: 'applied' }).every(function(){
+                window.selectedPdfIds.push($(this.node()).data('id'));
+            });
+        }
+        // Abre el modal
+        var modal = new bootstrap.Modal(document.getElementById('pdfExportModal'));
+        modal.show();
+
+        $('#pdf-vertical').on('click', function(){
+            // VALIDACIÓN: máximo 7 columnas
+            if (cols.length > 7) {
+                $('#pdf-export-error')
+                    .text('Solo puedes exportar un máximo de 7 columnas al PDF. Reduce la selección.')
+                    .show();
+                setTimeout(function() { $('#pdf-export-error').fadeOut(); }, 4000);
+                return;
+            }
+            $('#pdf-export-error').hide();
+            exportarPDFvertical();
+        });
+        $('#pdf-horizontal').on('click', function(){
+            // VALIDACIÓN: máximo 11 columnas
+            if (cols.length > 11) {
+                $('#pdf-export-error')
+                    .text('Solo puedes exportar un máximo de 11 columnas al PDF. Reduce la selección.')
+                    .show();
+                setTimeout(function() { $('#pdf-export-error').fadeOut(); }, 4000);
+                return;
+            }
+            $('#pdf-export-error').hide();
+            exportarPDFhorizontal();
+        });
+
+        function exportarPDFvertical() {
+            var params = [];
+            if (window.selectedPdfCols.length)
+                params.push('cols=' + window.selectedPdfCols.join(','));
+            if (window.selectedPdfIds.length)
+                params.push('ids=' + window.selectedPdfIds.join(','));
+            var url = "{% url 'inventario:inventario_pdfv' %}";
+            if (params.length) {
+                url += '?' + params.join('&');
+            }
+            var modal = bootstrap.Modal.getInstance(document.getElementById('pdfExportModal'));
+            modal.hide();
+            window.location.href = url;
+        }
+        function exportarPDFhorizontal() {
+            var params = [];
+            if (window.selectedPdfCols.length)
+                params.push('cols=' + window.selectedPdfCols.join(','));
+            if (window.selectedPdfIds.length)
+                params.push('ids=' + window.selectedPdfIds.join(','));
+            var url = "{% url 'inventario:inventario_pdfh' %}";
+            if (params.length) {
+                url += '?' + params.join('&');
+            }
+            var modal = bootstrap.Modal.getInstance(document.getElementById('pdfExportModal'));
+            modal.hide();
+            window.location.href = url;
+        }
+    });
+});
+</script>
+{% endblock %}

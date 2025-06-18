@@ -1,6 +1,11 @@
+import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
+from .forms import FormSubcategorias, FormSubcategoriasDELETE
+from .models import Subcategorias
+from roles.mixins import PantallaRequiredMixin
+
 from django.http import HttpResponse
 from django.conf import settings
 from reportlab.lib.pagesizes import letter, landscape
@@ -9,73 +14,25 @@ from reportlab.lib.colors import CMYKColor
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.platypus import Table, TableStyle
 from datetime import datetime
-from .forms import FormCategorias, FormCategoriasDELETE
-from .models import Categorias
-from roles.mixins import PantallaRequiredMixin
-import os
 
-
-class CategoriasList(PantallaRequiredMixin, ListView):
-    template_name = 'Categorias/CRUD/index.html'
-    queryset = Categorias.objects.all().order_by('id')
-    context_object_name = 'Categorias'
-    pantalla_required = '0012'
+class SubcategoriasList(PantallaRequiredMixin, ListView):
+    template_name = 'Subcategorias/CRUD/index.html'
+    queryset = Subcategorias.objects.all().order_by('id')
+    context_object_name = 'Subcategorias'
+    pantalla_required = '0016'  # Cambia este código según tu sistema
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['form'] = FormCategorias()
+        ctx['form'] = FormSubcategorias()
         return ctx
 
     def get_queryset(self):
-        return Categorias.objects.filter(eliminado=False).order_by('id')
-
-
-class CategoriasCreate(PantallaRequiredMixin, CreateView):
-    template_name = 'Categorias/CRUD/add.html'
-    model = Categorias
-    form_class = FormCategorias
-    pantalla_required = '0012'
-    success_url = reverse_lazy('categorias:home_categorias')
-
-    def form_valid(self, form):
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        return render(self.request, self.template_name, {'form': form})
-
-
-class CategoriasEdit(PantallaRequiredMixin, UpdateView):
-    template_name = 'Categorias/CRUD/edit.html'
-    model = Categorias
-    form_class = FormCategorias
-    pantalla_required = '0012'
-    success_url = reverse_lazy('categorias:home_categorias')
-
-    def form_valid(self, form):
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        return render(self.request, self.template_name, {'form': form})
-
-
-class CategoriasDelete(PantallaRequiredMixin, UpdateView):
-    template_name = 'Categorias/CRUD/delete.html'
-    model = Categorias
-    form_class = FormCategoriasDELETE
-    pantalla_required = '0012'
-    success_url = reverse_lazy('categorias:home_categorias')
-
-    def post(self, request, pk):
-        cat = get_object_or_404(Categorias, pk=pk)
-        cat.eliminado = True
-        cat.save()
-        return redirect(self.success_url)
-
-
-def export_categorias_pdf(request):
-    """Exporta categorías a PDF con filtrado de columnas y paginado."""
-    headers = ["ID", "Nombre", "Descripción", "Creado", "Modificado"]
-    fields = ["id", "nombre", "descripcion", "creado_fecha", "fecha_de_modificacion"]
+        return Subcategorias.objects.filter(eliminado=False).order_by('id')
+    
+def export_subcategorias_pdf(request):
+    """Exporta inventareio a PDF con filtrado de columnas y paginado."""
+    headers = ["ID", "Nombre", "Descripcion", "Categoria", "Creado", "Modificado"]
+    fields = ["id", "nombre", "descripcion", "categoria", "creado_fecha", "fecha_de_modificacion"]
 
     cols_param = request.GET.get("cols", "")
     if cols_param:
@@ -87,7 +44,7 @@ def export_categorias_pdf(request):
     else:
         selected = list(range(len(headers)))
 
-    qs = Categorias.objects.filter(eliminado=False).order_by("id")
+    qs = Subcategorias.objects.filter(eliminado=False).order_by("id")
     ids_param = request.GET.get("ids", "")
     if ids_param:
         try:
@@ -101,13 +58,13 @@ def export_categorias_pdf(request):
         row = []
         for i in selected:
             val = getattr(cat, fields[i])
-            if i in (3, 4):
+            if i in (21, 22, 23):
                 val = val.strftime("%Y-%m-%d %H:%M")
             row.append(str(val))
         rows.append(row)
 
     response = HttpResponse(content_type="application/pdf")
-    response["Content-Disposition"] = 'filename="categorias.pdf"'
+    response["Content-Disposition"] = 'filename="inventario.pdf"'
     c = Canvas(response, pagesize=letter)
     width, height = letter
     per_page = 25
@@ -142,7 +99,7 @@ def export_categorias_pdf(request):
 
         user = request.user.get_full_name() or request.user.username
         c.setFont("Helvetica-Bold", 14)
-        c.drawString((width - 150) / 2, height - 160, "Listado de Categorías")
+        c.drawString((width - 150) / 2, height - 160, "Listado de Inventario")
         c.setFont("Helvetica", 10)
         c.drawString((width) / 8 , height - 30, f"Usuario: {user}")
         c.drawString(450, height - 30, f"Fecha: {datetime.now().strftime('%d/%m/%Y')}")
@@ -152,6 +109,7 @@ def export_categorias_pdf(request):
         y = (height - 180) - h
         table.drawOn(c, x, y)
 
+
         c.setFont("Helvetica", 9)
         c.setFillColor(colors.white)
         c.drawCentredString(width / 2, 20, f"Página {page}")
@@ -160,3 +118,42 @@ def export_categorias_pdf(request):
 
     c.save()
     return response
+
+class SubcategoriasCreate(PantallaRequiredMixin, CreateView):
+    template_name = 'Subcategorias/CRUD/add.html'
+    model = Subcategorias
+    form_class = FormSubcategorias
+    pantalla_required = '0016'
+    success_url = reverse_lazy('subcategorias:home_subcategorias')
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'form': form})
+
+class SubcategoriasEdit(PantallaRequiredMixin, UpdateView):
+    template_name = 'Subcategorias/CRUD/edit.html'
+    model = Subcategorias
+    form_class = FormSubcategorias
+    pantalla_required = '0016'
+    success_url = reverse_lazy('subcategorias:home_subcategorias')
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'form': form})
+
+class SubcategoriasDelete(PantallaRequiredMixin, UpdateView):
+    template_name = 'Subcategorias/CRUD/delete.html'
+    model = Subcategorias
+    form_class = FormSubcategoriasDELETE
+    pantalla_required = '0016'
+    success_url = reverse_lazy('subcategorias:home_subcategorias')
+
+    def post(self, request, pk):
+        sub = get_object_or_404(Subcategorias, pk=pk)
+        sub.eliminado = True
+        sub.save()
+        return redirect(self.success_url)

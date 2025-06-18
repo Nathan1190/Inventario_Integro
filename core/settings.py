@@ -15,7 +15,7 @@ from pathlib import Path
 import os
 
 # ① Indícale a Decouple dónde está el archivo:
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ─── Lectura manual denventar .db_pass/db_config.env ───
 conf_path = Path(__file__).resolve().parent / ".env" / "db_config.env"
@@ -73,6 +73,9 @@ INSTALLED_APPS = [
     'proveedores_history',
     'categorias',
     'categorias_history',
+    'inventario',
+    'subcategorias',
+    'subcategorias_history',
 ]
 
 MIDDLEWARE = [
@@ -112,6 +115,8 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 CSS_LOCATION = os.path.join(BASE_DIR,'static')
 
 WSGI_APPLICATION = 'core.wsgi.application'
+
+
 
 
 # Database
@@ -169,8 +174,8 @@ LOGIN_URL        = 'loginapp:login'
 LOGIN_REDIRECT_URL = 'home'    
 LOGOUT_REDIRECT_URL = 'loginapp:login'
 
-MEDIA_ROOT = '/templates/Base/images'
 MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

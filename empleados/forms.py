@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 from django.core.validators import RegexValidator
 
 class FormEmpleados(forms.ModelForm):
-    
 
     class Meta:
         model = Empleados
