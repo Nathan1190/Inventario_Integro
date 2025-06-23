@@ -1,5 +1,5 @@
 from django import forms
-from .models import BienNacional, Manufacturera, Fabricante, Estados, Compania
+from .models import BienNacional, Manufacturera, Fabricante, Estados, Compania, StockBien
 from django.core.exceptions import ValidationError
 from datetime import date
 import re
@@ -75,6 +75,20 @@ class FabricanteForm(forms.ModelForm):
         return nombre.upper()
 
 class BienNacionalForm(forms.ModelForm):
+    cantidad_minima = forms.IntegerField(
+        label="Cantidad mínima para stock",
+        min_value=0,
+        required=False,
+        initial=0,
+        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Cantidad mínima para stock"})
+    )
+    total_bienes = forms.IntegerField(
+        label="Total de Bienes a agregar",
+        min_value=1,
+        required=True,
+        initial=1,
+        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Total de bienes"})
+    )
     estado_fisico = forms.ModelMultipleChoiceField(
         queryset=Estados.objects.all(),
         required=False,
@@ -104,8 +118,6 @@ class BienNacionalForm(forms.ModelForm):
             'serial': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Serial'}),
             'unidad_medida': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de Medida'}),
             'ubicacion': forms.Select(attrs={'class': 'form-control select2'}),
-            'cantidad_minima': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad mínima'}),
-            'total': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Cantidad total de bienes'}),
             'fecha_compra': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'costo_compra': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01', 'placeholder': 'Ej: 2000.00'}),
             'numero_orden': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número de orden'}),
@@ -172,3 +184,4 @@ class BienNacionalForm(forms.ModelForm):
                 self.add_error('cantidad_minima', "La cantidad mínima no puede ser mayor que el total.")
         # Más validaciones cruzadas aquí si las necesitas
         return cleaned
+

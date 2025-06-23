@@ -13,20 +13,24 @@
     <div class="card-body">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+
             {% for field in form.visible_fields %}
                 <div class="form-group mb-3">
                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                     <div class="input-group">
                         {{ field }}
                         {% if field.name == 'compania' %}
+                        <hr>  
                             <button class="btn btn-outline-primary btn-sm ms-2" type="button" data-bs-toggle="modal" data-bs-target="#modalCompania">
                                 + Agregar compañía
                             </button>
                         {% elif field.name == 'manufacturera' %}
-                            <button class="btn btn-outline-primary btn-sm ms-2" type="button" data-bs-toggle="modal" data-bs-target="#modalManufacturera">
+                        <hr>    
+                        <button class="btn btn-outline-primary btn-sm ms-2" type="button" data-bs-toggle="modal" data-bs-target="#modalManufacturera">
                                 + Agregar manufacturera
                             </button>
                         {% elif field.name == 'fabricante' %}
+                        <hr>  
                             <button class="btn btn-outline-primary btn-sm ms-2" type="button" data-bs-toggle="modal" data-bs-target="#modalFabricante">
                                 + Agregar fabricante
                             </button>

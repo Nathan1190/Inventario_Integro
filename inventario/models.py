@@ -8,6 +8,8 @@ from proveedores.models import Proveedores
 from estados.models import Estados          
 from uuid import uuid4
 from django.core.validators import MinLengthValidator, RegexValidator, MinValueValidator, MaxValueValidator, EmailValidator
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 
 class Manufacturera(models.Model):
@@ -62,14 +64,7 @@ class BienNacional(models.Model):
     
     # Ubicación
     ubicacion = models.ForeignKey(Ubicaciones, on_delete=models.SET_NULL, null=True, verbose_name='Ubicación Física')
-    
-    # Control de cantidades
-    cantidad_minima = models.PositiveIntegerField(default=0, verbose_name='Cantidad Mínima', validators=[MinValueValidator(0)])
-    total = models.PositiveIntegerField(default=1, verbose_name='Total')
-    disponibles = models.PositiveIntegerField(default=1, verbose_name='Disponibles')
-    cantidad_restante = models.PositiveIntegerField(default=1, verbose_name='Cantidad de Bien Restante')
-    total_asignado = models.PositiveIntegerField(default=0, verbose_name='Total Asignado')
-    
+
     # Control de compra
     fecha_compra = models.DateField(null=True, blank=True, verbose_name='Fecha de Compra')
     costo_compra = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True, verbose_name='Costo de Compra')
@@ -94,6 +89,42 @@ class BienNacional(models.Model):
         verbose_name_plural = "Bienes Nacionales"
         ordering = ['nombre_bien', 'numero_inventario']
 
+class StockBien(models.Model):
+    nombre_bien    = models.CharField(max_length=100)
+    categoria      = models.ForeignKey(Categorias, on_delete=models.PROTECT)
+    subcategoria   = models.ForeignKey(Subcategorias, on_delete=models.PROTECT, blank=True, null=True)
+    
+    cantidad_minima    = models.PositiveIntegerField(default=0, verbose_name='Cantidad Mínima')
+    cantidad_restante  = models.PositiveIntegerField(default=0, verbose_name='Cantidad Restante')
+    total_asignado     = models.PositiveIntegerField(default=0, verbose_name='Total Asignado')
+
+    class Meta:
+        verbose_name_plural = "Stock de Bienes"
+        unique_together = ('nombre_bien', 'categoria', 'subcategoria')
+        ordering = ["nombre_bien", "categoria", "subcategoria"]
+
+    def __str__(self):
+        return f"{self.nombre_bien} - {self.categoria} - {self.subcategoria or ''}"
+
+@receiver([post_save, post_delete], sender=BienNacional)
+def actualizar_stock_bien(sender, instance, **kwargs):
+    # Busca o crea el stock correspondiente a este grupo de bienes
+    stock, created = StockBien.objects.get_or_create(
+        nombre_bien=instance.nombre_bien,
+        categoria=instance.categoria,
+        subcategoria=instance.subcategoria,
+    )
+    # Cuenta los bienes activos con estos datos
+    total = BienNacional.objects.filter(
+        nombre_bien=instance.nombre_bien,
+        categoria=instance.categoria,
+        subcategoria=instance.subcategoria,
+        eliminado=False,
+    ).count()
+    stock.cantidad_restante = total
+    stock.total_asignado = total
+    # Puedes poner reglas personalizadas para cantidad_minima y total_asignado aquí si lo deseas
+    stock.save()
 
 
 

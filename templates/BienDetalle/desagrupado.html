@@ -1,0 +1,111 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+<div class="card">
+    <h5 class="card-header card text-center text-white bg-gradient-primary mb-1">
+        Bienes: {{ nombre_bien }}
+    </h5>
+    <div class="card-body">
+        <a href="{% url 'inventario:home_bienesnacionales' %}" class="btn btn-secondary mb-3">
+            <i class="bi bi-arrow-left"></i> Volver a inventario agrupado
+        </a>
+        <div style="overflow-x:auto;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Número de Inventario</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Subcategoría</th>
+                        <th>Compañía</th>
+                        <th>Manufacturera</th>
+                        <th>Fabricante</th>
+                        <th>Proveedor</th>
+                        <th>Serial</th>
+                        <th>Modelo</th>
+                        <th>Unidad de Medida</th>
+                        <th>Ubicación</th>
+                        <th>Total</th>
+                        <th>Disponibles</th>
+                        <th>Cantidad Mínima</th>
+                        <th>Cantidad Restante</th>
+                        <th>Total Asignado</th>
+                        <th>Número de Orden</th>
+                        <th>Número de Factura</th>
+                        <th>Costo de Compra</th>
+                        <th>Fecha de Compra</th>
+                        <th>Estado(s)</th>
+                        <th>Responsable</th>
+                        <th>Notas</th>
+                        <th>Creado</th>
+                        <th>Modificado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bien in bienes %}
+                    <tr>
+                        <td>{{ bien.id }}</td>
+                        <td>{{ bien.numero_inventario }}</td>
+                        <td>
+                            {% if bien.imagen_mostrar %}
+                                <img src="{{ bien.imagen_mostrar }}" alt="Imagen" style="max-width: 70px; max-height: 70px;">
+                            {% else %}
+                                <span class="text-muted">Sin imagen</span>
+                            {% endif %}
+                    </td>
+                        <td>{{ bien.nombre_bien }}</td>
+                        <td>{{ bien.categoria }}</td>
+                        <td>{{ bien.subcategoria }}</td>
+                        <td>{{ bien.compania }}</td>
+                        <td>{{ bien.manufacturera }}</td>
+                        <td>{{ bien.fabricante }}</td>
+                        <td>{{ bien.proveedor }}</td>
+                        <td>{{ bien.serial }}</td>
+                        <td>{{ bien.numero_modelo }}</td>
+                        <td>{{ bien.unidad_medida }}</td>
+                        <td>{{ bien.ubicacion }}</td>
+                        <td>{{ bien.total }}</td>
+                        <td>{{ bien.disponibles }}</td>
+                        <td>{{ bien.cantidad_minima }}</td>
+                        <td>{{ bien.cantidad_restante }}</td>
+                        <td>{{ bien.total_asignado }}</td>
+                        <td>{{ bien.numero_orden }}</td>
+                        <td>{{ bien.numero_factura }}</td>
+                        <td>
+                            {% if bien.costo_compra %}
+                                L. {{ bien.costo_compra|floatformat:2 }}
+                            {% else %}
+                                <span class="text-muted">No especificado</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ bien.fecha_compra|date:"d/m/Y" }}</td>
+                        <td>
+                            {% for estado in bien.estado_fisico.all %}
+                                <span class="badge bg-info">{{ estado }}</span>
+                            {% empty %}
+                                <span class="text-muted">Sin estado</span>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% if bien.responsable %}
+                                {{ bien.responsable }}
+                            {% else %}
+                                <span class="text-muted">No asignado</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ bien.notas }}</td>
+                        <td>{{ bien.creado|date:"d/m/Y H:i:s" }}</td>
+                        <td>{{ bien.modificado|date:"d/m/Y H:i:s" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="27" class="text-center">No hay bienes para este criterio.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -53,6 +53,8 @@ urlpatterns = [
 
     path('subcategorias/',include('subcategorias.urls', namespace='subcategorias')),
 
+    path('bien_detalle/',include('bien_detalle.urls', namespace='bien_detalle')),
+
 
 
 
