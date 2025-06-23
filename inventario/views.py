@@ -123,19 +123,19 @@ class BienNacionalList(PantallaRequiredMixin, ListView):
         imagenes = {}
         for grupo in qs:
             clave = (grupo['nombre_bien'], grupo['categoria'], grupo['subcategoria'])
-        if clave not in imagenes:
-            bien_con_imagen = (
-                BienNacional.objects
-                .filter(
-                    eliminado=False,
-                    nombre_bien=grupo['nombre_bien'],
-                    categoria=grupo['categoria'],
-                    subcategoria=grupo['subcategoria'],
+            if clave not in imagenes:
+                bien_con_imagen = (
+                    BienNacional.objects
+                    .filter(
+                        eliminado=False,
+                        nombre_bien=grupo['nombre_bien'],
+                        categoria=grupo['categoria'],
+                        subcategoria=grupo['subcategoria'],
+                    )
+                    .exclude(imagen="")
+                    .exclude(imagen__isnull=True)
+                    .first()
                 )
-                .exclude(imagen="")
-                .exclude(imagen__isnull=True)
-                .first()
-            )
             imagenes[clave] = bien_con_imagen.imagen.url if (bien_con_imagen and bien_con_imagen.imagen) else None
             grupo['imagen_url'] = imagenes[clave]
             stock = StockBien.objects.filter(

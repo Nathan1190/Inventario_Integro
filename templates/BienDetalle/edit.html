@@ -1,0 +1,126 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+
+<div class="card mb-4">
+  <h5 class="card-header bg-gradient-primary text-white">
+    Editar Bien Nacional: {{ form.instance.numero_inventario }}
+  </h5>
+  <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="{{ form.nombre_bien.id_for_label }}">Nombre del Bien:</label>
+          {{ form.nombre_bien }}
+          {% if form.nombre_bien.errors %}
+            <div class="text-danger">{{ form.nombre_bien.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="col-md-4">
+          <label>Número de Inventario:</label>
+          {{ form.numero_inventario }}
+        </div>
+        <div class="col-md-4">
+          <label for="{{ form.serial.id_for_label }}">Serial:</label>
+          {{ form.serial }}
+          {% if form.serial.errors %}
+            <div class="text-danger">{{ form.serial.errors }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="{{ form.categoria.id_for_label }}">Categoría:</label>
+          {{ form.categoria }}
+          {% if form.categoria.errors %}
+            <div class="text-danger">{{ form.categoria.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="col-md-4">
+          <label for="{{ form.subcategoria.id_for_label }}">Subcategoría:</label>
+          {{ form.subcategoria }}
+        </div>
+        <div class="col-md-4">
+          <label for="{{ form.unidad_medida.id_for_label }}">Unidad de Medida:</label>
+          {{ form.unidad_medida }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="{{ form.manufacturera.id_for_label }}">Manufacturera:</label>
+          {{ form.manufacturera }}
+        </div>
+        <div class="col-md-4">
+          <label for="{{ form.fabricante.id_for_label }}">Fabricante:</label>
+          {{ form.fabricante }}
+        </div>
+        <div class="col-md-4">
+          <label for="{{ form.proveedor.id_for_label }}">Proveedor:</label>
+          {{ form.proveedor }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="{{ form.compania.id_for_label }}">Compañía:</label>
+          {{ form.compania }}
+        </div>
+        <div class="col-md-4">
+          <label for="{{ form.ubicacion.id_for_label }}">Ubicación:</label>
+          {{ form.ubicacion }}
+        </div>
+        <div class="col-md-4">
+          <label>Responsable:</label>
+          {{ form.responsable }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="{{ form.fecha_compra.id_for_label }}">Fecha de Compra:</label>
+          {{ form.fecha_compra }}
+        </div>
+        <div class="col-md-4">
+          <label for="{{ form.costo_compra.id_for_label }}">Costo de Compra:</label>
+          {{ form.costo_compra }}
+        </div>
+        <div class="col-md-4">
+          <label for="{{ form.numero_orden.id_for_label }}">Número de Orden:</label>
+          {{ form.numero_orden }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="{{ form.numero_factura.id_for_label }}">Número de Factura:</label>
+          {{ form.numero_factura }}
+        </div>
+        <div class="col-md-4">
+          <label for="{{ form.estado_fisico.id_for_label }}">Estado Físico:</label>
+          {{ form.estado_fisico }}
+        </div>
+        <div class="col-md-4">
+          <label for="{{ form.imagen.id_for_label }}">Imagen:</label><br>
+          {{ form.imagen }}
+          {% if form.instance.imagen %}
+            <img src="{{ form.instance.imagen.url }}" alt="Imagen" class="img-thumbnail mt-2" style="max-width:110px;max-height:110px;">
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="{{ form.notas.id_for_label }}">Notas:</label>
+        {{ form.notas }}
+      </div>
+
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{% url 'bien_detalle:desagrupado' form.instance.nombre_bien form.instance.categoria.id form.instance.subcategoria.id %}" class="btn btn-danger">Cancelar</a>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

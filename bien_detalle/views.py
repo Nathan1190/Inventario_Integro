@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from inventario.models import BienNacional
+from django.shortcuts import render
+from django.views.generic import ListView, UpdateView
+from inventario.models import BienNacional
+from inventario.forms import BienNacionalEditForm
+from django.urls import reverse_lazy
 
 class BienDetalleList(ListView):
     template_name = "BienDetalle/desagrupado.html"
@@ -42,3 +47,43 @@ class BienDetalleList(ListView):
         ctx['bienes'] = bienes
 
         return ctx 
+    
+class BienDetalleEdit(UpdateView):
+    
+    model = BienNacional
+    form_class = BienNacionalEditForm
+    template_name = "BienDetalle/edit.html"
+
+    class Meta:
+        model = BienNacional
+        exclude = [
+            'numero_inventario', 'eliminado', 'creado', 'modificado',
+            'total_asignado', 'cantidad_restante',  # se actualizan automáticos
+        ]
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        if 'total_bienes' in form.fields:
+            del form.fields['total_bienes']
+        if 'cantidad_minima' in form.fields:
+            form.fields['cantidad_minima'].required = False
+        return form
+
+    def get_success_url(self):
+        bien = self.object
+        return reverse_lazy(
+            'bien_detalle:desagrupado',
+            kwargs={
+                'nombre_bien': bien.nombre_bien,
+                'categoria_id': bien.categoria.id,
+                'subcategoria_id': bien.subcategoria.id if bien.subcategoria else 0
+            }
+        )
+    
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print("Errores del formulario:", form.errors)  # Esto imprime los errores en tu consola de Django
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)

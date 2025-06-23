@@ -8,8 +8,9 @@
         <a href="{% url 'inventario:home_bienesnacionales' %}" class="btn btn-secondary mb-3">
             <i class="bi bi-arrow-left"></i> Volver a inventario agrupado
         </a>
+        <!-- Aquí puedes agregar los botones de exportar PDF/Excel y selección de columnas en el futuro -->
         <div style="overflow-x:auto;">
-            <table class="table table-striped">
+            <table id="tablaBienes" class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -26,11 +27,6 @@
                         <th>Modelo</th>
                         <th>Unidad de Medida</th>
                         <th>Ubicación</th>
-                        <th>Total</th>
-                        <th>Disponibles</th>
-                        <th>Cantidad Mínima</th>
-                        <th>Cantidad Restante</th>
-                        <th>Total Asignado</th>
                         <th>Número de Orden</th>
                         <th>Número de Factura</th>
                         <th>Costo de Compra</th>
@@ -40,6 +36,7 @@
                         <th>Notas</th>
                         <th>Creado</th>
                         <th>Modificado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,7 +50,7 @@
                             {% else %}
                                 <span class="text-muted">Sin imagen</span>
                             {% endif %}
-                    </td>
+                        </td>
                         <td>{{ bien.nombre_bien }}</td>
                         <td>{{ bien.categoria }}</td>
                         <td>{{ bien.subcategoria }}</td>
@@ -65,11 +62,6 @@
                         <td>{{ bien.numero_modelo }}</td>
                         <td>{{ bien.unidad_medida }}</td>
                         <td>{{ bien.ubicacion }}</td>
-                        <td>{{ bien.total }}</td>
-                        <td>{{ bien.disponibles }}</td>
-                        <td>{{ bien.cantidad_minima }}</td>
-                        <td>{{ bien.cantidad_restante }}</td>
-                        <td>{{ bien.total_asignado }}</td>
                         <td>{{ bien.numero_orden }}</td>
                         <td>{{ bien.numero_factura }}</td>
                         <td>
@@ -97,10 +89,15 @@
                         <td>{{ bien.notas }}</td>
                         <td>{{ bien.creado|date:"d/m/Y H:i:s" }}</td>
                         <td>{{ bien.modificado|date:"d/m/Y H:i:s" }}</td>
+                        <td>
+                            <a href="{% url 'bien_detalle:editar' bien.id %}" class="btn btn-info btn-sm">
+                                <i class="bi bi-pencil-square"></i> Ver Detalles
+                            </a>
+                        </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="27" class="text-center">No hay bienes para este criterio.</td>
+                        <td colspan="24" class="text-center">No hay bienes para este criterio.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
