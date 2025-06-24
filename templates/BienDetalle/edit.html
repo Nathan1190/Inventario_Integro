@@ -18,10 +18,7 @@
             <div class="text-danger">{{ form.nombre_bien.errors }}</div>
           {% endif %}
         </div>
-        <div class="col-md-4">
-          <label>Número de Inventario:</label>
-          {{ form.numero_inventario }}
-        </div>
+        
         <div class="col-md-4">
           <label for="{{ form.serial.id_for_label }}">Serial:</label>
           {{ form.serial }}
@@ -122,5 +119,30 @@
     </form>
   </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function(){
+                $('.select2').select2({
+                    theme: 'classic',
+                    width: '100%',
+                    placeholder: 'Selecciona una opción',
+                    allowClear: true,
+                    language: {
+                      noResults: function() { return 'No se encontraron resultados'; }
+                    },
+                });
+                $('.select2-multiple').select2({
+                    theme: 'classic',
+                    width: '100%',
+                    placeholder: 'Selecciona una o más opciones',
+                    language: {
+                      noResults: function() { return 'No se encontraron resultados'; }
+                    },
+                    allowClear: true,
+                });
+                
+            });
+        </script>
 
 {% endblock %}

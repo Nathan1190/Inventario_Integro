@@ -121,7 +121,14 @@ def actualizar_stock_bien(sender, instance, **kwargs):
         subcategoria=instance.subcategoria,
         eliminado=False,
     ).count()
-    stock.cantidad_restante = total
+    cantidad_restante = BienNacional.objects.filter(
+        nombre_bien=instance.nombre_bien,
+        categoria=instance.categoria,
+        subcategoria=instance.subcategoria,
+        responsable__isnull=True,
+        eliminado=False,
+    ).count()
+    stock.cantidad_restante = cantidad_restante
     stock.total_asignado = total
     # Puedes poner reglas personalizadas para cantidad_minima y total_asignado aquí si lo deseas
     stock.save()

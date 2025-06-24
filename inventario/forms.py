@@ -204,8 +204,8 @@ class BienNacionalEditForm(forms.ModelForm):
         queryset=Estados.objects.all(),
         required=False,
         widget=forms.SelectMultiple(attrs={
-            'class': 'form-control dual-listbox',
-            'size': 8
+            'class': 'form-control select2-multiple',
+            'size': 8,
         }),
         label='Etiquetas de Estado:'
     )
@@ -214,7 +214,7 @@ class BienNacionalEditForm(forms.ModelForm):
         model = BienNacional
         
         exclude = [
-            'numero_inventario', 'responsable', 'eliminado', 'creado', 'modificado',
+            'numero_inventario', 'eliminado', 'creado', 'modificado',
             'total_asignado', 'cantidad_restante', 'disponibles'
         ]
         widgets = {
@@ -230,6 +230,7 @@ class BienNacionalEditForm(forms.ModelForm):
             'serial': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Serial'}),
             'unidad_medida': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de Medida'}),
             'ubicacion': forms.Select(attrs={'class': 'form-control select2'}),
+            'responsable': forms.Select(attrs={'class': 'form-control select2'}),
             'fecha_compra': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'costo_compra': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01', 'placeholder': 'Ej: 2000.00'}),
             'numero_orden': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número de orden'}),
@@ -245,6 +246,7 @@ class BienNacionalEditForm(forms.ModelForm):
         self.fields['compania'].empty_label = "Seleccione compañía"
         self.fields['manufacturera'].empty_label = "Seleccione manufacturera"
         self.fields['fabricante'].empty_label = "Seleccione fabricante"
+        self.fields['responsable'].empty_label = "Sin responsable"
 
     def clean_nombre_bien(self):
         nombre = self.cleaned_data.get('nombre_bien', '')

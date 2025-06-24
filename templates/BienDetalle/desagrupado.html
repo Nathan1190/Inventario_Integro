@@ -8,8 +8,9 @@
         <a href="{% url 'inventario:home_bienesnacionales' %}" class="btn btn-secondary mb-3">
             <i class="bi bi-arrow-left"></i> Volver a inventario agrupado
         </a>
+        <div class="table table-striped"></div>
         <!-- Aquí puedes agregar los botones de exportar PDF/Excel y selección de columnas en el futuro -->
-        <div style="overflow-x:auto;">
+        <div style="overflow-x:auto; width:100%;">
             <table id="tablaBienes" class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -74,7 +75,8 @@
                         <td>{{ bien.fecha_compra|date:"d/m/Y" }}</td>
                         <td>
                             {% for estado in bien.estado_fisico.all %}
-                                <span class="badge bg-info">{{ estado }}</span>
+                            
+                                <span class="badge" style="background-color: {{ estado.color_hex|default:'#adb5bd' }}; color: white;"> {{ estado }}</span>
                             {% empty %}
                                 <span class="text-muted">Sin estado</span>
                             {% endfor %}
@@ -104,5 +106,44 @@
             </table>
         </div>
     </div>
+    {% load static %}
+<script src="{% static '/base/vendor/jquery/jquery.js' %}"></script>
+<script>
+$(document).ready(function() {
+    var table = $('#tablaBienes').DataTable({
+        language: {
+            decimal:        "",
+            emptyTable:     "No hay datos disponibles",
+            info:           "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            infoEmpty:      "Mostrando 0 a 0 de 0 registros",
+            infoFiltered:   "(filtrado de _MAX_ registros totales)",
+            lengthMenu:     "Mostrar _MENU_ registros",
+            loadingRecords: "Cargando...",
+            processing:     "Procesando...",
+            search:         "Buscar:",
+            zeroRecords:    "No se encontraron registros",
+            paginate: {
+                first:    "Primero",
+                last:     "Último",
+                next:     "Siguiente",
+                previous: "Anterior"
+            },
+            aria: {
+                sortAscending:  ": activar orden ascendente",
+                sortDescending: ": activar orden descendente"
+            },
+            buttons: {
+                colvis: "Columnas"
+            }
+        },
+        columnDefs: [
+            { orderable: false, searchable: false, targets: 0 },
+            { targets: [5, 6], visible: false }, // Ajusta los targets después de insertar la nueva columna
+        ]
+    });
+    });
+</script>
 </div>
+
+
 {% endblock %}
