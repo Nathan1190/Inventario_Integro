@@ -1,38 +1,19 @@
 {% extends 'base/base.html' %}
 {% block contenido %}
-<div class="card">
-    <h5 class="card-header card text-center text-white bg-gradient-success mb-1">INVENTARIO GENERAL</h5>
-    <div class="card-body">
-        <div>
-            <a href="{% url 'inventario:biennacional_create' %}" class="btn btn-success">
+<!-- Aqui -->
+<div class="card shadow">
+    <div class="card-header text-center" style="background-color: #0b3873; color: white;">
+        <span class="fw-bold">INVENTARIO GENERAL</span>
+    </div>
+    <!-- Aqui -->
+    <div class="card-body" style="position: relative;z-index: 0;background: rgba(220, 218, 218, 0.5);border-radius: 10px;backdrop-filter: blur(10px);box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+        <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <!-- AQUI -->
+            <a href="{% url 'inventario:biennacional_create' %}" class="btn btn-outline-primary d-flex align-items-center gap-2">
                 <i class="bi bi-person-add"></i>
                 Agregar Bien
             </a>
-            <!--<a href="#" id="export-pdf" class="btn btn-danger">
-                <i class="bi bi-file-earmark-pdf"></i>
-                PDF
-            </a>
-            <div class="modal fade" id="pdfExportModal" tabindex="-1" aria-labelledby="pdfExportModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="pdfExportModalLabel">Exportar PDF</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            <p>¿En qué formato deseas exportar el PDF?</p>
-                            <button type="button" class="btn btn-outline-primary me-2" id="pdf-vertical">Carta (Vertical)</button>
-                            <div id="pdf-export-error" style="display:none; color: red; font-weight: bold; margin-top: 10px;"></div>
-                            <button type="button" class="btn btn-outline-secondary" id="pdf-horizontal">Horizontal (Apaisado)</button>
-                            <div id="pdf-export-error" style="display:none; color: red; font-weight: bold; margin-top: 10px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-            <hr>
-        </div>
-        <div class="table table-striped"></div>
-        <div class="dropdown mb-3 text-right">
+            <div class="dropdown mb-3 text-end">
             <button 
                 class="btn btn-secondary dropdown-toggle" 
                 type="button" 
@@ -60,8 +41,31 @@
                 <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10"><label class="form-check-label" for="col-10">Acciones</label></div></li>
             </ul>
         </div>
+            <!--<a href="#" id="export-pdf" class="btn btn-danger">
+                <i class="bi bi-file-earmark-pdf"></i>
+                PDF
+            </a>
+            <div class="modal fade" id="pdfExportModal" tabindex="-1" aria-labelledby="pdfExportModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="pdfExportModalLabel">Exportar PDF</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <p>¿En qué formato deseas exportar el PDF?</p>
+                            <button type="button" class="btn btn-outline-primary me-2" id="pdf-vertical">Carta (Vertical)</button>
+                            <div id="pdf-export-error" style="display:none; color: red; font-weight: bold; margin-top: 10px;"></div>
+                            <button type="button" class="btn btn-outline-secondary" id="pdf-horizontal">Horizontal (Apaisado)</button>
+                            <div id="pdf-export-error" style="display:none; color: red; font-weight: bold; margin-top: 10px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+        
         <div style="overflow-x:auto; width:100%;">
-            <table id="dataTable" class="table table-striped" style="width:100%">
+            <table id="dataTable" class="table table-striped align-middle" style="width:100%">
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="select-all"></th>
@@ -108,7 +112,7 @@
                         <td>{{ bien.cantidad_minima }}</td>
                         <td>
                             <button 
-                                class="btn btn-success btn-sm agregar-mas"
+                                class="btn btn-outline-success  agregar-mas"
                                 data-nombre="{{ bien.nombre_bien }}"
                                 data-categoria="{{ bien.categoria }}"
                                 data-subcategoria="{{ bien.subcategoria }}"

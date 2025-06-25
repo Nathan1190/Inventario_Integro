@@ -1,11 +1,11 @@
 {% extends 'base/base.html' %}
 {% block contenido %}
 
-<div class="card mb-4">
-  <h5 class="card-header bg-gradient-primary text-white">
+<div class="card shadow mb-4">
+  <h5 class="card-header bg-gradient-primary text-white" style="background-color: #0b3873;">
     Editar Bien Nacional: {{ form.instance.numero_inventario }}
   </h5>
-  <div class="card-body">
+  <div class="card-body" style="position: relative;z-index: 0;background: rgba(220, 218, 218, 0.5);border-radius: 10px;backdrop-filter: blur(10px);box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.non_field_errors }}

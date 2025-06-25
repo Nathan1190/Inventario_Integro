@@ -7,11 +7,11 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"
   />
 
-<div class="card mb-4">
-    <h5 class="card-header bg-gradient-primary text-white">
+<div class="card mb-4 shadow">
+    <h5 class="card-header" style="background-color: #0b3873; color: white;">
       Editar Cargo: {{ form.instance.nombre }}
     </h5>
-    <div class="card-body">
+    <div class="card-body" style="position: relative;z-index: 0;background: rgba(220, 218, 218, 0.5);border-radius: 10px;backdrop-filter: blur(10px);box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
       <form method="post">
                 {% csrf_token %}
                 {{ form.non_field_errors }}

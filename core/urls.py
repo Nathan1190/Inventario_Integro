@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from .views import *
-from .views import HomeView
+from .views import *
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -28,6 +28,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', RedirectView.as_view(url='/home/')),
+
+    path('charts/', chartsView.as_view(), name="charts"),
 
     path('home/', HomeView.as_view(), name="home"),
 

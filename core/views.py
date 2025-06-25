@@ -8,3 +8,10 @@ class HomeView(View):
             
             }
         return render(request, 'Base/base.html', context)
+    
+class chartsView(View):
+    def get(self, request, *args, **kwargs):
+        context={
+            
+            }
+        return render(request, 'Base/charts.html', context) 

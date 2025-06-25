@@ -40,82 +40,107 @@
 
     {% block estilos %}{% endblock %}
 
-    <!-- Dark mode overrides -->
+    <!-- Style overrides -->
     <style>
       body {
-        background: linear-gradient(165deg,rgba(42, 123, 155, 1) 0%, rgba(0, 31, 100, 1) 50%, rgba(0, 4, 57, 1) 100%);
-        
-      }
-      /* Sidebar */
-      .navbar-nav.sidebar {
-        background-image: #fffff !important;
-      }
-      .sidebar .sidebar-brand, .sidebar .sidebar-heading, .sidebar .nav-link {
-        color: #e0e0e0 !important;
-      }
-      .nav-link:hover {
-        background-color: #001F64 !important;
-      }
-      /* Topbar */
-      .navbar-nav .nav-item .nav-link, .navbar-dark {
-        color: #1e1e1e !important;
-        background-color: #e0e0e0 !important;
-      }
+  background: linear-gradient(0deg,rgba(42, 123, 155, 1) 0%, rgba(0, 31, 100, 1) 50%, rgba(0, 4, 57, 1) 100%);
+  min-height: 100vh;
+}
 
-      .nav-item .nav-link:hover{
-        color: #e0e0e0 !important;
-        background-color: #1863AB !important;
-      }
+.card, .modal-content {
+  background: #f5f6fa;
+  border-radius: 1.25rem !important;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  border: none;
+}
 
-      /* Cards */
-      .card, .card-group .card {
-        background-color: #e0e0e0;
-        border: none;
-        
-      }
-      .card .card-header {
-        background-color: #fffff;
-         
-      }
-      /* Tables */
-      .table, .table-responsive {
-        background-color: #fffff;
-      }
-      .table thead th {
-        background-color: #fffff;
-        
-        border-color: #e0e0e0;
-      }
-      .table tbody tr {
-        border-bottom: 1px solid #2c2c2c;
-      }
-      /* Footer and scroll */
-      .sticky-footer.bg-white {
-        display: grid;
-        min-height: 100dvh;
-        grid-template-rows: auto 1fr auto;
-        background-color: #343a40 !important;
-        
-      }
-      .scroll-to-top {
-        background-color: #2c2c2c !important;
-      }
-      /* Modals & Dropdowns */
-      .modal-content {
-        background-color: #1e1e1e;
-        color: #e0e0e0;
-        grid-template-rows: auto 1fr auto;
-      }
-      
-      /* Icon Color */
-      .menu-icon {
-        color: #3e6389 !important;
-        transition: color 0.2s ease;
-      }
+.card-header, .modal-header {
+  background: transparent;
+  color: #001F64;
+  font-weight: bold;
+  border-bottom: 0;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+}
 
-      .nav-link:hover .menu-icon {
-        color: #fff !important;
-      }
+.table {
+  background: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.table thead th {
+  background: #e0e0e0;
+  color: #001F64;
+  border: none;
+  font-weight: 600;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f7fafc;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+  background-color: #f1f5f9;
+}
+
+.btn {
+  border-radius: 1rem !important;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.btn-success {
+  background-color: #00966a;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #00744f;
+}
+
+.btn-danger {
+  background-color: #eb3c3c;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #c52727;
+}
+
+.btn-secondary {
+  background-color: #001F64;
+  color: #fff;
+  border: none;
+}
+
+.dropdown-menu {
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+
+.form-check-input:checked {
+  background-color: #00966a;
+  border-color: #00966a;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  background: #f1f5f9;
+  border-radius: 3.5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #b3c2dd;
+  border-radius: 3.5px;
+}
+
+.topbar {
+  background: linear-gradient(320deg,rgb(37, 107, 145) 0%, rgba(0, 31, 100, 1) 50%, rgba(0, 4, 57, 1) 100%);
+  
+}
+
 
     </style>
 </head>
@@ -261,18 +286,19 @@
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-dark topbar mb-4 static-top shadow">
-            <button id="sidebarToggleTop" class="btn btn-link btn-sidebar-toggle">
-                <i class="fa fa-bars fa-lg"></i>
+          
+            <button id="sidebarToggleTop" class="btn btn-secondary btn-sidebar-toggle">
+                <i class="fa fa-bars "></i>
             </button>
 
-          <ul class="navbar-nav ms-auto">
+          <ul class="navbar-nav ms-auto" >
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
                 
-                <span class="me-2 d-none d-lg-inline small ">{{ user.username }}</span>
-                <i class="bi bi-person-circle menu-icon text-dark"></i>
+                <span class="me-2 d-none d-lg-inline text-light">{{ user.username }}</span>
+                <i class="bi bi-person-circle menu-icon text-light"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in">
+              <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in"> 
                 {% if user.is_authenticated %}
                 <li>
                     <i class="bi fa-sm fa-fw me-2"></i>{{ user.username }}
@@ -289,8 +315,8 @@
         <!-- End of Topbar -->
       {% endblock %}
 
-      <!-- Begin Page Content - contenido de la pantalla principal -->
-       <div id="content-wrapper" class="card-body d-flex flex-column">
+      <!-- Begin Page Content - contenido de la pantalla principal  jajajajajaj-->
+       <div id="content-wrapper" class="card-body d-flex flex-column" >
       <div class="container-fluid">
 
         {% block contenido %}
