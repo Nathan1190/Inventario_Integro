@@ -231,7 +231,7 @@ class BienNacionalEditForm(forms.ModelForm):
             'unidad_medida': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Unidad de Medida'}),
             'ubicacion': forms.Select(attrs={'class': 'form-control select2'}),
             'responsable': forms.Select(attrs={'class': 'form-control select2'}),
-            'fecha_compra': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'fecha_compra': forms.DateInput(format='%Y-%m-%d', attrs={'class': 'form-control', 'type': 'date'}),
             'costo_compra': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01', 'placeholder': 'Ej: 2000.00'}),
             'numero_orden': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número de orden'}),
             'numero_factura': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número de factura'}),
@@ -240,6 +240,8 @@ class BienNacionalEditForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        if self.instance and self.instance.fecha_compra:
+            self.initial['fecha_compra'] = self.instance.fecha_compra.strftime('%Y-%m-%d')
         self.fields['compania'].queryset = Compania.objects.all().order_by('nombre')
         self.fields['manufacturera'].queryset = Manufacturera.objects.all().order_by('nombre')
         self.fields['fabricante'].queryset = Fabricante.objects.all().order_by('nombre')

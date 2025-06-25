@@ -5,6 +5,9 @@ from .forms import *
 from .models import *
 from roles.mixins import PantallaRequiredMixin
 
+from inventario.models import BienNacional
+from empleados.models import Empleados
+
 class EmpleadosList(PantallaRequiredMixin, ListView):
     template_name        = 'Empleados/CRUD/index.html'
     queryset             = Empleados.objects.all().order_by('id')
@@ -61,3 +64,21 @@ class EmpleadosDelete(PantallaRequiredMixin, UpdateView):
         rol.eliminado = True
         rol.save()
         return redirect(self.success_url)
+    
+
+class BienesDeEmpleadoList(PantallaRequiredMixin, ListView):
+    template_name = "Empleados/CRUD/bienes_asignados.html"
+    context_object_name = "bienes"
+    pantalla_required = '0002' 
+
+    def get_queryset(self):
+        empleado_id = self.kwargs['pk']
+        return BienNacional.objects.filter(
+            responsable_id=empleado_id,
+            eliminado=False
+        ).order_by('nombre_bien', 'numero_inventario')
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['empleado'] = Empleados.objects.get(pk=self.kwargs['pk'])
+        return ctx

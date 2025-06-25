@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+
+<div class="card mb-4">
+    <h5 class="card-header bg-gradient-danger text-white">
+        ELIMINAR BIEN: {{ form.instance.numero_inventario }}
+    </h5>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-danger">ELIMINAR</button>
+            <a href="{% url 'bien_detalle:desagrupado' form.instance.nombre_bien form.instance.categoria.id form.instance.subcategoria.id %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

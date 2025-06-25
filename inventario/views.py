@@ -8,7 +8,7 @@ from django.views.generic import ListView, UpdateView
 from .models import *
 from .forms import *
 from roles.mixins import PantallaRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.conf import settings
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib import colors
@@ -16,7 +16,6 @@ from reportlab.lib.colors import CMYKColor
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.platypus import Table, TableStyle
 from datetime import datetime
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 # Generador automático del código UFTF-xxxxx
@@ -535,3 +534,26 @@ def export_inventario_pdfh(request):
 
     ca.save()
     return response
+
+
+def buscar_por_numero_inventario(request):
+    numero = request.GET.get("numero", "").strip()
+    bien = BienNacional.objects.filter(numero_inventario__iexact=numero, eliminado=False).first()
+    if not bien:
+        return JsonResponse({"ok": False, "msg": "No se encontró el bien."})
+
+    return JsonResponse({
+        "ok": True,
+        "nombre_bien": bien.nombre_bien,
+        "categoria_id": bien.categoria.id if bien.categoria else None,
+        "subcategoria_id": bien.subcategoria.id if bien.subcategoria else 0,
+        "url_desagrupado": reverse_lazy(
+            "bien_detalle:desagrupado",
+            kwargs={
+                "nombre_bien": bien.nombre_bien,
+                "categoria_id": bien.categoria.id if bien.categoria else 0,
+                "subcategoria_id": bien.subcategoria.id if bien.subcategoria else 0,
+            }
+        ),
+        "bien_id": bien.id
+    })

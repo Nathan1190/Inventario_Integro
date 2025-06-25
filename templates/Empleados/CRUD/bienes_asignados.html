@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+<div class="card">
+    <h5 class="card-header text-white bg-gradient-info mb-1">
+        Bienes asignados a: {{ empleado.nombre }}
+    </h5>
+    <div class="card-body">
+        <a href="{% url 'empleados:home_empleados' %}" class="btn btn-secondary mb-3">
+            <i class="bi bi-arrow-left"></i> Volver a empleados
+        </a>
+        <div style="overflow-x:auto; width:100%;">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Número de Inventario</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Subcategoría</th>
+                        <th>Estado(s)</th>
+                        <th>Ubicación</th>
+                        <th>Notas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bien in bienes %}
+                    <tr>
+                        <td>{{ bien.numero_inventario }}</td>
+                        <td>{{ bien.nombre_bien }}</td>
+                        <td>{{ bien.categoria }}</td>
+                        <td>{{ bien.subcategoria }}</td>
+                        <td>
+                            {% for estado in bien.estado_fisico.all %}
+                                <span class="badge" style="background-color: {{ estado.color_hex|default:'#adb5bd' }}; color: white;">
+                                    {{ estado.nombre }}
+                                </span>
+                            {% empty %}
+                                <span class="text-muted">Sin estado</span>
+                            {% endfor %}
+                        </td>
+                        <td>{{ bien.ubicacion }}</td>
+                        <td>{{ bien.notas }}</td>
+                        
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center">Este empleado no tiene bienes asignados.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

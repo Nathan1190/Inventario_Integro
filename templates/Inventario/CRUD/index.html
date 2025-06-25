@@ -79,7 +79,7 @@
                 </thead>
                 <tbody>
                     {% for bien in Bienes %}
-                    <tr data-id="{{ bien.id }}">
+                    <tr data-id="{{ bien.id }}" id="bien-{{ bien.id }}">
                         <td><input type="checkbox" class="row-select"></td>
                         <td>
                             {% if bien.imagen_url %}
@@ -192,6 +192,7 @@ $(document).ready(function() {
         ]
     });
 
+    
 
     $('.agregar-mas').on('click', function(){
         $('#nombreBienModal').val($(this).data('nombre'));
@@ -234,6 +235,27 @@ $(document).ready(function() {
         });
     });
 
+
+    $('#dataTable_filter input').on('keydown', function(e){
+        if (e.key === "Enter") {
+            let value = $(this).val().trim();
+            let regex = /^UFTF-\d{5}$/i;
+
+            if (regex.test(value)) {
+                // Llama al backend para buscar el bien
+                $.get("{% url 'inventario:buscar_numero_inventario' %}", { numero: value }, function(resp){
+                    if (resp.ok) {
+                        window.location.href = resp.url_desagrupado + "#bien-" + resp.bien_id;
+                    } else {
+                        alert(resp.msg || "No se encontró el bien.");
+                    }
+                });
+                // OPCIONAL: Limpia el input y evita el submit normal de DataTable
+                e.preventDefault();
+            }
+        }
+    });
+    
     // Inicializa checkboxes según visibilidad
     $('.toggle-col').each(function(){
         var idx = $(this).data('col');
@@ -331,6 +353,8 @@ $(document).ready(function() {
             modal.hide();
             window.location.href = url;
         }
+
+        
     });
 });
 </script>
