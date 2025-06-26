@@ -6,21 +6,15 @@
 
 {% block contenido %}
 
-<div class="card">
-    <h5 class="card-header card text-center text-white bg-gradient-success mb-1">LISTADO DE EMPLEADOS</h5>
+<div class="card shadow">
+    <div class="card-header" style="background-color: #0b3873; color: white;">LISTADO DE EMPLEADOS</div>
     <div class="card-body">
-        <div>
-            <a href="{% url 'empleados:empleados_create' %}" class="btn btn-success">
+        <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <a href="{% url 'empleados:empleados_create' %}" class="btn btn-outline-primary d-flex align-items-center gap-2">
                 <i class="bi bi-person-add"></i>
                 Agregar Empleados
             </a>
-            <hr>
-        </div>
-
-        <div class="table table-striped"></div>
-        <div class="mb-2"></div>
-
-        <div class="dropdown mb-3 text-right">
+            <div class="dropdown mb-3 text-right">
             <button 
                 class="btn btn-secondary dropdown-toggle" 
                 type="button" 
@@ -99,7 +93,14 @@
             </ul>
         </div>
 
-        <table id="dataTable" class="table table-striped" style="width:100%">
+
+        </div>
+
+        
+
+        
+
+        <table id="dataTable" class="table table-striped align-middle" style="width:100%">
             <thead>
                 <tr>
                     <th>ID</th>

@@ -1,9 +1,10 @@
 {% extends 'base/base.html' %}
 
 {% block contenido %}
-<div class="card mb-4">
-    <h5 class="card-header bg-gradient-success text-white">Crear Nueva Ubicación</h5>
+<div class="card shadow">
+    <div class="card-header text-center" style="background-color: #0b3873; color: white;">Crear Nueva Ubicación</div>
     <div class="card-body">
+        
         <form method="post">
             {% csrf_token %}
 
@@ -27,11 +28,11 @@
                 {% endif %}
             </div>
 
-            <div class="form-check mb-3">
+            <div class="form-check mb-3" style="letter-spacing: 2px;">
                 {{ form.activo }}
-                <label class="form-check-label" for="{{ form.activo.id_for_label }}">
+                <span class="form-check" for="{{ form.activo.id_for_label }}" style=" text-indent: 2em;">
                     Activo
-                </label>
+                </span>
             </div>
 
             <button type="submit" class="btn btn-primary">Guardar</button>

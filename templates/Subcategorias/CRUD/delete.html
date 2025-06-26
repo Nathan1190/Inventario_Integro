@@ -1,9 +1,9 @@
 {% extends 'base/base.html' %}
 {% block contenido %}
-<div class="card mb-4">
-    <h5 class="card-header bg-gradient-danger text-white">
+<div class="card shadow">
+    <div class="card-header" style="background-color: red; color: white;">
       ELIMINAR SUBCATEGORÍA: {{ form.instance.nombre }}
-    </h5>
+    </div>
     <div class="card-body">
         <form method="post">
             {% csrf_token %}

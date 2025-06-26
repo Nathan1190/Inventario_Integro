@@ -8,10 +8,10 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"
   />
 
-<div class="card mb-4">
-    <h5 class="card-header bg-gradient-danger text-white">
-      ELIMINAR CARGO: {{ form.instance.nombre }}
-    </h5>
+<div class="card shadow">
+    <div class="card-header" style="background-color: red; color: white;">
+      ELIMINAR DEPENDENCIA: {{ form.instance.nombre }}
+    </div>
     <div class="card-body">
             <form method="post">
                 {% csrf_token %}

@@ -4,23 +4,20 @@
 {% endblock %}
 
 {% block contenido %}
-<div class="card">
-    <h5 class="card-header card text-center text-white bg-gradient-success mb-1">LISTADO DE SUBCATEGORÍAS</h5>
+<div class="card shadow">
+    <div class="card-header" style="background-color: #0b3873; color: white;">LISTADO DE SUBCATEGORÍAS</div>
     <div class="card-body">
-        <div>
-            <a href="{% url 'subcategorias:subcategorias_create' %}" class="btn btn-success">
+        <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <a href="{% url 'subcategorias:subcategorias_create' %}" class="btn btn-outline-primary d-flex align-items-center gap-2">
                 <i class="bi bi-person-add"></i>
                 Agregar Subcategoría
             </a>
+            <div class="dropdown mb-3 text-end">
             <a href="#" id="export-pdf" class="btn btn-danger">
                 <i class="bi bi-file-earmark-pdf"></i>
                 PDF
             </a>
-            <hr>
-        </div>
-        <div class="table table-striped"></div>
-        <div class="mb-2"></div>
-        <div class="dropdown mb-3 text-right">
+            
             <button class="btn btn-secondary dropdown-toggle" type="button" id="columnDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 Columnas
             </button>
@@ -74,6 +71,12 @@
                     </div>
                 </li>
             </ul>
+        </div>
+        </div>
+        <div class="table table-striped"></div>
+        <div class="mb-2"></div>
+        <div class="dropdown mb-3 text-right">
+            
         </div>
 
         <table id="dataTable" class="table table-striped" style="width:100%">

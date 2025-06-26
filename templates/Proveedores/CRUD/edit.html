@@ -7,8 +7,8 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"
   />
 
-<div class="card mb-4">
-  <h5 class="card-header bg-gradient-primary text-white">Editar Proveedor: {{ form.instance.nombre }}</h5>
+<div class="card shadow">
+  <div class="card-header" style="background-color: #0b3873; color: white;">Editar Proveedor: {{ form.instance.nombre }}</div>
   <div class="card-body">
     <form method="post">
       {% csrf_token %}
