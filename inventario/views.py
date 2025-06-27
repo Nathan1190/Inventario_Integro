@@ -166,7 +166,7 @@ class BienNacionalCreate(PantallaRequiredMixin, UpdateView):
         return render(request, self.template_name, {
             'form': self.form_class(),
             'manufacturera_form': ManufactureraForm(),
-            'compania_form': ManufactureraForm(),
+            'compania_form': CompaniaForm(),
             'fabricante_form': FabricanteForm(),
         })
 
@@ -180,14 +180,14 @@ class BienNacionalCreate(PantallaRequiredMixin, UpdateView):
                 return render(request, self.template_name, {
                     'form': form,
                     'manufacturera_form': ManufactureraForm(),
-                    'compania_form': ManufactureraForm(),
+                    'compania_form': CompaniaForm(),
                     'fabricante_form': FabricanteForm(),
                     'manufacturera_added': True
                 })
             return render(request, self.template_name, {
                 'form': form,
                 'manufacturera_form': manufacturera_form,
-                'compania_form': ManufactureraForm(),
+                'compania_form': CompaniaForm(),
                 'fabricante_form': FabricanteForm(),
             })
 
@@ -219,14 +219,14 @@ class BienNacionalCreate(PantallaRequiredMixin, UpdateView):
                 return render(request, self.template_name, {
                     'form': form,
                     'manufacturera_form': ManufactureraForm(),
-                    'compania_form': ManufactureraForm(),
+                    'compania_form': CompaniaForm(),
                     'fabricante_form': FabricanteForm(),
                     'fabricante_added': True
                 })
             return render(request, self.template_name, {
                 'form': form,
                 'manufacturera_form': ManufactureraForm(),
-                'compania_form': ManufactureraForm(),
+                'compania_form': CompaniaForm(),
                 'fabricante_form': fabricante_form,
             })
 

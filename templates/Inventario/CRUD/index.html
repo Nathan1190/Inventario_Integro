@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 {% block contenido %}
 <!-- Aqui -->
+ 
 <div class="card shadow">
     <div class="card-header text-center" style="background-color: #0b3873; color: white;">
         <span class="fw-bold">INVENTARIO GENERAL</span>
@@ -125,14 +126,16 @@
                 </tbody>
             </table>
             <hr>
-
+        </div>
+        </div>
+    </div>
             <div class="modal fade" id="agregarMasModal" tabindex="-1" aria-labelledby="agregarMasLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <form id="formAgregarMas" method="post">
                             {% csrf_token %}
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="agregarMasLabel">Agregar más unidades</div>
+                                <div class="modal-header" style="background: transparent !important;border: none;">
+                                    <h5 class="modal-title" id="agregarMasLabel">Agregar más unidades</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                                 </div>
                                 <div class="modal-body">
@@ -154,6 +157,7 @@
                     </div>
                 </div>
             </div>
+            
 
 
         </div>
@@ -226,7 +230,6 @@ $(document).ready(function() {
                 if(response.ok){
                     $('#agregarMasModal').modal('hide');
                     alert(response.msg);
-                    location.reload(); // Recarga la página para actualizar stock
                 } else {
                     $('#bienes-nuevos-error').text('Hubo un error al crear mas bienes.').show();
                 setTimeout(function() { $('#bienes-nuevos-error').fadeOut(); }, 4000);

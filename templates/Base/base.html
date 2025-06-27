@@ -164,115 +164,171 @@
     {% endif %}
 
     <!-- Sidebar -->
-    <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
-      <!-- Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
-        <div class="sidebar-brand-icon rotate-n-15"></div>
-        <div class="sidebar-brand-text text-light mx-3">Inventario Íntegro</div>
-      </a>
+  <!-- Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
+    <div class="sidebar-brand-icon rotate-n-15"></div>
+    <div class="sidebar-brand-text text-light mx-3">Inventario Íntegro</div>
+  </a>
 
-      <hr class="sidebar-divider my-0">
+  <hr class="sidebar-divider my-0">
 
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'home' %}">
-          <i class="fas fa-fw fa-tachometer-alt menu-icon"></i>
-          
-          <span>Dashboard</span>
-        </a>
-      </li>
+  <!-- DASHBOARD -->
+   <!-- SECCIÓN: OPERACIONES -->
+  <div class="sidebar-heading">Inventario</div>
+  {% if request.user|has_pantalla:'0014' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'inventario:home_bienesnacionales' %}">
+      <i class="fas fa-boxes"></i>
+      <span>Bienes Nacionales</span>
+    </a>
+  </li>
+  {% endif %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'home' %}">
+      <i class="fas fa-fw fa-tachometer-alt menu-icon"></i>
+      <span>Dashboard</span>
+    </a>
+  </li>
 
-      <hr class="sidebar-divider">
+  <hr class="sidebar-divider">
 
-      <div class="sidebar-heading">Paginas</div>
+  <!-- SECCIÓN: GESTIÓN DE SISTEMA -->
+  <div class="sidebar-heading">Gestión del sistema</div>
+  {% if request.user|has_pantalla:'0000' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'roles:home_roles' %}">
+      <i class="fas fa-users-cog"></i>
+      <span>Roles y Permisos</span>
+    </a>
+  </li>
+  {% endif %}
+  {% if request.user|has_pantalla:'0002' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'empleados:home_empleados' %}">
+      <i class="fas fa-user"></i>
+      <span>Empleados</span>
+    </a>
+  </li>
+  {% endif %}
+  {% if request.user|has_pantalla:'0004' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'cargos:home_cargos' %}">
+      <i class="fas fa-briefcase"></i>
+      <span>Cargos</span>
+    </a>
+  </li>
+  {% endif %}
+  {% if request.user|has_pantalla:'0005' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'dependencias:home_dependencias' %}">
+      <i class="fas fa-network-wired"></i>
+      <span>Departamentos</span>
+    </a>
+  </li>
+  {% endif %}
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="true">
-          <i class="fas fa-fw fa-folder menu-icon"></i>
-          <span>Paginas</span>
-        </a>
-        <div id="collapsePages" class="collapse" data-bs-parent="#accordionSidebar">
-          <div class="bg-white collapse-inner rounded ">
-            <h6 class="collapse-header">Paginas:</h6>
-            {% if request.user|has_pantalla:'0000' %}
-            <a class="collapse-item" href="{% url 'roles:home_roles' %}">Roles</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0002' %}
-            <a class="collapse-item" href="{% url 'empleados:home_empleados' %}">Empleados</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0004' %}
-            <a class="collapse-item" href="{% url 'cargos:home_cargos' %}">Cargos</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0005' %}
-            <a class="collapse-item" href="{% url 'dependencias:home_dependencias' %}">Dependencias</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0006' %}
-            <a class="collapse-item" href="{% url 'ubicaciones:home_ubicaciones' %}">Ubicaciones</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0009' %}
-            <a class="collapse-item" href="{% url 'estados:home_estados' %}">Estados</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0010' %}
-            <a class="collapse-item" href="{% url 'proveedores:home_proveedores' %}">Proveedores</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0012' %}
-            <a class="collapse-item" href="{% url 'categorias:home_categorias' %}">Categorias</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0014' %}
-            <a class="collapse-item" href="{% url 'inventario:home_bienesnacionales' %}">Bienes Nacionales</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0016' %}
-            <a class="collapse-item" href="{% url 'subcategorias:home_subcategorias' %}">Sub Categorias</a>
-            {% endif %}
-            
-          </div>
-        </div>
-      </li>
+  <hr class="sidebar-divider">
 
-      
-        <hr class="sidebar-divider">
-        <div class="sidebar-heading">Historiales</div>
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="true">
-          <i class="fas fa-fw fa-folder menu-icon"></i>
-          <span>Historiales</span>
-        </a>
-        <div id="collapsePages2" class="collapse" data-bs-parent="#accordionSidebar">
-          <div class="bg-white collapse-inner rounded ">
-            <h6 class="collapse-header">Historiales:</h6>
-            {% if request.user|has_pantalla:'0001' %}
-            <a class="collapse-item" href="{% url 'roles_history:home_roles_history' %}">Historial de Roles</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0003' %}
-            <a class="collapse-item" href="{% url 'empleados_history:home_empleados_history' %}">Historial de Empleados</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0007' %}
-            <a class="collapse-item" href="{% url 'cargos_history:home_cargos_history' %}">Historial de Cargos</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0008' %}
-            <a class="collapse-item" href="{% url 'dependencias_history:home_dependencias_history' %}">Historial de Dependencias</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0015' %}
-            <a class="collapse-item" href="{% url 'estados_history:home_estados_history' %}">Historial de Estados</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0011' %}
-            <a class="collapse-item" href="{% url 'proveedores_history:home_proveedores_history' %}">Historial de Proveedores</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0013' %}
-            <a class="collapse-item" href="{% url 'categorias_history:home_categorias_history' %}">Historial de Categorias</a>
-            {% endif %}
-            {% if request.user|has_pantalla:'0017' %}
-            <a class="collapse-item" href="{% url 'subcategorias_history:home_subcategorias_history' %}">Historial de Sub Categorias</a>
-            {% endif %}
-          </div>
-        </div>
-      </li>
+  <!-- SECCIÓN: CATÁLOGOS -->
+   {% if request.user|has_pantalla:'0012' or request.user|has_pantalla:'0016' or request.user|has_pantalla:'0006' or request.user|has_pantalla:'0009' or request.user|has_pantalla:'0010' %}
+  <div class="sidebar-heading">Catálogos</div>
+  {% endif %}
+  {% if request.user|has_pantalla:'0012' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'categorias:home_categorias' %}">
+      <i class="fas fa-layer-group"></i>
+      <span>Categorías</span>
+    </a>
+  </li>
+  {% endif %}
+  {% if request.user|has_pantalla:'0016' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'subcategorias:home_subcategorias' %}">
+      <i class="fas fa-tags"></i>
+      <span>Sub Categorías</span>
+    </a>
+  </li>
+  {% endif %}
+  {% if request.user|has_pantalla:'0006' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'ubicaciones:home_ubicaciones' %}">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>Ubicaciones</span>
+    </a>
+  </li>
+  {% endif %}
+  {% if request.user|has_pantalla:'0009' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'estados:home_estados' %}">
+      <i class="fas fa-info-circle"></i>
+      <span>Estados</span>
+    </a>
+  </li>
+  {% endif %}
+  {% if request.user|has_pantalla:'0010' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'proveedores:home_proveedores' %}">
+      <i class="fas fa-truck"></i>
+      <span>Proveedores</span>
+    </a>
+  </li>
+  {% endif %}
 
-      <hr class="sidebar-divider d-none d-md-block">
+  <hr class="sidebar-divider">
 
-      
+  
 
-    </ul>
+  <!-- Puedes agregar más menús de operaciones aquí (Movimientos, Reportes, etc) -->
+
+  <hr class="sidebar-divider">
+
+  <!-- SECCIÓN: HISTORIALES -->
+  <div class="sidebar-heading">Historiales</div>
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHistoriales" aria-expanded="true">
+      <i class="fas fa-history"></i>
+      <span>Ver historiales</span>
+    </a>
+    <div id="collapseHistoriales" class="collapse" data-bs-parent="#accordionSidebar">
+      <div class="bg-white collapse-inner rounded">
+        <h6 class="collapse-header">Historiales:</h6>
+        {% if request.user|has_pantalla:'0001' %}
+        <a class="collapse-item" href="{% url 'roles_history:home_roles_history' %}">Roles</a>
+        {% endif %}
+        {% if request.user|has_pantalla:'0003' %}
+        <a class="collapse-item" href="{% url 'empleados_history:home_empleados_history' %}">Empleados</a>
+        {% endif %}
+        {% if request.user|has_pantalla:'0007' %}
+        <a class="collapse-item" href="{% url 'cargos_history:home_cargos_history' %}">Cargos</a>
+        {% endif %}
+        {% if request.user|has_pantalla:'0008' %}
+        <a class="collapse-item" href="{% url 'dependencias_history:home_dependencias_history' %}">Dependencias</a>
+        {% endif %}
+        {% if request.user|has_pantalla:'0015' %}
+        <a class="collapse-item" href="{% url 'estados_history:home_estados_history' %}">Estados</a>
+        {% endif %}
+        {% if request.user|has_pantalla:'0011' %}
+        <a class="collapse-item" href="{% url 'proveedores_history:home_proveedores_history' %}">Proveedores</a>
+        {% endif %}
+        {% if request.user|has_pantalla:'0013' %}
+        <a class="collapse-item" href="{% url 'categorias_history:home_categorias_history' %}">Categorías</a>
+        {% endif %}
+        {% if request.user|has_pantalla:'0017' %}
+        <a class="collapse-item" href="{% url 'subcategorias_history:home_subcategorias_history' %}">Sub Categorías</a>
+        {% endif %}
+        {% if request.user|has_pantalla:'0018' %}
+        <a class="collapse-item" href="{% url 'inventario_history:home_inventario_history' %}">Inventario</a>
+        {% endif %}
+      </div>
+    </div>
+  </li>
+
+  <hr class="sidebar-divider d-none d-md-block">
+
+</ul>
+
     <!-- End of Sidebar -->
     {% endblock %}
 

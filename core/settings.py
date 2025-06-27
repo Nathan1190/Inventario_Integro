@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'subcategorias',
     'subcategorias_history',
     'bien_detalle',
+    'inventario_history',
 ]
 
 MIDDLEWARE = [

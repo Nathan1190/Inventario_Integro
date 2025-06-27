@@ -16,10 +16,12 @@ from inventario.models import StockBien
 from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from datetime import datetime
+from roles.mixins import PantallaRequiredMixin
 
-class BienDetalleList(ListView):
+class BienDetalleList(PantallaRequiredMixin, ListView):
     template_name = "BienDetalle/desagrupado.html"
     context_object_name = "bienes"
+    pantalla_required = '0019'
 
     def get_queryset(self):
         
@@ -317,11 +319,12 @@ def export_inventario_pdfh(request, nombre_bien, categoria_id, subcategoria_id):
 
 
     
-class BienDetalleEdit(UpdateView):
+class BienDetalleEdit(PantallaRequiredMixin, UpdateView):
     
     model = BienNacional
     form_class = BienNacionalEditForm
     template_name = "BienDetalle/edit.html"
+    pantalla_required = '0019'
 
     class Meta:
         model = BienNacional

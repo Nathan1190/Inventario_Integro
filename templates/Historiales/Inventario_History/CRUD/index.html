@@ -1,5 +1,4 @@
-{# empleados_history/templates/Empleados_History/index.html #}
-{% extends 'base\base.html' %}
+{% extends 'base/base.html' %}
 
 {% block estilos %}
 {% endblock %}
@@ -7,7 +6,7 @@
 {% block contenido %}
 <div class="card shadow">
     <div class="card-header" style="background-color: #0b3873; color: white;">
-        HISTORIAL DE EMPLEADOS
+        HISTORIAL DE BIENES NACIONALES
     </div>
     <div class="card-body">
 
@@ -33,7 +32,7 @@
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="1" id="col-1">
-                        <label class="form-check-label" for="col-1">Empleado ID</label>
+                        <label class="form-check-label" for="col-1">Bien ID</label>
                     </div>
                 </li>
                 <li>
@@ -51,112 +50,167 @@
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4">
-                        <label class="form-check-label" for="col-4">CAMBIO Nombre</label>
+                        <label class="form-check-label" for="col-4">Nombre</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5">
-                        <label class="form-check-label" for="col-5">CAMBIO Cargo</label>
+                        <label class="form-check-label" for="col-5">Categoría</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="6" id="col-6">
-                        <label class="form-check-label" for="col-6">CAMBIO Departamento</label>
+                        <label class="form-check-label" for="col-6">Subcategoría</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="7" id="col-7">
-                        <label class="form-check-label" for="col-7">CAMBIO Contacto</label>
+                        <label class="form-check-label" for="col-7">Modelo</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="8" id="col-8">
-                        <label class="form-check-label" for="col-8">CAMBIO Correo Institucional</label>
+                        <label class="form-check-label" for="col-8">Fabricante</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="9" id="col-9">
-                        <label class="form-check-label" for="col-9">CAMBIO Código Empleado</label>
+                        <label class="form-check-label" for="col-9">Proveedor</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10">
-                        <label class="form-check-label" for="col-10">CAMBIO Activo</label>
+                        <label class="form-check-label" for="col-10">Serial</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="11" id="col-11">
-                        <label class="form-check-label" for="col-11">CAMBIO Fecha de Creación</label>
+                        <label class="form-check-label" for="col-11">Número de Inventario</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="12" id="col-12">
-                        <label class="form-check-label" for="col-12">CAMBIO Fecha de Modificación</label>
+                        <label class="form-check-label" for="col-12">Unidad de Medida</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="13" id="col-13">
-                        <label class="form-check-label" for="col-13">CAMBIO Eliminado</label>
+                        <label class="form-check-label" for="col-13">Ubicación</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="14" id="col-14">
+                        <label class="form-check-label" for="col-14">Fecha Compra</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="15" id="col-15">
+                        <label class="form-check-label" for="col-15">Costo Compra</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="16" id="col-16">
+                        <label class="form-check-label" for="col-16">N° Orden</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="17" id="col-17">
+                        <label class="form-check-label" for="col-17">N° Factura</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="18" id="col-18">
+                        <label class="form-check-label" for="col-18">Notas</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="19" id="col-19">
+                        <label class="form-check-label" for="col-19">Eliminado</label>
                     </div>
                 </li>
             </ul>
         </div>
-<div style="overflow-x:auto; width:100%;">
+
+        <div style="overflow-x:auto; width:100%;">
             <table id="dataTable" class="table table-striped align-middle" style="width:100%">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Empleado ID</th>
-                    <th>Cambio hecho por</th>
-                    <th>Timestamp</th>
-                    <th>CAMBIO Nombre</th>
-                    <th>CAMBIO Cargo</th>
-                    <th>CAMBIO Dependencia</th>
-                    <th>CAMBIO Contacto</th>
-                    <th>CAMBIO Correo Institucional</th>
-                    <th>CAMBIO Código Empleado</th>
-                    <th>CAMBIO Activo</th>
-                    <th>CAMBIO Fecha de Creación</th>
-                    <th>CAMBIO Fecha de Modificación</th>
-                    <th>CAMBIO Eliminado</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for h in Empleados_History %}
-                <tr>
-                    <td>{{ h.id }}</td>
-                    <td>{{ h.empleado_id }}</td>
-                    <td>{{ h.changed_by }}</td>
-                    <td>{{ h.timestamp|date:"j F Y, H:i:s" }}</td>
-                    <td>{{ h.nombre_cambio }}</td>
-                    <td>{{ h.cargo_cambio }}</td>
-                    <td>{{ h.dependencia_cambio }}</td>
-                    <td>{{ h.contacto_cambio }}</td>
-                    <td>{{ h.correo_inst_cambio }}</td>
-                    <td>{{ h.codigo_empleado_cambio }}</td>
-                    <td>{{ h.activo_cambio|yesno:"Activo,Inactivo" }}</td>
-                    <td>{{ h.creado_fecha_cambio|date:"j F Y, H:i:s" }}</td>
-                    <td>{{ h.fecha_de_modificacion_cambio|date:"j F Y, H:i:s" }}</td>
-                    <td>{{ h.eliminado_cambio|yesno:"Sí,No" }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Bien ID</th>
+                        <th>Cambio hecho por</th>
+                        <th>Timestamp</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Subcategoría</th>
+                        <th>Modelo</th>
+                        <th>Manufacturera</th>
+                        <th>Fabricante</th>
+                        <th>Proveedor</th>
+                        <th>Serial</th>
+                        <th>Número de Inventario</th>
+                        <th>Unidad de Medida</th>
+                        <th>Ubicación</th>
+                        <th>Fecha Compra</th>
+                        <th>Costo Compra</th>
+                        <th>N° Orden</th>
+                        <th>N° Factura</th>
+                        <th>Estado Fisico</th>
+                        <th>Responsable</th>
+                        <th>Notas</th>
+                        <th>Eliminado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for h in Inventario_History %}
+                    <tr>
+                        <td>{{ h.id }}</td>
+                        <td>{{ h.bien.id }}</td>
+                        <td>{{ h.changed_by }}</td>
+                        <td>{{ h.timestamp|date:"j F Y, H:i:s" }}</td>
+                        <td>{{ h.nombre_bien }}</td>
+                        <td>{{ h.categoria }}</td>
+                        <td>{{ h.subcategoria }}</td>
+                        <td>{{ h.numero_modelo }}</td>
+                        <td>{{ h.manufacturera }}</td>
+                        <td>{{ h.fabricante }}</td>
+                        <td>{{ h.proveedor }}</td>
+                        <td>{{ h.serial }}</td>
+                        <td>{{ h.numero_inventario }}</td>
+                        <td>{{ h.unidad_medida }}</td>
+                        <td>{{ h.ubicacion }}</td>
+                        <td>{% if h.fecha_compra %}{{ h.fecha_compra|date:"d/m/Y" }}{% endif %}</td>
+                        <td>{% if h.costo_compra %}L. {{ h.costo_compra|floatformat:2 }}{% endif %}</td>
+                        <td>{{ h.numero_orden }}</td>
+                        <td>{{ h.numero_factura }}</td>
+                        <td>{{ h.estado_fisico }}</td>
+                        <td>{{ h.responsable }}</td>
+                        <td>{{ h.notas }}</td>
+                        <td>{{ h.eliminado|yesno:"Sí,No" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 {% load static %}
 <script src="{% static '/base/vendor/jquery/jquery.js' %}"></script>
-
 <script>
   $(document).ready(function() {
     var table = $('#dataTable').DataTable({
@@ -187,7 +241,7 @@
         }
       },
       columnDefs: [
-        { targets: [7, 8], visible: false }  // Oculta ID por defecto
+        { targets: [0], visible: false }  // Oculta el ID por defecto
       ]
     });
 

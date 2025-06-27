@@ -76,5 +76,7 @@ urlpatterns = [
     path('categorias_history/',include('categorias_history.urls', namespace='categorias_history')),
 
     path('subcategorias_history/',include('subcategorias_history.urls', namespace='subcategorias_history')),
+
+    path('inventario_history/',include('inventario_history.urls', namespace='inventario_history')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

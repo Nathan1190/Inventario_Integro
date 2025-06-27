@@ -12,6 +12,9 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 
+from core.middleware import get_current_user 
+
+
 class Manufacturera(models.Model):
     nombre = models.CharField(max_length=80, unique=True)
     contacto = models.CharField(max_length=80, blank=True, null=True)
@@ -133,6 +136,8 @@ def actualizar_stock_bien(sender, instance, **kwargs):
     # Puedes poner reglas personalizadas para cantidad_minima y total_asignado aquí si lo deseas
     stock.save()
 
+
+    #HISTORIAL
 
 
 
