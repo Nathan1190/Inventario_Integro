@@ -256,8 +256,8 @@ def export_inventario_pdfh(request, nombre_bien, categoria_id, subcategoria_id):
 
         response = HttpResponse(content_type="application/pdf")
         response["Content-Disposition"] = 'filename="inventario.pdf"'
-        c = Canvas(response, pagesize=letter)
-        width, height = letter
+        ca = Canvas(response, pagesize=landscape(letter))
+        width, height = landscape(letter)
         per_page = 25
         page = 1
 
@@ -279,41 +279,34 @@ def export_inventario_pdfh(request, nombre_bien, categoria_id, subcategoria_id):
             ]))
 
             if os.path.exists(grey_logo):
-                c.drawImage(grey_logo, (width - 230) - 40, (height - 200) / 5, width=230, height=200, mask='auto')
+                ca.drawImage(grey_logo, (width - 230) - 40, (height - 200) / 5, width=230, height=200, mask='auto')
             if os.path.exists(logo_path):
-                c.drawImage(logo_path, (width - 316) / 2, height - 73 - 60, width=316, height=73, mask='auto')
+                ca.drawImage(logo_path, (width - 316) / 2, height - 73 - 60, width=316, height=73, mask='auto')
             if os.path.exists(bottom_text):
-                c.drawImage(bottom_text, (width - 400) / 2, (height - 50) / 15, width=400, height=50, mask='auto')
-    
-            c.setFillColor(CMYKColor(15, 0, 0, 0.4))
-            c.rect(0, 0, width, 40, fill=1)
-    
+                ca.drawImage(bottom_text, (width - 400) / 2, (height - 50) / 15, width=400, height=50, mask='auto')
+
+            ca.setFillColor(CMYKColor(15, 0, 0, 0.4))
+            ca.rect(0, 0, width, 40, fill=1)
+
             user = request.user.get_full_name() or request.user.username
-            c.setFont("Helvetica-Bold", 14)
-            c.drawString((width - 150) / 2, height - 160, "Listado de Inventario")
-            c.setFont("Helvetica", 10)
-            c.drawString((width) / 8 , height - 30, f"Usuario: {user}")
-            c.drawString(450, height - 30, f"Fecha: {datetime.now().strftime('%d/%m/%Y')}")
+            ca.setFont("Helvetica-Bold", 14)
+            ca.drawString((width - 150) / 2, height - 160, "Listado de Inventario")
+            ca.setFont("Helvetica", 10)
+            ca.drawString((width) / 8 , height - 30, f"Usuario: {user}")
+            ca.drawString((width) / 1.3, height - 30, f"Fecha: {datetime.now().strftime('%d/%m/%Y')}")
 
             w, h = table.wrap(0, 0)
             x = (width - w) / 2
             y = (height - 180) - h
-            table.drawOn(c, x, y)
+            table.drawOn(ca, x, y)
 
-            if start + per_page >= len(rows):  
-                if total_costo > 0:
-                    c.setFont("Helvetica-Bold", 11)
-                    c.setFillColor(colors.black)
-                    c.drawRightString(width - 50, y - 18, f"Total general de Costo de Compra: L. {total_costo:,.2f}")
-
-
-            c.setFont("Helvetica", 9)
-            c.setFillColor(colors.white)
-            c.drawCentredString(width / 2, 20, f"Página {page}")
+            ca.setFont("Helvetica", 9)
+            ca.setFillColor(colors.white)
+            ca.drawCentredString(width / 2, 20, f"Página {page}")
             page += 1
-            c.showPage()
+            ca.showPage()
 
-        c.save()
+        ca.save()
         return response
 
 

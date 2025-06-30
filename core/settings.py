@@ -78,6 +78,8 @@ INSTALLED_APPS = [
     'subcategorias_history',
     'bien_detalle',
     'inventario_history',
+    'asignaciones',
+    'asignaciones_history',
 ]
 
 MIDDLEWARE = [

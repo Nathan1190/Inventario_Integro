@@ -1,0 +1,69 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+<div class="card shadow">
+    <h5 class="card-header text-center" style="background-color: #0b3873; color: white;">
+        Asignar Bien: {{ bien.numero_inventario }} - {{ bien.nombre_bien }}
+    </h5>
+    <div class="card-body" style="background: rgba(220, 218, 218, 0.5);border-radius: 10px;">
+        <form method="post">
+            {% csrf_token %}
+            {% if asignacion_pendiente and not show_confirm %}
+    <div class="alert alert-warning">
+        Ya existe una asignación pendiente para este bien: <b>{{ asignacion_pendiente.responsable }}</b>.<br>
+        ¿Deseas sobrescribirla? <br>
+        <form method="post" style="display:inline;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="sobrescribir" value="1">
+            <button type="submit" class="btn btn-danger btn-sm">Sobrescribir asignación</button>
+            <a href="{% url 'bien_detalle:desagrupado' bien.nombre_bien bien.categoria.id bien.subcategoria.id %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+    {# Oculta el formulario normal si hay pendiente y no se está confirmando #}
+{% else %}
+    {# Aquí va el form normal, como ya lo tienes #}
+    <div class="mb-3">
+        <label for="{{ form.responsable.id_for_label }}">Responsable:</label>
+        {{ form.responsable }}
+        {% if form.responsable.errors %}
+        <div class="text-danger">{{ form.responsable.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.comentario.id_for_label }}">Comentario:</label>
+        {{ form.comentario }}
+    </div>
+    {% if show_confirm %}
+        <input type="hidden" name="sobrescribir" value="1">
+    {% endif %}
+    <button type="submit" class="btn btn-primary">Asignar</button>
+    <a href="{% url 'bien_detalle:desagrupado' bien.nombre_bien bien.categoria.id bien.subcategoria.id %}" class="btn btn-danger">Cancelar</a>
+{% endif %}
+</form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+<script>
+            document.addEventListener('DOMContentLoaded', function(){
+                $('.select2').select2({
+                    theme: 'classic',
+                    width: '100%',
+                    placeholder: 'Selecciona una opción',
+                    allowClear: true,
+                    language: {
+                      noResults: function() { return 'No se encontraron resultados'; }
+                    },
+                });
+                $('.select2-multiple').select2({
+                    theme: 'classic',
+                    width: '100%',
+                    placeholder: 'Selecciona una o más opciones',
+                    language: {
+                      noResults: function() { return 'No se encontraron resultados'; }
+                    },
+                    allowClear: true,
+                });
+                
+            });
+        </script>
+    </div>
+</div>
+{% endblock %}

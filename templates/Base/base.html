@@ -233,6 +233,14 @@
     </a>
   </li>
   {% endif %}
+  {% if request.user|has_pantalla:'0020' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'asignaciones:lista' %}">
+      <i class="fas fa-users-cog"></i>
+      <span>Asignaciones</span>
+    </a>
+  </li>
+  {% endif %}
   {% if request.user|has_pantalla:'0002' %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'empleados:home_empleados' %}">
@@ -349,6 +357,9 @@
         {% endif %}
         {% if request.user|has_pantalla:'0018' %}
         <a class="collapse-item" href="{% url 'inventario_history:home_inventario_history' %}">Inventario</a>
+        {% endif %}
+        {% if request.user|has_pantalla:'0022' %}
+        <a class="collapse-item" href="{% url 'asignaciones_history:home_asignaciones_history' %}">Asignaciones</a>
         {% endif %}
       </div>
     </div>

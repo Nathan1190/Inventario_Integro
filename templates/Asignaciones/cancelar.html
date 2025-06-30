@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+<div class="card shadow">
+    <h5 class="card-header text-center" style="background-color: #eb3c3c; color: white;">
+        Cancelar Asignación
+    </h5>
+    <div class="card-body text-center" style="background: rgba(220, 218, 218, 0.5);border-radius: 10px;">
+        <h6>¿Estás seguro que deseas cancelar esta asignación?</h6>
+        <p>
+            <b>Bien:</b> {{ object.bien.numero_inventario }} - {{ object.bien.nombre_bien }}<br>
+            <b>Responsable:</b> {{ object.responsable }}<br>
+            <b>Fecha asignación:</b> {{ object.fecha_asignacion|date:"d/m/Y H:i" }}
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Cancelar Asignación</button>
+            <a href="{% url 'asignaciones:lista' %}" class="btn btn-secondary">Volver</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -56,6 +56,8 @@ urlpatterns = [
     path('subcategorias/',include('subcategorias.urls', namespace='subcategorias')),
 
     path('bien_detalle/',include('bien_detalle.urls', namespace='bien_detalle')),
+    
+    path('asignaciones/',include('asignaciones.urls', namespace='asignaciones')),
 
 
 
@@ -78,5 +80,7 @@ urlpatterns = [
     path('subcategorias_history/',include('subcategorias_history.urls', namespace='subcategorias_history')),
 
     path('inventario_history/',include('inventario_history.urls', namespace='inventario_history')),
+    
+    path('asignaciones_history/',include('asignaciones_history.urls', namespace='asignaciones_history')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
