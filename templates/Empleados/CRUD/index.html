@@ -69,25 +69,31 @@
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="7" id="col-7">
-                        <label class="form-check-label" for="col-7">Activo</label>
+                        <label class="form-check-label" for="col-7">Numero de Identidad </label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="8" id="col-8">
-                        <label class="form-check-label" for="col-8">Fecha de Creación</label>
+                        <label class="form-check-label" for="col-8">Activo</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
-                        <input class="form-check-input toggle-col" type="checkbox" data-col="9" id="col-9" >
-                        <label class="form-check-label" for="col-9">Fecha de Modificación</label>
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="9" id="col-9">
+                        <label class="form-check-label" for="col-9">Fecha de Creación</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
-                        <input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10">
-                        <label class="form-check-label" for="col-10">Acciones</label>
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10" >
+                        <label class="form-check-label" for="col-10">Fecha de Modificación</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="11" id="col-11">
+                        <label class="form-check-label" for="col-11">Acciones</label>
                     </div>
                 </li>
             </ul>
@@ -110,6 +116,7 @@
                     <th>Contacto</th>
                     <th>Correo Institucional</th>
                     <th>Código Empleado</th>
+                    <th>No. Identidad</th>
                     <th>Activo</th>
                     <th>Fecha de Creación</th>
                     <th>Fecha de Modificación</th>
@@ -126,6 +133,7 @@
                     <td>{{ empleados.contacto }}</td>
                     <td>{{ empleados.correo_inst }}</td>
                     <td>{{ empleados.codigo_empleado }}</td>
+                    <td>{{ empleados.num_identidad }}</td>
                     <td>{{ empleados.activo|yesno:"Activo,Inactivo" }}</td>
                     <td>{{ empleados.creado_fecha|date:"j F Y, H:i:s" }}</td>
                     <td>{{ empleados.fecha_de_modificacion|date:"j F Y, H:i:s" }}</td>

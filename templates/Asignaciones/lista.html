@@ -52,6 +52,13 @@
                                 <a href="{% url 'asignaciones:cancelar' asignacion.id %}" class="btn btn-danger btn-sm mb-1">
                                     Cancelar
                                 </a>
+                                <button class="btn btn-info btn-sm mb-1 btn-exportar-pdf"
+                                        data-responsable="{{ asignacion.responsable.id }}"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exportarPdfModal">
+                                    Exportar PDF pendientes
+                                </button>
                             {% else %}
                                 <span class="text-muted">Sin acciones</span>
                             {% endif %}
@@ -67,6 +74,69 @@
         </div>
     </div>
 </div>
+
+<!-- MODAL GLOBAL, solo uno por página -->
+<div class="modal fade" id="exportarPdfModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="formExportarPDF">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Datos para el PDF</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="responsable_id" id="pdfResponsableId" value="">
+
+                    <!-- RECIBE -->
+                    <div class="mb-3">
+                        <label>Recibe:</label>
+                        <div class="input-group mb-2">
+                            <select name="recibe_cargo_abrev" class="form-select" required>
+                                <option value="">Cargo</option>
+                                <option>Ing.</option>
+                                <option>Lic.</option>
+                                <option>Abog.</option>
+                                <option>Dr.</option>
+                                <option>Tec.</option>
+                                <option>C.P.</option>
+                                <option>MSc.</option>
+                                <option>Sr.</option>
+                                <option>Sra.</option>
+                            </select>
+                            <input type="text" name="recibe_nombre" class="form-control" placeholder="Nombre y Apellido" required>
+                        </div>
+                        <input type="text" name="recibe_cargo_completo" class="form-control mt-2" placeholder="Ej. Asistente de Comisionado" required>
+                    </div>
+                    <!-- FIRMA -->
+                    <div class="mb-3">
+                        <label>Firma:</label>
+                        <div class="input-group mb-2">
+                            <select name="firma_cargo_abrev" class="form-select" required>
+                                <option value="">Cargo</option>
+                                <option>Ing.</option>
+                                <option>Lic.</option>
+                                <option>Abog.</option>
+                                <option>Dr.</option>
+                                <option>Tec.</option>
+                                <option>C.P.</option>
+                                <option>MSc.</option>
+                                <option>Sr.</option>
+                                <option>Sra.</option>
+                            </select>
+                            <input type="text" name="firma_nombre" class="form-control" placeholder="Nombre y Apellido" required>
+                        </div>
+                        <input type="text" name="firma_cargo_completo" class="form-control mt-2" placeholder="Ej. Jefe Interino de Administración" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Generar PDF</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
 {% load static %}
 <script src="{% static '/base/vendor/jquery/jquery.js' %}"></script>
 <script>
@@ -100,9 +170,24 @@ $(document).ready(function() {
         },
         columnDefs: [
             { orderable: false, searchable: false, targets: 0 },
-            // Actualiza los índices de columnas a ocultar por defecto si quieres
         ]
     });
+
+    // Guardar el responsable_id en el modal cuando le den click a "Exportar PDF"
+    $('.btn-exportar-pdf').on('click', function(){
+        var responsableId = $(this).data('responsable');
+        $('#pdfResponsableId').val(responsableId);
     });
+
+    // Al enviar el modal, redirige con los datos por GET
+    $('#formExportarPDF').submit(function(e){
+        e.preventDefault();
+        var responsableId = $('#pdfResponsableId').val();
+        var datos = $(this).serialize();
+        // Adapta la URL aquí si tienes namespace distinto
+        window.open('{% url "asignaciones:exportar" 0 %}'.replace('0', responsableId) + '?' + datos, '_blank');
+        $('#exportarPdfModal').modal('hide');
+    });
+});
 </script>
 {% endblock %}

@@ -63,6 +63,15 @@
         {% endif %}
       </div>
 
+      <!-- Nuevo campo: Número de Identidad: -->
+      <div class="form-group">
+        <label for="">Número de Identidad:</label>
+        {{ form.num_identidad }}
+        {% if form.num_identidad.errors %}
+        <div class="text-danger">{{ form.num_identidad.errors }}</div>
+        {% endif %}
+      </div>
+
       <div class="form-group">
         <label for="">Activo:</label>
         {{ form.activo }}

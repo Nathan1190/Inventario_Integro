@@ -71,7 +71,14 @@ class Empleados(models.Model):
         max_length=4,
         unique=True,
         validators=[regex_codigo],
-        help_text='Exactamente 4 dígitos, p.ej. 7016'
+        help_text='Exactamente 4 dígitos, p.ej. 7016',
+    )
+
+    num_identidad = models.CharField(
+        "Numero de Identidad",
+        max_length=15,
+        unique=True,
+        help_text='Debe contener 13 digitos en total, separados por guiones p.ej. 0801-2000-00000',
     )
 
     activo = models.BooleanField(default=False)
@@ -80,7 +87,7 @@ class Empleados(models.Model):
     eliminado = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.codigo_empleado} - {self.nombre}"
+        return f"{self.codigo_empleado} - {self.nombre} - {self.num_identidad}"
 
     def clean(self):
         super_clean = super().clean() if hasattr(super(), 'clean') else None
@@ -119,6 +126,7 @@ def create_empleado_history(sender, instance, created, **kwargs):
         contacto_cambio              = instance.contacto,
         correo_inst_cambio           = instance.correo_inst,
         codigo_empleado_cambio       = instance.codigo_empleado,
+        numero_identidad_cambio       = instance.num_identidad,
         activo_cambio                = instance.activo,
         creado_fecha_cambio          = instance.creado_fecha,
         fecha_de_modificacion_cambio = instance.fecha_de_modificacion,

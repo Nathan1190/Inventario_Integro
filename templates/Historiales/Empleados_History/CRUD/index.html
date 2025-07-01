@@ -87,25 +87,31 @@
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10">
-                        <label class="form-check-label" for="col-10">CAMBIO Activo</label>
+                        <label class="form-check-label" for="col-10">CAMBIO Número de Inventario</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="11" id="col-11">
-                        <label class="form-check-label" for="col-11">CAMBIO Fecha de Creación</label>
+                        <label class="form-check-label" for="col-11">CAMBIO Activo</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="12" id="col-12">
-                        <label class="form-check-label" for="col-12">CAMBIO Fecha de Modificación</label>
+                        <label class="form-check-label" for="col-12">CAMBIO Fecha de Creación</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="13" id="col-13">
-                        <label class="form-check-label" for="col-13">CAMBIO Eliminado</label>
+                        <label class="form-check-label" for="col-13">CAMBIO Fecha de Modificación</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="14" id="col-14">
+                        <label class="form-check-label" for="col-14">CAMBIO Eliminado</label>
                     </div>
                 </li>
             </ul>
@@ -124,6 +130,7 @@
                     <th>CAMBIO Contacto</th>
                     <th>CAMBIO Correo Institucional</th>
                     <th>CAMBIO Código Empleado</th>
+                    <th>CAMBIO Número Identidad</th>
                     <th>CAMBIO Activo</th>
                     <th>CAMBIO Fecha de Creación</th>
                     <th>CAMBIO Fecha de Modificación</th>
@@ -143,6 +150,7 @@
                     <td>{{ h.contacto_cambio }}</td>
                     <td>{{ h.correo_inst_cambio }}</td>
                     <td>{{ h.codigo_empleado_cambio }}</td>
+                    <td>{{ h.numero_identidad_cambio }}</td>
                     <td>{{ h.activo_cambio|yesno:"Activo,Inactivo" }}</td>
                     <td>{{ h.creado_fecha_cambio|date:"j F Y, H:i:s" }}</td>
                     <td>{{ h.fecha_de_modificacion_cambio|date:"j F Y, H:i:s" }}</td>

@@ -84,15 +84,17 @@ class RegistrationForm(forms.Form):
 
     def clean_first_name(self):
         fn = self.cleaned_data['first_name'].strip()
-        if not fn.isalpha():
-            raise ValidationError("El nombre solo puede contener letras.")
-        return fn.upper()
+        # Permitir espacios, pero cada palabra solo letras
+        if not all(palabra.isalpha() for palabra in fn.split()):
+            raise ValidationError("El nombre solo puede contener letras y espacios.")
+        # Opcional: forzar mayúsculas y solo un espacio entre nombres
+        return ' '.join(fn.split()).upper()
 
     def clean_last_name(self):
         ln = self.cleaned_data['last_name'].strip()
-        if not ln.isalpha():
-            raise ValidationError("El apellido solo puede contener letras.")
-        return ln.upper()
+        if not all(palabra.isalpha() for palabra in ln.split()):
+            raise ValidationError("El apellido solo puede contener letras y espacios.")
+        return ' '.join(ln.split()).upper()
 
     def clean_username(self):
         un = self.cleaned_data['username'].strip()

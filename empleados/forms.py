@@ -10,7 +10,7 @@ class FormEmpleados(forms.ModelForm):
         model = Empleados
         fields = [
             'nombre', 'cargo', 'dependencia', 'contacto',
-            'correo_inst', 'codigo_empleado', 'activo', 'eliminado'
+            'correo_inst', 'codigo_empleado', 'activo', 'num_identidad', 'eliminado'
         ]
         widgets = {
             'nombre': forms.TextInput(attrs={
@@ -41,6 +41,11 @@ class FormEmpleados(forms.ModelForm):
                 'pattern': r'^\d{4}$',
                 'title': 'Sólo 4 dígitos numéricos'
             }),
+            'num_identidad': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '0801-2000-00000',
+                'title': 'Sólo 13 dígitos separados por guiones',
+            }),
             'activo': forms.CheckboxInput(attrs={
                 'class': 'form-check-input ms-2',
             }),
@@ -61,6 +66,12 @@ class FormEmpleados(forms.ModelForm):
         if not code.isdigit() or len(code) != 4:
             raise forms.ValidationError('El código debe tener exactamente 4 dígitos numéricos.')
         return code
+    
+    def clean_numero_inventario(self):
+        code = self.cleaned_data.get('num_empleado', '').strip()
+        #if not code.isdigit() or len(code) != 15:
+        #   raise forms.ValidationError('El código debe tener exactamente 4 dígitos numéricos.')
+        #return code
 
 
 class FormEmpleadosDELETE(forms.ModelForm):
@@ -77,7 +88,7 @@ class FormEmpleadosDELETE(forms.ModelForm):
         model = Empleados
         fields = [
             'nombre', 'cargo', 'dependencia', 'contacto',
-            'correo_inst', 'codigo_empleado', 'activo', 'eliminado'
+            'correo_inst', 'codigo_empleado', 'num_identidad', 'activo', 'eliminado'
         ]
         widgets = {
             'nombre': forms.TextInput(attrs={
@@ -102,6 +113,11 @@ class FormEmpleadosDELETE(forms.ModelForm):
             'codigo_empleado': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': '4 dígitos, ej. 7016',
+            }),
+            'num_identidad': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '0801-2000-00000',
+                'title': 'Sólo 13 dígitos separados por guiones',
             }),
             'activo': forms.CheckboxInput(attrs={
                 'class': 'form-check-input ms-2',
