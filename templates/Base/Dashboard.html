@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block contenido %}
+<div class="container py-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-7 text-center">
+            <img src="{% static 'assets/img/logo_transparente.png' %}" alt="UFTF Logo" style="max-width: 550px;" class="mb-4">
+            <h1 class="display-4 text-primary mb-3">¡Bienvenido a Inventario Íntegro!</h1>
+            <h5 class="mb-4 text-dark">Sistema de control y gestión de bienes nacionales<br>Unidad de Financiamiento, Transparencia y Fiscalización (UFTF)</h5>
+            <p class="lead mb-4 text-secondary">
+                Desde aquí podrás consultar, solicitar, registrar y gestionar los bienes de la UFTF de forma eficiente, segura y transparente.<br>
+                Si tienes dudas, consulta los manuales o contacta al responsable del área.
+            </p>
+            <div class="d-flex justify-content-center gap-3 mb-4 flex-wrap">
+                <a href="{% url 'inventario:home_bienesnacionales' %}" class="btn btn-primary btn-lg shadow rounded-3">
+                    <i class="fas fa-boxes"></i> Ver Bienes Nacionales
+                </a>
+                <a href="{% url 'solicitud:listar' %}" class="btn btn-outline-success btn-lg shadow rounded-3">
+                    <i class="fas fa-paper-plane"></i> Solicitar Bien
+                </a>
+            </div>
+            <hr class="my-4">
+        </div>
+    </div>
+</div>
+{% endblock %}

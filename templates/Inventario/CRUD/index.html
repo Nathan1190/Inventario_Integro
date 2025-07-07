@@ -39,8 +39,7 @@
                 <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="7" id="col-7"><label class="form-check-label" for="col-7">Proveedor</label></div></li>
                 <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="8" id="col-8"><label class="form-check-label" for="col-8">Total</label></div></li>
                 <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="9" id="col-9"><label class="form-check-label" for="col-9">Disponible</label></div></li>
-                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10"><label class="form-check-label" for="col-10">Cantidad Mínima</label></div></li>
-                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="11" id="col-11"><label class="form-check-label" for="col-11">Acciones</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10"><label class="form-check-label" for="col-10">Acciones</label></div></li>
             </ul>
         </div>
             <!--<a href="#" id="export-pdf" class="btn btn-danger">
@@ -80,7 +79,6 @@
                         <th>Proveedor</th>
                         <th>Total</th>
                         <th>Disponible</th>
-                        <th>Cantidad Mínima</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -113,7 +111,6 @@
                         <td>{{ bien.proveedor }}</td>
                         <td>{{ bien.total_asignado }}</td>
                         <td>{{ bien.cantidad_restante }}</td>
-                        <td>{{ bien.cantidad_minima }}</td>
                         <td>
                             <button 
                                 class="btn btn-outline-success  agregar-mas"
@@ -200,7 +197,7 @@ $(document).ready(function() {
         },
         columnDefs: [
             { orderable: false, searchable: false, targets: 0 },
-            { targets: [5, 6], visible: false } // Ajusta los targets después de insertar la nueva columna
+            { targets: [ 6], visible: false } // Ajusta los targets después de insertar la nueva columna
         ]
     });
 
