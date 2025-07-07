@@ -69,7 +69,7 @@ class EmpleadosDelete(PantallaRequiredMixin, UpdateView):
 class BienesDeEmpleadoList(PantallaRequiredMixin, ListView):
     template_name = "Empleados/CRUD/bienes_asignados.html"
     context_object_name = "bienes"
-    pantalla_required = '0002' 
+    pantalla_required = '0027' 
 
     def get_queryset(self):
         empleado_id = self.kwargs['pk']
