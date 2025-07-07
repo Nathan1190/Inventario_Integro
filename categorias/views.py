@@ -14,6 +14,13 @@ from .models import Categorias
 from roles.mixins import PantallaRequiredMixin
 import os
 
+from django.http import JsonResponse
+
+
+def categorias_por_objeto_gasto(request):
+    objeto_gasto_id = request.GET.get("objeto_gasto_id")
+    categorias = Categorias.objects.filter(objeto_gasto_id=objeto_gasto_id, eliminado=False).values("id", "nombre")
+    return JsonResponse(list(categorias), safe=False)
 
 class CategoriasList(PantallaRequiredMixin, ListView):
     template_name = 'Categorias/CRUD/index.html'
@@ -74,8 +81,8 @@ class CategoriasDelete(PantallaRequiredMixin, UpdateView):
 
 def export_categorias_pdf(request):
     """Exporta categorías a PDF con filtrado de columnas y paginado."""
-    headers = ["ID", "Nombre", "Descripción", "Creado", "Modificado"]
-    fields = ["id", "nombre", "descripcion", "creado_fecha", "fecha_de_modificacion"]
+    headers = ["ID", "Nombre", "Objeto de Gasto", "Descripción", "Creado", "Modificado"]
+    fields = ["id", "nombre", "objeto_gasto", "descripcion", "creado_fecha", "fecha_de_modificacion"]
 
     cols_param = request.GET.get("cols", "")
     if cols_param:

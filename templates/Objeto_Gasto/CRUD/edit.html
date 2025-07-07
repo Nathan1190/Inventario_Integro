@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+<div class="card shadow">
+    <div class="card-header" style="background-color: #0b3873; color: white;">
+      Editar Objeto de Gasto: {{ form.instance.nombre }}
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="form-group">
+            <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+            {{ form.nombre }}
+            {% if form.nombre.errors %}
+            <div class="text-danger">
+                {{ form.nombre.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.descripcion.id_for_label }}">Descripcion:</label>
+            {{ form.descripcion }}
+            {% if form.descripcion.errors %}
+            <div class="text-danger">
+                {{ form.descripcion.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'objeto_gasto:home_objeto_gasto' %}" class="btn btn-danger">Cancelar</a>
+      </form>
+    </div>
+</div>
+{% endblock %}

@@ -109,6 +109,7 @@ class BienNacionalForm(forms.ModelForm):
             'imagen': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'compania': forms.Select(attrs={'class': 'form-control select2'}),
             'nombre_bien': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ejemplo: Silla'}),
+            'objeto_gasto': forms.Select(attrs={'class': 'form-control select2'}),
             'categoria': forms.Select(attrs={'class': 'form-control select2'}),
             'subcategoria': forms.Select(attrs={'class': 'form-control select2'}),
             'numero_modelo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número/modelo'}),
@@ -133,6 +134,8 @@ class BienNacionalForm(forms.ModelForm):
         self.fields['compania'].empty_label = "Seleccione compañía"
         self.fields['manufacturera'].empty_label = "Seleccione manufacturera"
         self.fields['fabricante'].empty_label = "Seleccione fabricante"
+        self.fields['objeto_gasto'].empty_label = "Seleccione objeto de gasto"
+
 
     def clean_nombre_bien(self):
         nombre = self.cleaned_data.get('nombre_bien', '')
@@ -221,6 +224,7 @@ class BienNacionalEditForm(forms.ModelForm):
             'imagen': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'compania': forms.Select(attrs={'class': 'form-control select2'}),
             'nombre_bien': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ejemplo: Silla'}),
+            'objeto_gasto': forms.Select(attrs={'class': 'form-control select2'}),
             'categoria': forms.Select(attrs={'class': 'form-control select2'}),
             'subcategoria': forms.Select(attrs={'class': 'form-control select2'}),
             'numero_modelo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número/modelo'}),
@@ -243,12 +247,18 @@ class BienNacionalEditForm(forms.ModelForm):
         if self.instance and self.instance.fecha_compra:
             self.initial['fecha_compra'] = self.instance.fecha_compra.strftime('%Y-%m-%d')
         self.fields['compania'].queryset = Compania.objects.all().order_by('nombre')
+
+        self.fields['responsable'].widget = forms.HiddenInput()
+        if self.instance and self.instance.responsable_id:
+            self.fields['responsable'].initial = self.instance.responsable_id
+            
         self.fields['manufacturera'].queryset = Manufacturera.objects.all().order_by('nombre')
         self.fields['fabricante'].queryset = Fabricante.objects.all().order_by('nombre')
         self.fields['compania'].empty_label = "Seleccione compañía"
         self.fields['manufacturera'].empty_label = "Seleccione manufacturera"
         self.fields['fabricante'].empty_label = "Seleccione fabricante"
         self.fields['responsable'].empty_label = "Sin responsable"
+        self.fields['objeto_gasto'].empty_label = "Seleccione objeto de gasto"
 
     def clean_nombre_bien(self):
         nombre = self.cleaned_data.get('nombre_bien', '')

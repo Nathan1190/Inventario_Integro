@@ -65,19 +65,31 @@
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="7" id="col-7">
-                        <label class="form-check-label" for="col-7">Comentario</label>
+                        <label class="form-check-label" for="col-7">Fecha de descargo</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="8" id="col-8">
-                        <label class="form-check-label" for="col-8">Cambio hecho por</label>
+                        <label class="form-check-label" for="col-8">Comentario</label>
                     </div>
                 </li>
                 <li>
                     <div class="form-check dropdown-item">
                         <input class="form-check-input toggle-col" type="checkbox" data-col="9" id="col-9">
-                        <label class="form-check-label" for="col-9">Timestamp</label>
+                        <label class="form-check-label" for="col-9">PDF</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10">
+                        <label class="form-check-label" for="col-10">Cambio hecho por</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check dropdown-item">
+                        <input class="form-check-input toggle-col" type="checkbox" data-col="11" id="col-11">
+                        <label class="form-check-label" for="col-11">Timestamp</label>
                     </div>
                 </li>
             </ul>
@@ -94,7 +106,9 @@
                         <th>Asignado por</th>
                         <th>Fecha de asignación</th>
                         <th>Fecha de firma</th>
+                        <th>Fecha de descargo</th>
                         <th>Comentario</th>
+                        <th>PDF</th>
                         <th>Cambio hecho por</th>
                         <th>Timestamp</th>
                     </tr>
@@ -110,8 +124,14 @@
                                 <span class="badge bg-warning text-dark">Pendiente</span>
                             {% elif h.estado == 'firmado' %}
                                 <span class="badge bg-success">Firmado</span>
+                            {% elif h.estado == 'proceso' %}
+                                <span class="badge bg-info text-dark">Proceso</span>
                             {% elif h.estado == 'cancelado' %}
                                 <span class="badge bg-danger">Cancelado</span>
+                            {% elif h.estado == 'penddesc' %}
+                                <span class="badge bg-primary">PendDesc</span>
+                            {% elif h.estado == 'descargado' %}
+                                <span class="badge bg-secondary">Descargado</span>
                             {% else %}
                                 {{ h.estado }}
                             {% endif %}
@@ -122,10 +142,28 @@
                             {% if h.fecha_firma %}
                                 {{ h.fecha_firma|date:"d/m/Y H:i" }}
                             {% else %}
-                                <span class="text-muted">Sin firma</span>
+                                <span class="text-muted">—</span>
                             {% endif %}
                         </td>
-                        <td>{{ h.comentario }}</td>
+                        <td>
+                            {% if h.fecha_descargo %}
+                                {{ h.fecha_descargo|date:"d/m/Y H:i" }}
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ h.comentario|default:"—" }}
+                        </td>
+                        <td>
+                            {% if h.pdf_firmado %}
+                                <a href="{{ h.pdf_firmado.url }}" class="btn btn-outline-primary btn-sm" target="_blank">
+                                    Ver PDF
+                                </a>
+                            {% else %}
+                                <span class="text-muted">No disponible</span>
+                            {% endif %}
+                        </td>
                         <td>{{ h.changed_by }}</td>
                         <td>{{ h.cambiado_en|date:"d/m/Y H:i:s" }}</td>
                     </tr>

@@ -18,6 +18,26 @@ from reportlab.platypus import Table, TableStyle
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 
+def bienes_por_filtros(request):
+    objeto_gasto_id = request.GET.get("objeto_gasto_id")
+    categoria_id = request.GET.get("categoria_id")
+    subcategoria_id = request.GET.get("subcategoria_id")
+    queryset = BienNacional.objects.filter(eliminado=False)
+
+    if objeto_gasto_id:
+        queryset = queryset.filter(objeto_gasto_id=objeto_gasto_id)
+    if categoria_id:
+        queryset = queryset.filter(categoria_id=categoria_id)
+    if subcategoria_id:
+        queryset = queryset.filter(subcategoria_id=subcategoria_id)
+    bienes = queryset.values("id", "nombre_bien", "numero_inventario")
+    response = [
+        {"id": b["id"], "label": f'{b["numero_inventario"]} - {b["nombre_bien"]}'}
+        for b in bienes
+    ]
+    return JsonResponse(response, safe=False)
+
+
 # Generador automático del código UFTF-xxxxx
 CODIGO_PREFIX = "UFTF-"
 DIGITS = 5
@@ -51,6 +71,7 @@ def generar_codigos_para_bienes(cantidad):
 def agregar_mas_bienes(request):
     if request.method == 'POST':
         nombre_bien = request.POST.get('nombre_bien')
+        objeto_gasto_id = request.POST.get('objeto_gasto')
         categoria_id = request.POST.get('categoria')
         subcategoria_id = request.POST.get('subcategoria') or None
         cantidad = int(request.POST.get('cantidad', 1))
@@ -58,6 +79,7 @@ def agregar_mas_bienes(request):
         # Busca un bien base para copiar todos los campos
         bien_base = BienNacional.objects.filter(
             nombre_bien=nombre_bien,
+            objeto_gasto_id=objeto_gasto_id,
             categoria_id=categoria_id,
             subcategoria_id=subcategoria_id,
         ).first()
@@ -73,6 +95,7 @@ def agregar_mas_bienes(request):
                 imagen=None,  
                 compania=bien_base.compania,
                 nombre_bien=bien_base.nombre_bien,
+                objeto_gasto=bien_base.objeto_gasto,
                 categoria=bien_base.categoria,
                 subcategoria=bien_base.subcategoria,
                 numero_modelo=bien_base.numero_modelo,
@@ -107,11 +130,13 @@ class BienNacionalList(PantallaRequiredMixin, ListView):
                 .filter(eliminado=False)
                 .values(
                     'nombre_bien',
+                    'objeto_gasto',
                     'categoria',
                     'subcategoria',
                 )
                 .annotate(
                     min_id=Min('id'),
+                    objeto_gasto_nombre=F('objeto_gasto__nombre'),
                     categoria_nombre=F('categoria__nombre'),
                     subcategoria_nombre=F('subcategoria__nombre'),
                     compania_nombre=F('compania__nombre'),
@@ -121,13 +146,14 @@ class BienNacionalList(PantallaRequiredMixin, ListView):
         # Luego, para cada grupo, busca el id con imagen no vacía
         imagenes = {}
         for grupo in qs:
-            clave = (grupo['nombre_bien'], grupo['categoria'], grupo['subcategoria'])
+            clave = (grupo['nombre_bien'], grupo['objeto_gasto'], grupo['categoria'], grupo['subcategoria'])
             if clave not in imagenes:
                 bien_con_imagen = (
                     BienNacional.objects
                     .filter(
                         eliminado=False,
                         nombre_bien=grupo['nombre_bien'],
+                        objeto_gasto=grupo['objeto_gasto'],
                         categoria=grupo['categoria'],
                         subcategoria=grupo['subcategoria'],
                     )
@@ -139,6 +165,7 @@ class BienNacionalList(PantallaRequiredMixin, ListView):
             grupo['imagen_url'] = imagenes[clave]
             stock = StockBien.objects.filter(
                 nombre_bien=grupo['nombre_bien'],
+                objeto_gasto_id=grupo['objeto_gasto'],
                 categoria_id=grupo['categoria'],
                 subcategoria_id=grupo['subcategoria'],
             ).first()
@@ -253,6 +280,7 @@ class BienNacionalCreate(PantallaRequiredMixin, UpdateView):
             bien_ref = bienes[0]
             stock, created = StockBien.objects.get_or_create(
                 nombre_bien=bien_ref.nombre_bien,
+                objeto_gasto=bien_ref.objeto_gasto,
                 categoria=bien_ref.categoria,
                 subcategoria=bien_ref.subcategoria,
             )
@@ -260,6 +288,7 @@ class BienNacionalCreate(PantallaRequiredMixin, UpdateView):
             # Total = todos los bienes de ese tipo (sin eliminar)
             total = BienNacional.objects.filter(
                 nombre_bien=bien_ref.nombre_bien,
+                objeto_gasto=bien_ref.objeto_gasto,
                 categoria=bien_ref.categoria,
                 subcategoria=bien_ref.subcategoria,
                 eliminado=False,
@@ -268,6 +297,7 @@ class BienNacionalCreate(PantallaRequiredMixin, UpdateView):
             # Restantes = los bienes NO asignados (responsable es NULL)
             cantidad_restante = BienNacional.objects.filter(
                 nombre_bien=bien_ref.nombre_bien,
+                objeto_gasto=bien_ref.objeto_gasto,
                 categoria=bien_ref.categoria,
                 subcategoria=bien_ref.subcategoria,
                 responsable__isnull=True,
@@ -306,7 +336,7 @@ def export_inventario_pdfv(request):
         "Imagen", "Nombre del Bien", "Categoría", "Subcategoría", "Fabricante", "Proveedor", "Total", "Disponible", "Cantidad Mínima"
         ]
         fields = [
-        "imagen", "nombre_bien", "categoria", "subcategoria",
+        "imagen", "nombre_bien", "objeto_gasto", "categoria", "subcategoria",
         "fabricante", "proveedor", "total_asignado", "cantidad_restante", "cantidad_minima"
         ]
         cols_param = request.GET.get("cols", "")
@@ -332,6 +362,7 @@ def export_inventario_pdfv(request):
         for cat in qs:
             stock = StockBien.objects.filter(
                 nombre_bien=cat.nombre_bien,
+                objeto_gasto=cat.objeto_gasto,
                 categoria=cat.categoria,
                 subcategoria=cat.subcategoria
             ).first()
@@ -427,10 +458,10 @@ def export_inventario_pdfv(request):
 def export_inventario_pdfh(request):
     """Exporta inventareio a PDF con filtrado de columnas y paginado."""
     headers = [
-    "Imagen", "Nombre del Bien", "Categoría", "Subcategoría", "Fabricante", "Proveedor", "Total", "Disponible", "Cantidad Mínima"
+    "Imagen", "Nombre del Bien", "Objeto de Gasto", "Categoría", "Subcategoría", "Fabricante", "Proveedor", "Total", "Disponible", "Cantidad Mínima"
     ]
     fields = [
-    "imagen", "nombre_bien", "categoria", "subcategoria",
+    "imagen", "nombre_bien", "objeto_gasto", "categoria", "subcategoria",
     "fabricante", "proveedor", "total_asignado", "cantidad_restante", "cantidad_minima"
     ]
     
@@ -457,6 +488,7 @@ def export_inventario_pdfh(request):
     for cat in qs:
         stock = StockBien.objects.filter(
             nombre_bien=cat.nombre_bien,
+            objeto_gasto=cat.objeto_gasto,
             categoria=cat.categoria,
             subcategoria=cat.subcategoria
         ).first()
@@ -545,12 +577,14 @@ def buscar_por_numero_inventario(request):
     return JsonResponse({
         "ok": True,
         "nombre_bien": bien.nombre_bien,
+        "objeto_gasto_id": bien.objeto_gasto.id if bien.objeto_gasto else None,
         "categoria_id": bien.categoria.id if bien.categoria else None,
         "subcategoria_id": bien.subcategoria.id if bien.subcategoria else 0,
         "url_desagrupado": reverse_lazy(
             "bien_detalle:desagrupado",
             kwargs={
                 "nombre_bien": bien.nombre_bien,
+                "objeto_gasto_id": bien.objeto_gasto.id if bien.objeto_gasto else 0,
                 "categoria_id": bien.categoria.id if bien.categoria else 0,
                 "subcategoria_id": bien.subcategoria.id if bien.subcategoria else 0,
             }

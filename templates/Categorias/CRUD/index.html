@@ -57,19 +57,25 @@
     <li>
       <div class="form-check dropdown-item">
         <input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4">
-        <label class="form-check-label" for="col-4">Creado</label>
+        <label class="form-check-label" for="col-4">Objeto de Gasto</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
-        <input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5" >
-        <label class="form-check-label" for="col-5">Modificado</label>
+        <input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5">
+        <label class="form-check-label" for="col-5">Creado</label>
       </div>
     </li>
     <li>
       <div class="form-check dropdown-item">
-        <input class="form-check-input toggle-col" type="checkbox" data-col="6" id="col-6">
-        <label class="form-check-label" for="col-6">Acciones</label>
+        <input class="form-check-input toggle-col" type="checkbox" data-col="6" id="col-6" >
+        <label class="form-check-label" for="col-6">Modificado</label>
+      </div>
+    </li>
+    <li>
+      <div class="form-check dropdown-item">
+        <input class="form-check-input toggle-col" type="checkbox" data-col="7" id="col-7">
+        <label class="form-check-label" for="col-7">Acciones</label>
       </div>
     </li>
   </ul>
@@ -87,6 +93,7 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Descripcion</th>
+                <th>Objeto de Gasto</th>
                 <th>Fecha de Creacion</th>
                 <th>Fecha de Modificacion</th>
                 <th>Acciones</th>
@@ -99,6 +106,7 @@
                 <td>{{categorias.id}}</td>
                 <td>{{categorias.nombre}}</td>
                 <td>{{categorias.descripcion}}</td>
+                <td>{{categorias.objeto_gasto}}</td>
                 <td>{{categorias.creado_fecha|date:"j F Y, H:i:s" }}</td>
                 <td>{{categorias.fecha_de_modificacion|date:"j F Y, H:i:s" }}</td>
                 <td>

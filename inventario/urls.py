@@ -10,4 +10,5 @@ urlpatterns = [
     path('export/pdfh/', export_inventario_pdfh, name="inventario_pdfh"),
     path('agregar_mas/', agregar_mas_bienes, name='agregar_mas_bienes'),  
     path("buscar_numero_inventario/", buscar_por_numero_inventario, name="buscar_numero_inventario"),
+    path('bienes/por_filtros/', bienes_por_filtros, name="bienes_por_filtros"),
 ]

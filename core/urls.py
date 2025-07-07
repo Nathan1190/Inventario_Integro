@@ -59,8 +59,9 @@ urlpatterns = [
     
     path('asignaciones/',include('asignaciones.urls', namespace='asignaciones')),
 
+    path('solicitud/',include('solicitud.urls', namespace='solicitud')),
 
-
+    path('objeto_gasto/',include('objeto_gasto.urls', namespace='objeto_gasto')),
 
 
     path('roles_history/',include('roles_history.urls', namespace='roles_history')),
@@ -82,5 +83,7 @@ urlpatterns = [
     path('inventario_history/',include('inventario_history.urls', namespace='inventario_history')),
     
     path('asignaciones_history/',include('asignaciones_history.urls', namespace='asignaciones_history')),
+
+    path('objeto_gasto_history/',include('objeto_gasto_history.urls', namespace='objeto_gasto_history')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

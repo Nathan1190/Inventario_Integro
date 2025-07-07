@@ -9,4 +9,5 @@ urlpatterns = [
     path('CRUD/edit.html/<int:pk>', SubcategoriasEdit.as_view(), name="subcategorias_edit"),  
     path('CRUD/delete.html/<int:pk>', SubcategoriasDelete.as_view(), name="subcategorias_delete"),
     path('export/pdf/', export_subcategorias_pdf, name="subcategorias_pdf"),  
+    path("por_categoria/", subcategorias_por_categoria, name="subcategorias_por_categoria"),
 ]

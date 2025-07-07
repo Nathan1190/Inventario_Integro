@@ -1,0 +1,33 @@
+{% extends "base/base.html" %}
+{% block contenido %}
+<div class="card shadow">
+    <h5 class="card-header text-center" style="background-color: #00966a; color: white;">
+        Confirmar Descargo de Bien Asignado
+    </h5>
+
+    <div class="card-body text-center" style="background: rgba(220, 218, 218, 0.5);border-radius: 10px;">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <label for="{{ object.responsable }}">Responsable:</label>
+                {{ object.responsable.codigo_empleado }} - {{ object.responsable.nombre }}
+            <div class="mb-3">
+                <label for="{{ object.bien.numero_inventario }}">Bien Asignado:</label>
+                {{ object.bien.numero_inventario }} - {{ object.bien.nombre_bien }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.pdf_descargo.id_for_label }}">Adjuntar PDF firmado del Descargo:</label>
+                <hr>
+                {{ form.pdf_firmado }}
+                {% if form.pdf_firmado.errors %}
+                <hr>
+                <div class="text-danger">{{ form.pdf_firmado.errors }}</div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-success">Confirmar Descargo</button>
+            <a href="{% url 'asignaciones:lista' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

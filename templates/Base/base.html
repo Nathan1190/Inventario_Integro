@@ -265,12 +265,29 @@
     </a>
   </li>
   {% endif %}
+  {% if request.user|has_pantalla:'0023' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'solicitud:listar' %}">
+      <i class="fas fa-network-wired"></i>
+      <span>Solicitud de Bienes</span>
+    </a>
+  </li>
+  {% endif %}
 
   <hr class="sidebar-divider">
 
   <!-- SECCIÓN: CATÁLOGOS -->
+   
    {% if request.user|has_pantalla:'0012' or request.user|has_pantalla:'0016' or request.user|has_pantalla:'0006' or request.user|has_pantalla:'0009' or request.user|has_pantalla:'0010' %}
   <div class="sidebar-heading">Catálogos</div>
+  {% endif %}
+  {% if request.user|has_pantalla:'0024' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'objeto_gasto:home_objeto_gasto' %}">
+      <i class="fas fa-tags"></i>
+      <span>Objetos de Gasto</span>
+    </a>
+  </li>
   {% endif %}
   {% if request.user|has_pantalla:'0012' %}
   <li class="nav-item">
@@ -361,6 +378,9 @@
         {% if request.user|has_pantalla:'0022' %}
         <a class="collapse-item" href="{% url 'asignaciones_history:home_asignaciones_history' %}">Asignaciones</a>
         {% endif %}
+        {% if request.user|has_pantalla:'0025' %}
+        <a class="collapse-item" href="{% url 'objeto_gasto_history:home_objeto_gasto_history' %}">Objetos de Gasto</a>
+        {% endif %}
       </div>
     </div>
   </li>
@@ -401,6 +421,9 @@
                   </li>
                   <li><a class="dropdown-item text-dark" href="{% url 'loginapp:logout' %}">
                     <i class="bi bi-box-arrow-right fa-sm fa-fw me-2"></i>Cerrar sesión
+                  </a></li>
+                  <li><a class="dropdown-item text-dark" href="{% url 'loginapp:logout' %}">
+                    <i class="bi bi-box-arrow-right fa-sm fa-fw me-2"></i>asas sesión
                   </a></li>
                 {% endif %}
               </ul>

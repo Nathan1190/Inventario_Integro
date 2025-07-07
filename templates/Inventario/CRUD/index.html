@@ -32,14 +32,15 @@
                 </li>
                 <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="1" id="col-1"><label class="form-check-label" for="col-1">Imagen</label></div></li>
                 <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="2" id="col-2"><label class="form-check-label" for="col-2">Nombre del Bien</label></div></li>
-                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="3" id="col-3"><label class="form-check-label" for="col-3">Categoría</label></div></li>
-                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4"><label class="form-check-label" for="col-4">Subcategoría</label></div></li>
-                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5"><label class="form-check-label" for="col-5">Fabricante</label></div></li>
-                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="6" id="col-6"><label class="form-check-label" for="col-6">Proveedor</label></div></li>
-                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="7" id="col-7"><label class="form-check-label" for="col-7">Total</label></div></li>
-                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="8" id="col-8"><label class="form-check-label" for="col-8">Disponible</label></div></li>
-                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="9" id="col-9"><label class="form-check-label" for="col-9">Cantidad Mínima</label></div></li>
-                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10"><label class="form-check-label" for="col-10">Acciones</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="3" id="col-3"><label class="form-check-label" for="col-3">Objetos de Gastos</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="4" id="col-4"><label class="form-check-label" for="col-4">Categoría</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="5" id="col-5"><label class="form-check-label" for="col-5">Subcategoría</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="6" id="col-6"><label class="form-check-label" for="col-6">Fabricante</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="7" id="col-7"><label class="form-check-label" for="col-7">Proveedor</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="8" id="col-8"><label class="form-check-label" for="col-8">Total</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="9" id="col-9"><label class="form-check-label" for="col-9">Disponible</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="10" id="col-10"><label class="form-check-label" for="col-10">Cantidad Mínima</label></div></li>
+                <li><div class="form-check dropdown-item"><input class="form-check-input toggle-col" type="checkbox" data-col="11" id="col-11"><label class="form-check-label" for="col-11">Acciones</label></div></li>
             </ul>
         </div>
             <!--<a href="#" id="export-pdf" class="btn btn-danger">
@@ -72,6 +73,7 @@
                         <th><input type="checkbox" id="select-all"></th>
                         <th>Imagen</th>
                         <th>Nombre</th>
+                        <th>Objeto de Gasto</th>
                         <th>Categoría</th>
                         <th>Subcategoría</th>
                         <th>Fabricante</th>
@@ -94,10 +96,11 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{% url 'bien_detalle:desagrupado' bien.nombre_bien bien.categoria bien.subcategoria %}">
+                            <a href="{% url 'bien_detalle:desagrupado' bien.nombre_bien bien.objeto_gasto bien.categoria bien.subcategoria %}">
                                 {{ bien.nombre_bien }}
                             </a>
                         </td>
+                        <td>{{ bien.objeto_gasto_nombre }}</td>
                         <td>{{ bien.categoria_nombre }}</td>
                         <td>
                             {% if bien.subcategoria_nombre %}
@@ -115,6 +118,7 @@
                             <button 
                                 class="btn btn-outline-success  agregar-mas"
                                 data-nombre="{{ bien.nombre_bien }}"
+                                data-objetogasto="{{ bien.objeto_gasto }}"
                                 data-categoria="{{ bien.categoria }}"
                                 data-subcategoria="{{ bien.subcategoria }}"
                                 title="Agregar más unidades">

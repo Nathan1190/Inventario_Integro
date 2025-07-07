@@ -7,7 +7,7 @@ from inventario.models import BienNacional
 from inventario.forms import BienNacionalEditForm
 from .forms import *
 from django.urls import reverse_lazy
-from reportlab.lib.pagesizes import letter, landscape
+from reportlab.lib.pagesizes import letter, landscape, legal
 from reportlab.lib import colors
 from reportlab.lib.colors import CMYKColor
 from reportlab.pdfgen.canvas import Canvas
@@ -26,11 +26,13 @@ class BienDetalleList(PantallaRequiredMixin, ListView):
     def get_queryset(self):
         
         nombre_bien = self.kwargs['nombre_bien']
+        objeto_gasto_id = self.kwargs['objeto_gasto_id']
         categoria_id = self.kwargs['categoria_id']
         subcategoria_id = self.kwargs['subcategoria_id']
         return BienNacional.objects.filter(
             eliminado=False,
             nombre_bien=nombre_bien,
+            objeto_gasto_id=objeto_gasto_id,
             categoria_id=categoria_id,
             subcategoria_id=subcategoria_id
         ).order_by('id')
@@ -38,6 +40,7 @@ class BienDetalleList(PantallaRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['nombre_bien'] = self.kwargs['nombre_bien']
+        ctx['objeto_gasto_id'] = self.kwargs['objeto_gasto_id']
         ctx['categoria_id'] = self.kwargs['categoria_id']
         ctx['subcategoria_id'] = self.kwargs['subcategoria_id']
 
@@ -60,10 +63,10 @@ class BienDetalleList(PantallaRequiredMixin, ListView):
 
         return ctx 
     
-def export_inventario_pdfv(request, nombre_bien, categoria_id, subcategoria_id):
+def export_inventario_pdfv(request, nombre_bien, objeto_gasto_id, categoria_id, subcategoria_id):
         """Exporta inventareio a PDF con filtrado de columnas y paginado."""
-        headers = ["Id", "Numero de Inventario", "Imagen", "Nombre del Bien", "Categoría", "Subcategoría", "Compañia", "Manufacturera", "Fabricante", "Proveedor", "Serial", "Modelo", "Unidad de Medida", "Ubicacion", "Numero de Orden", "Numero de Factura", "Costo de Compra", "Fecha de Compra", "Estados", "Responsable", "Notas", "Fecha de Creado", "Fecha de Modificado"]
-        fields = ["id", "numero_inventario", "imagen_mostrar", "nombre_bien", "categoria", "subcategoria", "compania", "manufacturera", "fabricante", "proveedor", "serial", "numero_modelo", "unidad_medida", "ubicacion", "numero_orden", "numero_factura", "costo_compra", "fecha_compra", "estado", "responsable", "notas", "creado", "modificado"]
+        headers = ["Id", "Numero de Inventario", "Imagen", "Nombre del Bien", "Objeto Gasto", "Categoría", "Subcategoría", "Compañia", "Manufacturera", "Fabricante", "Proveedor", "Serial", "Modelo", "Unidad de Medida", "Ubicacion", "Numero de Orden", "Numero de Factura", "Costo de Compra", "Fecha de Compra", "Estados", "Responsable", "Notas", "Fecha de Creado", "Fecha de Modificado"]
+        fields = ["id", "numero_inventario", "imagen_mostrar", "nombre_bien", "objeto_gasto", "categoria", "subcategoria", "compania", "manufacturera", "fabricante", "proveedor", "serial", "numero_modelo", "unidad_medida", "ubicacion", "numero_orden", "numero_factura", "costo_compra", "fecha_compra", "estado", "responsable", "notas", "creado", "modificado"]
         cols_param = request.GET.get("cols", "")
         if cols_param:
             try:
@@ -74,7 +77,7 @@ def export_inventario_pdfv(request, nombre_bien, categoria_id, subcategoria_id):
         else:
             selected = list(range(len(headers)))
 
-        qs = BienNacional.objects.filter(eliminado=False,nombre_bien=nombre_bien,categoria_id=categoria_id,subcategoria_id=subcategoria_id).order_by("id")
+        qs = BienNacional.objects.filter(eliminado=False,nombre_bien=nombre_bien,objeto_gasto_id=objeto_gasto_id,categoria_id=categoria_id,subcategoria_id=subcategoria_id).order_by("id")
         ids_param = request.GET.get("ids", "")
         if ids_param:
             try:
@@ -89,6 +92,7 @@ def export_inventario_pdfv(request, nombre_bien, categoria_id, subcategoria_id):
         for cat in qs:
             stock = StockBien.objects.filter(
                 nombre_bien=cat.nombre_bien,
+                objeto_gasto=cat.objeto_gasto,
                 categoria=cat.categoria,
                 subcategoria=cat.subcategoria
             ).first()
@@ -188,10 +192,10 @@ def export_inventario_pdfv(request, nombre_bien, categoria_id, subcategoria_id):
         c.save()
         return response
 
-def export_inventario_pdfh(request, nombre_bien, categoria_id, subcategoria_id):
+def export_inventario_pdfh(request, nombre_bien, objeto_gasto_id, categoria_id, subcategoria_id):
         """Exporta inventareio a PDF con filtrado de columnas y paginado."""
-        headers = ["Id", "Numero de Inventario", "Imagen", "Nombre del Bien", "Categoría", "Subcategoría", "Compañia", "Manufacturera", "Fabricante", "Proveedor", "Serial", "Modelo", "Unidad de Medida", "Ubicacion", "Numero de Orden", "Numero de Factura", "Costo de Compra", "Fecha de Compra", "Estados", "Responsable", "Notas", "Fecha de Creado", "Fecha de Modificado"]
-        fields = ["id", "numero_inventario", "imagen_mostrar", "nombre_bien", "categoria", "subcategoria", "compania", "manufacturera", "fabricante", "proveedor", "serial", "numero_modelo", "unidad_medida", "ubicacion", "numero_orden", "numero_factura", "costo_compra", "fecha_compra", "estado", "responsable", "notas", "creado", "modificado"]
+        headers = ["Id", "Numero de Inventario", "Imagen", "Nombre del Bien", "Objeto de Gasto", "Categoría", "Subcategoría", "Compañia", "Manufacturera", "Fabricante", "Proveedor", "Serial", "Modelo", "Unidad de Medida", "Ubicacion", "Numero de Orden", "Numero de Factura", "Costo de Compra", "Fecha de Compra", "Estados", "Responsable", "Notas", "Fecha de Creado", "Fecha de Modificado"]
+        fields = ["id", "numero_inventario", "imagen_mostrar", "nombre_bien", "objeto_gasto", "categoria", "subcategoria", "compania", "manufacturera", "fabricante", "proveedor", "serial", "numero_modelo", "unidad_medida", "ubicacion", "numero_orden", "numero_factura", "costo_compra", "fecha_compra", "estado", "responsable", "notas", "creado", "modificado"]
     
         cols_param = request.GET.get("cols", "")
         if cols_param:
@@ -203,7 +207,7 @@ def export_inventario_pdfh(request, nombre_bien, categoria_id, subcategoria_id):
         else:
             selected = list(range(len(headers)))
 
-        qs = BienNacional.objects.filter(eliminado=False,nombre_bien=nombre_bien,categoria_id=categoria_id,subcategoria_id=subcategoria_id).order_by("id")
+        qs = BienNacional.objects.filter(eliminado=False,nombre_bien=nombre_bien,objeto_gasto_id=objeto_gasto_id,categoria_id=categoria_id,subcategoria_id=subcategoria_id).order_by("id")
         ids_param = request.GET.get("ids", "")
         if ids_param:
             try:
@@ -217,6 +221,7 @@ def export_inventario_pdfh(request, nombre_bien, categoria_id, subcategoria_id):
         for cat in qs:
             stock = StockBien.objects.filter(
                 nombre_bien=cat.nombre_bien,
+                objeto_gasto=cat.objeto_gasto,
                 categoria=cat.categoria,
                 subcategoria=cat.subcategoria
             ).first()
@@ -256,8 +261,8 @@ def export_inventario_pdfh(request, nombre_bien, categoria_id, subcategoria_id):
 
         response = HttpResponse(content_type="application/pdf")
         response["Content-Disposition"] = 'filename="inventario.pdf"'
-        ca = Canvas(response, pagesize=landscape(letter))
-        width, height = landscape(letter)
+        ca = Canvas(response, pagesize=landscape(legal))
+        width, height = landscape(legal)
         per_page = 25
         page = 1
 
@@ -267,7 +272,7 @@ def export_inventario_pdfh(request, nombre_bien, categoria_id, subcategoria_id):
 
         for start in range(0, len(rows), per_page):
             table_data = [[headers[i] for i in selected]] + rows[start:start + per_page]
-            table = Table(table_data, repeatRows=1)
+            table = Table(table_data)
             table.setStyle(TableStyle([
                 ("BACKGROUND", (0, 0), (-1, 0), colors.grey),
                 ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
@@ -300,6 +305,13 @@ def export_inventario_pdfh(request, nombre_bien, categoria_id, subcategoria_id):
             y = (height - 180) - h
             table.drawOn(ca, x, y)
 
+            if start + per_page >= len(rows):  
+                if total_costo > 0:
+                    ca.setFont("Helvetica-Bold", 11)
+                    ca.setFillColor(colors.black)
+                    ca.drawRightString(width - 65, y - 18, f"Total general de Costo de Compra: L. {total_costo:,.2f}")
+
+
             ca.setFont("Helvetica", 9)
             ca.setFillColor(colors.white)
             ca.drawCentredString(width / 2, 20, f"Página {page}")
@@ -323,7 +335,7 @@ class BienDetalleEdit(PantallaRequiredMixin, UpdateView):
         model = BienNacional
         exclude = [
             'numero_inventario', 'eliminado', 'creado', 'modificado',
-            'total_asignado', 'cantidad_restante',  # se actualizan automáticos
+            'total_asignado', 'cantidad_restante', 'responsable',
         ]
 
     def get_form(self, form_class=None):
@@ -340,13 +352,17 @@ class BienDetalleEdit(PantallaRequiredMixin, UpdateView):
             'bien_detalle:desagrupado',
             kwargs={
                 'nombre_bien': bien.nombre_bien,
+                'objeto_gasto_id': bien.objeto_gasto.id,
                 'categoria_id': bien.categoria.id,
                 'subcategoria_id': bien.subcategoria.id if bien.subcategoria else 0
             }
         )
     
     def form_valid(self, form):
+        if not form.cleaned_data.get('responsable'):
+            form.instance.responsable = self.get_object().responsable
         return super().form_valid(form)
+
 
     def form_invalid(self, form):
         print("Errores del formulario:", form.errors)  # Esto imprime los errores en tu consola de Django
@@ -366,6 +382,7 @@ class BienDetalleDelete(UpdateView):
         # Redirige al desagrupado (puedes mejorar la UX con mensajes)
         return redirect('bien_detalle:desagrupado',
             nombre_bien=bien.nombre_bien,
+            objeto_gasto_id=bien.objeto_gasto.id,
             categoria_id=bien.categoria.id,
             subcategoria_id=bien.subcategoria.id if bien.subcategoria else 0
         )

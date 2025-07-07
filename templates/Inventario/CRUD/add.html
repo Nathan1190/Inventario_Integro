@@ -35,6 +35,11 @@
 
       <div class="row mb-3">
         <div class="col-md-4">
+          <label for="{{ form.objeto_gasto.id_for_label }}">Objeto de Gasto:</label>
+          {{ form.objeto_gasto }}
+          {% if form.objeto_gasto.errors %}<div class="text-danger">{{ form.objeto_gasto.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-4">
           <label for="{{ form.categoria.id_for_label }}">Categoría:</label>
           {{ form.categoria }}
           {% if form.categoria.errors %}<div class="text-danger">{{ form.categoria.errors }}</div>{% endif %}
@@ -44,10 +49,7 @@
           {{ form.subcategoria }}
           {% if form.subcategoria.errors %}<div class="text-danger">{{ form.subcategoria.errors }}</div>{% endif %}
         </div>
-        <div class="col-md-4">
-          <label for="{{ form.unidad_medida.id_for_label }}">Unidad de Medida:</label>
-          {{ form.unidad_medida }}
-        </div>
+        
       </div>
 
       <div class="row mb-3">
@@ -130,6 +132,10 @@
         <div class="col-md-6">
           <label for="{{ form.notas.id_for_label }}">Notas:</label>
           {{ form.notas }}
+        </div>
+        <div class="col-md-6">
+          <label for="{{ form.unidad_medida.id_for_label }}">Unidad de Medida:</label>
+          {{ form.unidad_medida }}
         </div>
       </div>
 
@@ -225,20 +231,7 @@
     });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function(){
-        const input = document.querySelector('#id_telefono');
-        if (!input) return;
-        const iti = window.intlTelInput(input, {
-            initialCountry: 'hn',
-            separateDialCode: true,
-            utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js'
-        });
-        input.form.addEventListener('submit', () => {
-            input.value = iti.getNumber();
-        });
-    });
-</script>
+
 {% block javascript %}
     {{ block.super }}
     <script>
@@ -254,5 +247,73 @@
             });
         });
     </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+        console.log('JQuery listo');
+    $('.select2').select2({
+        theme: 'classic',
+        width: '100%',
+        placeholder: 'Selecciona una opción',
+        allowClear: true,
+        language: {
+            noResults: function() { return 'No se encontraron resultados'; }
+        }
+    });
+
+    $('#id_objeto_gasto').on('change', function() {
+        console.log('Cambiando objeto de gasto: ', this.value);
+        const objetoGastoId = this.value;
+        fetch(`/categorias/por_objeto_gasto/?objeto_gasto_id=${objetoGastoId}`)
+            .then(response => response.json())
+            .then(data => {
+                $('#id_categoria').select2('destroy');
+                $('#id_categoria').html('<option value="">Seleccione categoría</option>');
+                data.forEach(categoria => {
+                    $('#id_categoria').append(`<option value="${categoria.id}">${categoria.nombre}</option>`);
+                });
+                $('#id_categoria').select2({
+                    theme: 'classic',
+                    width: '100%',
+                    placeholder: 'Selecciona una opción',
+                    allowClear: true,
+                    language: { noResults: function() { return 'No se encontraron resultados'; } }
+                });
+
+                $('#id_subcategoria').select2('destroy');
+                $('#id_subcategoria').html('<option value="">Seleccione subcategoría</option>');
+                $('#id_subcategoria').select2({
+                    theme: 'classic',
+                    width: '100%',
+                    placeholder: 'Selecciona una opción',
+                    allowClear: true,
+                    language: { noResults: function() { return 'No se encontraron resultados'; } }
+                });
+            });
+    });
+    
+
+    $('#id_categoria').on('change', function() {
+        const categoriaId = this.value;
+        fetch(`/subcategorias/por_categoria/?categoria_id=${categoriaId}`)
+            .then(response => response.json())
+            .then(data => {
+                $('#id_subcategoria').select2('destroy');
+                $('#id_subcategoria').html('<option value="">Seleccione subcategoría</option>');
+                data.forEach(subcat => {
+                    $('#id_subcategoria').append(`<option value="${subcat.id}">${subcat.nombre}</option>`);
+                });
+                $('#id_subcategoria').select2({
+                    theme: 'classic',
+                    width: '100%',
+                    placeholder: 'Selecciona una opción',
+                    allowClear: true,
+                    language: { noResults: function() { return 'No se encontraron resultados'; } }
+                });
+            });
+    });
+});
+
+</script>
 {% endblock %}
 {% endblock %}

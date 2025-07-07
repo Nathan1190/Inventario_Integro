@@ -3,8 +3,10 @@ from django.core.validators import MinLengthValidator
 from django.db.models.signals import post_save
 from core.middleware import get_current_user
 from django.dispatch import receiver
+from objeto_gasto.models import ObjetoGasto
 
 class Categorias(models.Model):
+    objeto_gasto = models.ForeignKey(ObjetoGasto, on_delete=models.PROTECT, related_name="categorias")
     nombre = models.CharField(
         max_length=80,
         unique=True,
@@ -43,6 +45,7 @@ def crear_historial_categoria(sender, instance, created, **kwargs):
         changed_by                   = user,
         nombre_cambio                = instance.nombre,
         descripcion_cambio           = instance.descripcion,
+        objeto_gasto_cambio          = instance.objeto_gasto,
         creado_fecha_cambio          = instance.creado_fecha,
         fecha_de_modificacion_cambio = instance.fecha_de_modificacion,
         eliminado_cambio             = instance.eliminado,

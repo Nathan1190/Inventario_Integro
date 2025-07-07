@@ -80,6 +80,10 @@ INSTALLED_APPS = [
     'inventario_history',
     'asignaciones',
     'asignaciones_history',
+    'solicitud',
+
+    'objeto_gasto',
+    'objeto_gasto_history',
 ]
 
 MIDDLEWARE = [

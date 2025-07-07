@@ -12,7 +12,7 @@ class FormCategorias(forms.ModelForm):
 
     class Meta:
         model  = Categorias
-        fields = ["nombre", "descripcion"]          
+        fields = ["nombre", "descripcion", "objeto_gasto"]          
         widgets = {
             "nombre": forms.TextInput(attrs={
                 "class": "form-control",
@@ -21,6 +21,10 @@ class FormCategorias(forms.ModelForm):
             "descripcion": forms.TextInput(attrs={
                 "class": "form-control",
                 "placeholder": "Ingrese la descripción"
+            }),
+            "objeto_gasto": forms.Select(attrs={
+                "class": "form-control",
+                "placeholder": "Seleccione el objeto de gasto"
             }),
         }
 
@@ -39,9 +43,10 @@ class FormCategoriasDELETE(forms.ModelForm):
 
     class Meta:
         model  = Categorias
-        fields = ["nombre", "descripcion"]
+        fields = ["nombre", "descripcion", "objeto_gasto"]
         widgets = {
             "nombre": forms.TextInput(attrs={"class": "form-control"}),
             "descripcion": forms.TextInput(attrs={"class": "form-control"}),
+            "objeto_gasto": forms.Select(attrs={"class": "form-control"}),
             
         }

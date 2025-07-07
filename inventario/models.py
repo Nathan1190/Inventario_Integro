@@ -5,7 +5,8 @@ from subcategorias.models import Subcategorias
 from ubicaciones.models import Ubicaciones         
 from empleados.models import Empleados            
 from proveedores.models import Proveedores         
-from estados.models import Estados          
+from estados.models import Estados
+from objeto_gasto.models import ObjetoGasto
 from uuid import uuid4
 from django.core.validators import MinLengthValidator, RegexValidator, MinValueValidator, MaxValueValidator, EmailValidator
 from django.db.models.signals import post_save, post_delete
@@ -55,6 +56,7 @@ class BienNacional(models.Model):
     
     # Información principal
     nombre_bien = models.CharField(max_length=100, verbose_name='Nombre del Bien')
+    objeto_gasto = models.ForeignKey(ObjetoGasto, on_delete=models.SET_NULL, null=True, verbose_name='Objeto de Gasto')
     categoria = models.ForeignKey(Categorias, on_delete=models.SET_NULL, null=True, verbose_name='Categoría')
     subcategoria = models.ForeignKey(Subcategorias,on_delete=models.SET_NULL,null=True,blank=True,verbose_name='Subcategoría')
     numero_modelo = models.CharField(max_length=50, blank=True, null=True, verbose_name='Número del Modelo')
@@ -94,6 +96,7 @@ class BienNacional(models.Model):
 
 class StockBien(models.Model):
     nombre_bien    = models.CharField(max_length=100)
+    objeto_gasto   = models.ForeignKey(ObjetoGasto, on_delete=models.PROTECT, null=True, blank=True)
     categoria      = models.ForeignKey(Categorias, on_delete=models.PROTECT)
     subcategoria   = models.ForeignKey(Subcategorias, on_delete=models.PROTECT, blank=True, null=True)
     
@@ -103,29 +106,32 @@ class StockBien(models.Model):
 
     class Meta:
         verbose_name_plural = "Stock de Bienes"
-        unique_together = ('nombre_bien', 'categoria', 'subcategoria')
+        unique_together = ('nombre_bien', 'objeto_gasto', 'categoria', 'subcategoria')
         ordering = ["nombre_bien", "categoria", "subcategoria"]
 
     def __str__(self):
-        return f"{self.nombre_bien} - {self.categoria} - {self.subcategoria or ''}"
+        return f"{self.nombre_bien} - {self.objeto_gasto} - {self.categoria} - {self.subcategoria or ''}"
 
 @receiver([post_save, post_delete], sender=BienNacional)
 def actualizar_stock_bien(sender, instance, **kwargs):
     # Busca o crea el stock correspondiente a este grupo de bienes
     stock, created = StockBien.objects.get_or_create(
         nombre_bien=instance.nombre_bien,
+        objeto_gasto=instance.objeto_gasto,
         categoria=instance.categoria,
         subcategoria=instance.subcategoria,
     )
     # Cuenta los bienes activos con estos datos
     total = BienNacional.objects.filter(
         nombre_bien=instance.nombre_bien,
+        objeto_gasto=instance.objeto_gasto,
         categoria=instance.categoria,
         subcategoria=instance.subcategoria,
         eliminado=False,
     ).count()
     cantidad_restante = BienNacional.objects.filter(
         nombre_bien=instance.nombre_bien,
+        objeto_gasto=instance.objeto_gasto,
         categoria=instance.categoria,
         subcategoria=instance.subcategoria,
         responsable__isnull=True,

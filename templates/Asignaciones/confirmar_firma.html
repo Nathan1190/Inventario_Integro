@@ -10,8 +10,15 @@
             <b>Bien:</b> {{ object.bien.numero_inventario }} - {{ object.bien.nombre_bien }}<br>
             <b>Fecha asignación:</b> {{ object.fecha_asignacion|date:"d/m/Y H:i" }}
         </p>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.pdf_firmado.id_for_label }}">Adjuntar PDF firmado:</label>
+                {{ form.pdf_firmado }}
+                {% if form.pdf_firmado.errors %}
+                <div class="text-danger">{{ form.pdf_firmado.errors }}</div>
+                {% endif %}
+            </div>
             <button type="submit" class="btn btn-success">Confirmar Firma</button>
             <a href="{% url 'asignaciones:lista' %}" class="btn btn-secondary">Cancelar</a>
         </form>

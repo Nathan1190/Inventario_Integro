@@ -14,9 +14,8 @@ class BienNacionalDeleteForm(forms.ModelForm):
 
     class Meta:
         model = BienNacional
-        # Muestra los campos principales
         fields = [
-            'numero_inventario', 'nombre_bien', 'categoria', 'subcategoria',
+            'numero_inventario', 'nombre_bien', 'objeto_gasto', 'categoria', 'subcategoria',
             'compania', 'manufacturera', 'fabricante', 'proveedor',
             'serial', 'unidad_medida', 'ubicacion', 'fecha_compra',
             'costo_compra', 'numero_orden', 'numero_factura', 'notas',

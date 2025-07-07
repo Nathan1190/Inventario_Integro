@@ -10,6 +10,7 @@ from dependencias.models import Dependencias
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from core.middleware import get_current_user
+from django.contrib.auth.models import User
 
 
 class Empleados(models.Model):
@@ -81,6 +82,14 @@ class Empleados(models.Model):
         help_text='Debe contener 13 digitos en total, separados por guiones p.ej. 0801-2000-00000',
     )
 
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        null=True, 
+        blank=True, 
+        related_name='empleados'
+    )
+
     activo = models.BooleanField(default=False)
     creado_fecha = models.DateTimeField(auto_now_add=True)
     fecha_de_modificacion = models.DateTimeField(auto_now=True)
@@ -116,19 +125,21 @@ class Empleados(models.Model):
 @receiver(post_save, sender=Empleados)
 def create_empleado_history(sender, instance, created, **kwargs):
     from empleados_history.models import Empleados_History
-    user = get_current_user()  
+    usuario = get_current_user()  
     Empleados_History.objects.create(
         empleado                     = instance,
-        changed_by                   = user,
+        changed_by                   = usuario,
         nombre_cambio                = instance.nombre,
         cargo_cambio                 = str(instance.cargo),
         dependencia_cambio           = str(instance.dependencia),
         contacto_cambio              = instance.contacto,
         correo_inst_cambio           = instance.correo_inst,
         codigo_empleado_cambio       = instance.codigo_empleado,
-        numero_identidad_cambio       = instance.num_identidad,
+        numero_identidad_cambio      = instance.num_identidad,
+        user_cambio                  = instance.user.username if instance.user else "",
         activo_cambio                = instance.activo,
         creado_fecha_cambio          = instance.creado_fecha,
         fecha_de_modificacion_cambio = instance.fecha_de_modificacion,
         eliminado_cambio             = instance.eliminado
     )
+

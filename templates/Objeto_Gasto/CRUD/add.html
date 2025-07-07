@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+<div class="card shadow">
+    <div class="card-header" style="background-color: #0b3873; color: white;">Crear Nuevo Objeto de Gasto</div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="">Nombre:</label>
+                {{ form.nombre }}
+                {% if form.nombre.errors %}
+                <div class="text-danger">
+                    {{ form.nombre.errors }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="">Descripcion:</label>
+                {{ form.descripcion }}
+                {% if form.descripcion.errors %}
+                <div class="text-danger">
+                    {{ form.descripcion.errors }}
+                </div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{% url 'objeto_gasto:home_objeto_gasto' %}" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

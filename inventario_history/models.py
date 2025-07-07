@@ -16,7 +16,8 @@ class BienNacionalHistory(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     # Copia los campos clave del bien
     nombre_bien = models.CharField(max_length=100)
-    categoria = models.CharField(max_length=80)
+    objeto_gasto = models.CharField(max_length=80, blank=True)
+    categoria = models.CharField(max_length=80, blank=True)
     subcategoria = models.CharField(max_length=80, blank=True, null=True)
     numero_modelo = models.CharField(max_length=50, blank=True, null=True)
     manufacturera = models.CharField(max_length=80, blank=True, null=True)

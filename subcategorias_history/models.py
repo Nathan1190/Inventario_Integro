@@ -20,7 +20,7 @@ class Subcategorias_History(models.Model):
     # Campos “snapshot” de Subcategoría
     nombre_cambio                = models.CharField(max_length=80)
     descripcion_cambio           = models.CharField(max_length=120, blank=True)
-    categoria_cambio             = models.CharField(max_length=80) # Nombre de la categoría al momento del cambio
+    categoria_cambio             = models.CharField(max_length=80)
     creado_fecha_cambio          = models.DateTimeField()
     fecha_de_modificacion_cambio = models.DateTimeField()
     eliminado_cambio             = models.BooleanField()

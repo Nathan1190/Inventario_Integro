@@ -15,6 +15,13 @@ from reportlab.pdfgen.canvas import Canvas
 from reportlab.platypus import Table, TableStyle
 from datetime import datetime
 
+from django.http import JsonResponse
+
+def subcategorias_por_categoria(request):
+    categoria_id = request.GET.get("categoria_id")
+    subcategorias = Subcategorias.objects.filter(categoria_id=categoria_id, eliminado=False).values("id", "nombre")
+    return JsonResponse(list(subcategorias), safe=False)
+
 class SubcategoriasList(PantallaRequiredMixin, ListView):
     template_name = 'Subcategorias/CRUD/index.html'
     queryset = Subcategorias.objects.all().order_by('id')

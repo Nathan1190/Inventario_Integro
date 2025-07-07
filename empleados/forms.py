@@ -10,7 +10,7 @@ class FormEmpleados(forms.ModelForm):
         model = Empleados
         fields = [
             'nombre', 'cargo', 'dependencia', 'contacto',
-            'correo_inst', 'codigo_empleado', 'activo', 'num_identidad', 'eliminado'
+            'correo_inst', 'codigo_empleado', 'activo', 'num_identidad', 'user', 'eliminado'
         ]
         widgets = {
             'nombre': forms.TextInput(attrs={
@@ -46,6 +46,11 @@ class FormEmpleados(forms.ModelForm):
                 'placeholder': '0801-2000-00000',
                 'title': 'Sólo 13 dígitos separados por guiones',
             }),
+
+            'user': forms.Select(attrs={
+                'class': 'form-control select2',
+            }),
+
             'activo': forms.CheckboxInput(attrs={
                 'class': 'form-check-input ms-2',
             }),
@@ -88,7 +93,7 @@ class FormEmpleadosDELETE(forms.ModelForm):
         model = Empleados
         fields = [
             'nombre', 'cargo', 'dependencia', 'contacto',
-            'correo_inst', 'codigo_empleado', 'num_identidad', 'activo', 'eliminado'
+            'correo_inst', 'codigo_empleado', 'num_identidad', 'user', 'activo', 'eliminado'
         ]
         widgets = {
             'nombre': forms.TextInput(attrs={
@@ -112,12 +117,15 @@ class FormEmpleadosDELETE(forms.ModelForm):
             }),
             'codigo_empleado': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': '4 dígitos, ej. 7016',
+                'placeholder': '4 dígitos, ej. 1000',
             }),
             'num_identidad': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': '0801-2000-00000',
                 'title': 'Sólo 13 dígitos separados por guiones',
+            }),
+            'user': forms.TextInput(attrs={
+                'class': 'form-control select2',
             }),
             'activo': forms.CheckboxInput(attrs={
                 'class': 'form-check-input ms-2',

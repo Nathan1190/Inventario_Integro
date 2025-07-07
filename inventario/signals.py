@@ -12,6 +12,7 @@ def crear_historial_bien(sender, instance, created, **kwargs):
         changed_by=user,
         # compania=instance.compania.nombre if instance.compania else '',  # Solo si tienes el campo en el modelo
         nombre_bien=instance.nombre_bien,
+        objeto_gasto=instance.objeto_gasto.nombre if instance.objeto_gasto else '',
         categoria=instance.categoria.nombre if instance.categoria else '',
         subcategoria=instance.subcategoria.nombre if instance.subcategoria else '',
         numero_modelo=instance.numero_modelo,

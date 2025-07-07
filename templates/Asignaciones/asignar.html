@@ -16,7 +16,7 @@
             {{ form.as_p }}
             <input type="hidden" name="sobrescribir" value="1">
             <button type="submit" class="btn btn-danger btn-sm">Sobrescribir asignación</button>
-            <a href="{% url 'bien_detalle:desagrupado' bien.nombre_bien bien.categoria.id bien.subcategoria.id %}" class="btn btn-secondary">Cancelar</a>
+            <a href="{% url 'asignaciones:lista' %}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
     {# Oculta el formulario normal si hay pendiente y no se está confirmando #}
@@ -37,7 +37,7 @@
         <input type="hidden" name="sobrescribir" value="1">
     {% endif %}
     <button type="submit" class="btn btn-primary">Asignar</button>
-    <a href="{% url 'bien_detalle:desagrupado' bien.nombre_bien bien.categoria.id bien.subcategoria.id %}" class="btn btn-danger">Cancelar</a>
+    <a href="{% url 'bien_detalle:desagrupado' bien.nombre_bien bien.objeto_gasto.id bien.categoria.id bien.subcategoria.id %}" class="btn btn-danger">Cancelar</a>
 {% endif %}
 </form>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>

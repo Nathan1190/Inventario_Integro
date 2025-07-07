@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% block contenido %}
+<div class="card shadow">
+    <h5 class="card-header text-center" style="background-color: #0b3873; color: white;">
+        Confirmar estado de En Proceso para este Bien Asignado
+    </h5>
+    <div class="card-body text-center" style="background: rgba(220, 218, 218, 0.5);border-radius: 10px;">
+        <h6>¿Deseas marcar este bien como estado de En Proceso por <b>{{ object.responsable }}</b>?</h6>
+        <p>
+            <b>Bien:</b> {{ object.bien.numero_inventario }} - {{ object.bien.nombre_bien }}<br>
+            <b>Fecha asignación:</b> {{ object.fecha_asignacion|date:"d/m/Y H:i" }}
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Confirmar En Proceso</button>
+            <a href="{% url 'asignaciones:lista' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

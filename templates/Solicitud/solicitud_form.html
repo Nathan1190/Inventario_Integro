@@ -1,0 +1,186 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block contenido %}
+<div class="card shadow">
+    <h5 class="card-header text-center" style="background-color: #0b3873; color: white;">
+        Nueva Solicitud de Bien
+    </h5>
+    <div class="card-body" style="background: rgba(220, 218, 218, 0.5);border-radius: 10px;">
+        <form  method="post" enctype="multipart/form-data" id="solicitud-form">
+            {% csrf_token %}
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label class="form-label">Empleado solicitante:</label>
+                    <input type="text" class="form-control" value="{{ request.user.empleados.nombre }}" disabled>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Dependencia:</label>
+                    <input type="text" class="form-control" value="{{ request.user.empleados.dependencia.nombre }}" disabled>
+                </div>
+                
+                <div class="col-md-4">
+                    <label for="{{ form.objeto_gasto.id_for_label }}">Objeto de Gasto:</label>
+                    {{ form.objeto_gasto}}
+                    {% if form.objeto_gasto.errors %}
+                    <div class="text-danger">{{ form.objeto_gasto.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="{{ form.categoria.id_for_label }}">Categoría:</label>
+                    {{ form.categoria}}
+                    {% if form.categoria.errors %}
+                    <div class="text-danger">{{ form.categoria.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <label for="{{ form.subcategoria.id_for_label }}">Subcategoría:</label>
+                    {{ form.subcategoria }}
+                    {% if form.subcategoria.errors %}
+                    <div class="text-danger">{{ form.subcategoria.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <label for="{{ form.bien.id_for_label }}">Bien:</label>
+                    {{ form.bien }}
+                    {% if form.bien.errors %}
+                    <div class="text-danger">{{ form.bien.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="{{ form.cantidad.id_for_label }}">Cantidad:</label>
+                    {{ form.cantidad }}
+                    {% if form.cantidad.errors %}
+                    <div class="text-danger">{{ form.cantidad.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <label for="{{ form.prioridad.id_for_label }}">Prioridad:</label>
+                    {{ form.prioridad }}
+                    {% if form.prioridad.errors %}
+                    <div class="text-danger">{{ form.prioridad.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <label for="{{ form.comentario.id_for_label }}">Motivo o Comentario:</label>
+                    {{ form.comentario }}
+                    {% if form.comentario.errors %}
+                    <div class="text-danger">{{ form.comentario.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="{{ form.memo.id_for_label }}">Subir PDF del Memorándum:</label>
+                        {{ form.memo }}
+                        {% if form.memo.errors %}
+                        <div class="text-danger">{{ form.memo.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Solicitar</button>
+            <a href="{% url 'solicitud:listar' %}" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        console.log('JQuery listo');
+    $('.select2').select2({
+        theme: 'classic',
+        width: '100%',
+        placeholder: 'Selecciona una opción',
+        allowClear: true,
+        language: {
+            noResults: function() { return 'No se encontraron resultados'; }
+        }
+    });
+
+    $('#id_objeto_gasto').on('change', function() {
+        console.log('Cambiando objeto de gasto: ', this.value);
+        const objetoGastoId = this.value;
+        fetch(`/categorias/por_objeto_gasto/?objeto_gasto_id=${objetoGastoId}`)
+            .then(response => response.json())
+            .then(data => {
+                $('#id_categoria').select2('destroy');
+                $('#id_categoria').html('<option value="">Seleccione categoría</option>');
+                data.forEach(categoria => {
+                    $('#id_categoria').append(`<option value="${categoria.id}">${categoria.nombre}</option>`);
+                });
+                $('#id_categoria').select2({
+                    theme: 'classic',
+                    width: '100%',
+                    placeholder: 'Selecciona una opción',
+                    allowClear: true,
+                    language: { noResults: function() { return 'No se encontraron resultados'; } }
+                });
+
+                $('#id_subcategoria').select2('destroy');
+                $('#id_subcategoria').html('<option value="">Seleccione subcategoría</option>');
+                $('#id_subcategoria').select2({
+                    theme: 'classic',
+                    width: '100%',
+                    placeholder: 'Selecciona una opción',
+                    allowClear: true,
+                    language: { noResults: function() { return 'No se encontraron resultados'; } }
+                });
+            });
+    });
+    function cargarBienes() {
+    const objetoGastoId = $('#id_objeto_gasto').val();
+    const categoriaId = $('#id_categoria').val();
+    const subcategoriaId = $('#id_subcategoria').val();
+
+    fetch(`/inventario/bienes/por_filtros/?objeto_gasto_id=${objetoGastoId}&categoria_id=${categoriaId}&subcategoria_id=${subcategoriaId}`)
+        .then(response => response.json())
+        .then(data => {
+            $('#id_bien').select2('destroy');
+            $('#id_bien').html('<option value="">Seleccione bien</option>');
+            data.forEach(bien => {
+                $('#id_bien').append(`<option value="${bien.id}">${bien.label}</option>`);
+            });
+            $('#id_bien').select2({
+                theme: 'classic',
+                width: '100%',
+                placeholder: 'Selecciona una opción',
+                allowClear: true,
+                language: { noResults: function() { return 'No se encontraron resultados'; } }
+            });
+        });
+}
+
+// Cargar bienes cuando cambie cualquier filtro
+$('#id_objeto_gasto, #id_categoria, #id_subcategoria').on('change', function() {
+    cargarBienes();
+});
+
+    $('#id_categoria').on('change', function() {
+        const categoriaId = this.value;
+        fetch(`/subcategorias/por_categoria/?categoria_id=${categoriaId}`)
+            .then(response => response.json())
+            .then(data => {
+                $('#id_subcategoria').select2('destroy');
+                $('#id_subcategoria').html('<option value="">Seleccione subcategoría</option>');
+                data.forEach(subcat => {
+                    $('#id_subcategoria').append(`<option value="${subcat.id}">${subcat.nombre}</option>`);
+                });
+                $('#id_subcategoria').select2({
+                    theme: 'classic',
+                    width: '100%',
+                    placeholder: 'Selecciona una opción',
+                    allowClear: true,
+                    language: { noResults: function() { return 'No se encontraron resultados'; } }
+                });
+            });
+    });
+});
+
+</script>
+{% endblock %}
