@@ -65,7 +65,7 @@ class BienDetalleList(PantallaRequiredMixin, ListView):
     
 def export_inventario_pdfv(request, nombre_bien, objeto_gasto_id, categoria_id, subcategoria_id):
         """Exporta inventareio a PDF con filtrado de columnas y paginado."""
-        headers = ["Id", "Numero de Inventario", "Imagen", "Nombre del Bien", "Objeto Gasto", "Categoría", "Subcategoría", "Compañia", "Manufacturera", "Fabricante", "Proveedor", "Serial", "Modelo", "Unidad de Medida", "Ubicacion", "Numero de Orden", "Numero de Factura", "Costo de Compra", "Fecha de Compra", "Estados", "Responsable", "Notas", "Fecha de Creado", "Fecha de Modificado"]
+        headers = ["Id", "Numero de Inventario", "Imagen", "Nombre del Bien", "Objeto de Gasto", "Categoría", "Subcategoría", "Compañia", "Manufacturera", "Fabricante", "Proveedor", "Serial", "Modelo", "Unidad de Medida", "Ubicacion", "Numero de Orden", "Numero de Factura", "Costo de Compra", "Fecha de Compra", "Estados", "Responsable", "Notas", "Fecha de Creado", "Fecha de Modificado"]
         fields = ["id", "numero_inventario", "imagen_mostrar", "nombre_bien", "objeto_gasto", "categoria", "subcategoria", "compania", "manufacturera", "fabricante", "proveedor", "serial", "numero_modelo", "unidad_medida", "ubicacion", "numero_orden", "numero_factura", "costo_compra", "fecha_compra", "estado", "responsable", "notas", "creado", "modificado"]
         cols_param = request.GET.get("cols", "")
         if cols_param:
