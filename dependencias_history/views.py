@@ -8,4 +8,4 @@ class Dependencias_HistoryList(PantallaRequiredMixin, ListView):
     template_name        = 'Historiales/Dependencias_History/CRUD/index.html'
     queryset             = Dependencias_History.objects.all().order_by('-timestamp')
     context_object_name  = "Dependencias_History"
-    pantalla_required    = '0008'  # Ajusta este código según tus permisos
+    pantalla_required    = '0008'  
