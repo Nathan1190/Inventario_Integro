@@ -57,6 +57,11 @@
           <label for="{{ form.manufacturera.id_for_label }}">Manufacturera:</label>
           <div class="input-group">
             {{ form.manufacturera }}
+            {% if form.manufacturera.errors %}
+                      <div class="text-danger">
+                          {{ form.manufacturera.errors }}
+                      </div>
+                      {% endif %}
             <button class="btn btn-outline-primary btn-sm ms-2" type="button" data-bs-toggle="modal" data-bs-target="#modalManufacturera">+ Agregar manufacturera</button>
           </div>
         </div>
@@ -64,12 +69,23 @@
           <label for="{{ form.fabricante.id_for_label }}">Fabricante:</label>
           <div class="input-group">
             {{ form.fabricante }}
+            {% if form.fabricante.errors %}
+                      <div class="text-danger">
+                          {{ form.fabricante.errors }}
+                      </div>
+                      {% endif %}
+            
             <button class="btn btn-outline-primary btn-sm ms-2" type="button" data-bs-toggle="modal" data-bs-target="#modalFabricante">+ Agregar fabricante</button>
           </div>
         </div>
         <div class="col-md-4">
           <label for="{{ form.proveedor.id_for_label }}">Proveedor:</label>
           {{ form.proveedor }}
+          {% if form.proveedor.errors %}
+                      <div class="text-danger">
+                          {{ form.proveedor.errors }}
+                      </div>
+                      {% endif %}
         </div>
       </div>
 
@@ -78,33 +94,61 @@
           <label for="{{ form.compania.id_for_label }}">Compañía:</label>
           <div class="input-group">
             {{ form.compania }}
+            {% if form.compania.errors %}
+                      <div class="text-danger">
+                          {{ form.compania.errors }}
+                      </div>
+                      {% endif %}
             <button class="btn btn-outline-primary btn-sm ms-2" type="button" data-bs-toggle="modal" data-bs-target="#modalCompania">+ Agregar compañía</button>
           </div>
         </div>
         <div class="col-md-4">
           <label for="{{ form.ubicacion.id_for_label }}">Ubicación:</label>
           {{ form.ubicacion }}
+          {% if form.ubicacion.errors %}
+                      <div class="text-danger">
+                          {{ form.ubicacion.errors }}
+                      </div>
+                      {% endif %}
         </div>
-        <div class="row mb-2">
-        <div class="">
+        <div class="col-md-4">
           <label for="{{ form.estado_fisico.id_for_label }}">Estado Físico:</label>
           {{ form.estado_fisico }}
+          {% if form.estado_fisico.errors %}
+                    <div class="text-danger">
+                        {{ form.estado_fisico.errors }}
+                    </div>
+          {% endif %}
         </div>
-    </div>
       </div>
 
       <div class="row mb-3">
         <div class="col-md-4">
           <label for="{{ form.fecha_compra.id_for_label }}">Fecha de Compra:</label>
           {{ form.fecha_compra }}
+          {% if form.fecha_compra.errors %}
+                      <div class="text-danger">
+                          {{ form.fecha_compra.errors }}
+                      </div>
+                      {% endif %}
         </div>
         <div class="col-md-4">
           <label for="{{ form.costo_compra.id_for_label }}">Costo de Compra:</label>
           {{ form.costo_compra }}
+          {% if form.costo_compra.errors %}
+                      <div class="text-danger">
+                          {{ form.costo_compra.errors }}
+                      </div>
+                      {% endif %}
         </div>
         <div class="col-md-4">
           <label for="{{ form.numero_orden.id_for_label }}">Número de Orden:</label>
           {{ form.numero_orden }}
+          {% if form.numero_orden.errors %}
+                      <div class="text-danger">
+                          {{ form.numero_orden.errors }}
+                      </div>
+                      {% endif %}
         </div>
       </div>
 
@@ -112,10 +156,20 @@
         <div class="col-md-4">
           <label for="{{ form.numero_factura.id_for_label }}">Número de Factura:</label>
           {{ form.numero_factura }}
+          {% if form.numero_factura.errors %}
+                      <div class="text-danger">
+                          {{ form.numero_factura.errors }}
+                      </div>
+                      {% endif %}
         </div>
         <div class="col-md-4">
           <label for="{{ form.total_bienes.id_for_label }}">Total de Bienes:</label>
           {{ form.total_bienes }}
+          {% if form.total_bienes.errors %}
+                      <div class="text-danger">
+                          {{ form.total_bienes.errors }}
+                      </div>
+                      {% endif %}
         </div>
       </div>
 
@@ -123,15 +177,30 @@
         <div class="col-md-6">
           <label for="{{ form.imagen.id_for_label }}">Imagen:</label>
           {{ form.imagen }}
+          {% if form.imagen.errors %}
+                      <div class="text-danger">
+                          {{ form.imagen.errors }}
+                      </div>
+                      {% endif %}
           <div class="form-text text-info">La imagen debe ser jpg, jpeg, png o webp y no debe superar los 2MB.</div>
         </div>
         <div class="col-md-6">
           <label for="{{ form.notas.id_for_label }}">Notas:</label>
           {{ form.notas }}
+          {% if form.notas.errors %}
+                      <div class="text-danger">
+                          {{ form.notas.errors }}
+                      </div>
+                      {% endif %}
         </div>
         <div class="col-md-6">
           <label for="{{ form.unidad_medida.id_for_label }}">Unidad de Medida:</label>
           {{ form.unidad_medida }}
+          {% if form.unidad_medida.errors %}
+                      <div class="text-danger">
+                          {{ form.unidad_medida.errors }}
+                      </div>
+                      {% endif %}
         </div>
       </div>
 
@@ -247,68 +316,77 @@
     <script>
     document.addEventListener('DOMContentLoaded', function(){
         console.log('JQuery listo');
-    $('.select2').select2({
-        theme: 'classic',
-        width: '100%',
-        placeholder: 'Selecciona una opción',
-        allowClear: true,
-        language: {
-            noResults: function() { return 'No se encontraron resultados'; }
-        }
-    });
+      $('.select2').select2({
+          theme: 'classic',
+          width: '100%',
+          placeholder: 'Selecciona una opción',
+          allowClear: true,
+          language: {
+              noResults: function() { return 'No se encontraron resultados'; }
+          },
+      });
+      $('.select2-multiple').select2({
+                      theme: 'classic',
+                      width: '100%',
+                      placeholder: 'Selecciona una o más opciones',
+                      language: {
+                        noResults: function() { return 'No se encontraron resultados'; }
+                      },
+                      allowClear: true,
+                  });
+      });
+      $('#id_objeto_gasto').on('change', function() {
+          console.log('Cambiando objeto de gasto: ', this.value);
+          const objetoGastoId = this.value;
+          fetch(`/categorias/por_objeto_gasto/?objeto_gasto_id=${objetoGastoId}`)
+              .then(response => response.json())
+              .then(data => {
+                  $('#id_categoria').select2('destroy');
+                  $('#id_categoria').html('<option value="">Seleccione categoría</option>');
+                  data.forEach(categoria => {
+                      $('#id_categoria').append(`<option value="${categoria.id}">${categoria.nombre}</option>`);
+                  });
+                  $('#id_categoria').select2({
+                      theme: 'classic',
+                      width: '100%',
+                      placeholder: 'Selecciona una opción',
+                      allowClear: true,
+                      language: { noResults: function() { return 'No se encontraron resultados'; } }
+                  });
 
-    $('#id_objeto_gasto').on('change', function() {
-        console.log('Cambiando objeto de gasto: ', this.value);
-        const objetoGastoId = this.value;
-        fetch(`/categorias/por_objeto_gasto/?objeto_gasto_id=${objetoGastoId}`)
-            .then(response => response.json())
-            .then(data => {
-                $('#id_categoria').select2('destroy');
-                $('#id_categoria').html('<option value="">Seleccione categoría</option>');
-                data.forEach(categoria => {
-                    $('#id_categoria').append(`<option value="${categoria.id}">${categoria.nombre}</option>`);
-                });
-                $('#id_categoria').select2({
-                    theme: 'classic',
-                    width: '100%',
-                    placeholder: 'Selecciona una opción',
-                    allowClear: true,
-                    language: { noResults: function() { return 'No se encontraron resultados'; } }
-                });
+                  $('#id_subcategoria').select2('destroy');
+                  $('#id_subcategoria').html('<option value="">Seleccione subcategoría</option>');
+                  $('#id_subcategoria').select2({
+                      theme: 'classic',
+                      width: '100%',
+                      placeholder: 'Selecciona una opción',
+                      allowClear: true,
+                      language: { noResults: function() { return 'No se encontraron resultados'; } }
+                  });
+              });
+      });
+      
 
-                $('#id_subcategoria').select2('destroy');
-                $('#id_subcategoria').html('<option value="">Seleccione subcategoría</option>');
-                $('#id_subcategoria').select2({
-                    theme: 'classic',
-                    width: '100%',
-                    placeholder: 'Selecciona una opción',
-                    allowClear: true,
-                    language: { noResults: function() { return 'No se encontraron resultados'; } }
-                });
-            });
-    });
-    
-
-    $('#id_categoria').on('change', function() {
-        const categoriaId = this.value;
-        fetch(`/subcategorias/por_categoria/?categoria_id=${categoriaId}`)
-            .then(response => response.json())
-            .then(data => {
-                $('#id_subcategoria').select2('destroy');
-                $('#id_subcategoria').html('<option value="">Seleccione subcategoría</option>');
-                data.forEach(subcat => {
-                    $('#id_subcategoria').append(`<option value="${subcat.id}">${subcat.nombre}</option>`);
-                });
-                $('#id_subcategoria').select2({
-                    theme: 'classic',
-                    width: '100%',
-                    placeholder: 'Selecciona una opción',
-                    allowClear: true,
-                    language: { noResults: function() { return 'No se encontraron resultados'; } }
-                });
-            });
-    });
-});
+      $('#id_categoria').on('change', function() {
+          const categoriaId = this.value;
+          fetch(`/subcategorias/por_categoria/?categoria_id=${categoriaId}`)
+              .then(response => response.json())
+              .then(data => {
+                  $('#id_subcategoria').select2('destroy');
+                  $('#id_subcategoria').html('<option value="">Seleccione subcategoría</option>');
+                  data.forEach(subcat => {
+                      $('#id_subcategoria').append(`<option value="${subcat.id}">${subcat.nombre}</option>`);
+                  });
+                  $('#id_subcategoria').select2({
+                      theme: 'classic',
+                      width: '100%',
+                      placeholder: 'Selecciona una opción',
+                      allowClear: true,
+                      language: { noResults: function() { return 'No se encontraron resultados'; } }
+                  });
+              });
+      });
+  });
 
 </script>
 {% endblock %}

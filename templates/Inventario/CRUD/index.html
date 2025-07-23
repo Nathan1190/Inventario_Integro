@@ -115,7 +115,7 @@
                             <button 
                                 class="btn btn-outline-success  agregar-mas"
                                 data-nombre="{{ bien.nombre_bien }}"
-                                data-objetogasto="{{ bien.objeto_gasto }}"
+                                data-objeto_gasto="{{ bien.objeto_gasto }}"
                                 data-categoria="{{ bien.categoria }}"
                                 data-subcategoria="{{ bien.subcategoria }}"
                                 title="Agregar más unidades">
@@ -141,9 +141,9 @@
                                 </div>
                                 <div class="modal-body">
                                     <input type="hidden" name="nombre_bien" id="nombreBienModal">
+                                    <input type="hidden" name="objeto_gasto" id="objeto_gastoModal">
                                     <input type="hidden" name="categoria" id="categoriaModal">
                                     <input type="hidden" name="subcategoria" id="subcategoriaModal">
-                                    <input type="hidden" name="numero_modelo" id="modeloModal">
                                     <div class="mb-3">
                                         <label for="cantidadAgregar" class="form-label">¿Cuántos bienes quieres agregar?</label>
                                         
@@ -205,9 +205,9 @@ $(document).ready(function() {
 
     $('.agregar-mas').on('click', function(){
         $('#nombreBienModal').val($(this).data('nombre'));
+        $('#objeto_gastoModal').val($(this).data('objeto_gasto'));
         $('#categoriaModal').val($(this).data('categoria'));
         $('#subcategoriaModal').val($(this).data('subcategoria'));
-        $('#modeloModal').val($(this).data('modelo'));
         $('#agregarMasModal').modal('show');
     });
 
@@ -216,9 +216,9 @@ $(document).ready(function() {
         e.preventDefault();
         var data = {
             nombre_bien: $('#nombreBienModal').val(),
+            objeto_gasto: $('#objeto_gastoModal').val(),
             categoria: $('#categoriaModal').val(),
             subcategoria: $('#subcategoriaModal').val(),
-            numero_modelo: $('#modeloModal').val(),
             cantidad: $('#cantidadAgregar').val(),
             csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val()
         };

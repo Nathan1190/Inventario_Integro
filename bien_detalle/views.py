@@ -334,7 +334,7 @@ class BienDetalleEdit(PantallaRequiredMixin, UpdateView):
     class Meta:
         model = BienNacional
         exclude = [
-            'numero_inventario', 'eliminado', 'creado', 'modificado',
+            'eliminado', 'creado', 'modificado',
             'total_asignado', 'cantidad_restante', 'responsable',
         ]
 

@@ -16,7 +16,7 @@
                 </div>
             {% endfor %}
             <button type="submit" class="btn btn-danger">ELIMINAR</button>
-            <a href="{% url 'bien_detalle:desagrupado' form.instance.nombre_bien form.instance.categoria.id form.instance.subcategoria.id %}" class="btn btn-secondary">Cancelar</a>
+            <a href="{% url 'bien_detalle:desagrupado' form.instance.nombre_bien form.instance.objeto_gasto.id form.instance.categoria.id form.instance.subcategoria.id %}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 </div>

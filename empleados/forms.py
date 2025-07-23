@@ -3,8 +3,14 @@ from .models import Empleados
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 from django.core.validators import RegexValidator
+from cargos.models import Cargos
+from dependencias.models import Dependencias
 
 class FormEmpleados(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(FormEmpleados, self).__init__(*args, **kwargs)
+        self.fields['cargo'].queryset = Cargos.objects.filter(eliminado=False)
+        self.fields['dependencia'].queryset = Dependencias.objects.filter(eliminado=False)
 
     class Meta:
         model = Empleados

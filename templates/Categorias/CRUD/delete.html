@@ -38,6 +38,16 @@
                     </div>
                     {% endif %}
                 </div>
+                <div class="form-group">
+                    <label for="{{ form.objeto_gasto.id_for_label }}">Objeto de Gasto:</label>
+                    {{ form.objeto_gasto }}
+                    
+                    {% if form.objeto_gasto.errors %}
+                    <div class="text-danger">
+                        {{ form.objeto_gasto.errors }}
+                    </div>
+                    {% endif %}
+                </div>
                 
 
                 

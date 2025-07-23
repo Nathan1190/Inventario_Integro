@@ -4,6 +4,14 @@ from django.core.exceptions import ValidationError
 from datetime import date
 import re
 
+from proveedores.models import Proveedores
+from ubicaciones.models import Ubicaciones
+from categorias.models import Categorias
+from subcategorias.models import Subcategorias
+from objeto_gasto.models import ObjetoGasto
+
+
+
 def validate_email(value):
     if value and '@' not in value:
         raise ValidationError('El correo debe contener @.')
@@ -75,6 +83,7 @@ class FabricanteForm(forms.ModelForm):
         return nombre.upper()
 
 class BienNacionalForm(forms.ModelForm):
+
     cantidad_minima = forms.IntegerField(
         label="Cantidad mínima para stock",
         min_value=0,
@@ -93,8 +102,8 @@ class BienNacionalForm(forms.ModelForm):
         queryset=Estados.objects.all(),
         required=False,
         widget=forms.SelectMultiple(attrs={
-            'class': 'form-control dual-listbox',
-            'size': 8
+            'class': 'form-control select2-multiple',
+            'size': 8,
         }),
         label='Etiquetas de Estado:'
     )
@@ -134,7 +143,12 @@ class BienNacionalForm(forms.ModelForm):
         self.fields['compania'].empty_label = "Seleccione compañía"
         self.fields['manufacturera'].empty_label = "Seleccione manufacturera"
         self.fields['fabricante'].empty_label = "Seleccione fabricante"
-        self.fields['objeto_gasto'].empty_label = "Seleccione objeto de gasto"
+
+        self.fields['proveedor'].queryset = Proveedores.objects.filter(eliminado=False).order_by('nombre')
+        self.fields['ubicacion'].queryset = Ubicaciones.objects.filter(eliminado=False).order_by('nombre')
+        self.fields['categoria'].queryset = Categorias.objects.filter(eliminado=False).order_by('nombre')
+        self.fields['subcategoria'].queryset = Subcategorias.objects.filter(eliminado=False).order_by('nombre')
+        self.fields['objeto_gasto'].queryset = ObjetoGasto.objects.filter(eliminado=False).order_by('nombre')
 
 
     def clean_nombre_bien(self):
@@ -189,6 +203,7 @@ class BienNacionalForm(forms.ModelForm):
         return cleaned
 
 class BienNacionalEditForm(forms.ModelForm):
+
     cantidad_minima = forms.IntegerField(
         label="Cantidad mínima para stock",
         min_value=0,
@@ -217,7 +232,7 @@ class BienNacionalEditForm(forms.ModelForm):
         model = BienNacional
         
         exclude = [
-            'numero_inventario', 'eliminado', 'creado', 'modificado',
+             'eliminado', 'creado', 'modificado',
             'total_asignado', 'cantidad_restante', 'disponibles'
         ]
         widgets = {
@@ -240,6 +255,7 @@ class BienNacionalEditForm(forms.ModelForm):
             'numero_orden': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número de orden'}),
             'numero_factura': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número de factura'}),
             'notas': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Notas adicionales'}),
+            'numero_inventario': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'UFTF-XXXXX'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -258,7 +274,12 @@ class BienNacionalEditForm(forms.ModelForm):
         self.fields['manufacturera'].empty_label = "Seleccione manufacturera"
         self.fields['fabricante'].empty_label = "Seleccione fabricante"
         self.fields['responsable'].empty_label = "Sin responsable"
-        self.fields['objeto_gasto'].empty_label = "Seleccione objeto de gasto"
+
+        self.fields['proveedor'].queryset = Proveedores.objects.filter(eliminado=False).order_by('nombre')
+        self.fields['ubicacion'].queryset = Ubicaciones.objects.filter(eliminado=False).order_by('nombre')
+        self.fields['categoria'].queryset = Categorias.objects.filter(eliminado=False).order_by('nombre')
+        self.fields['subcategoria'].queryset = Subcategorias.objects.filter(eliminado=False).order_by('nombre')
+        self.fields['objeto_gasto'].queryset = ObjetoGasto.objects.filter(eliminado=False).order_by('nombre')
 
     def clean_nombre_bien(self):
         nombre = self.cleaned_data.get('nombre_bien', '')

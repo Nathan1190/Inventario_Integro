@@ -99,6 +99,7 @@ def agregar_mas_bienes(request):
                 categoria=bien_base.categoria,
                 subcategoria=bien_base.subcategoria,
                 numero_modelo=bien_base.numero_modelo,
+                estado_fisico=bien_base.estado_fisico,
                 manufacturera=bien_base.manufacturera,
                 fabricante=bien_base.fabricante,
                 proveedor=bien_base.proveedor,
@@ -267,6 +268,7 @@ class BienNacionalCreate(PantallaRequiredMixin, UpdateView):
             cantidad_minima = form.cleaned_data['cantidad_minima'] or 0
             codigos = generar_codigos_para_bienes(total)
             bienes = []
+            estados = form.cleaned_data.get('estado_fisico')
             with transaction.atomic():
                 for i in range(total):
                     bien = form.save(commit=False)
@@ -275,6 +277,8 @@ class BienNacionalCreate(PantallaRequiredMixin, UpdateView):
                     if 'imagen' in request.FILES and i > 0:
                         bien.imagen = None
                     bien.save()
+                    if estados:
+                        bien.estado_fisico.set(estados) 
                     bienes.append(bien)
             # Solo después de guardar todos los bienes, actualizamos o creamos el stock
             bien_ref = bienes[0]

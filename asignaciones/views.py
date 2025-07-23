@@ -210,16 +210,15 @@ def exportar_pendientes_pdf(request, responsable_id):
         responsable_nombre = responsable_nombre.title()
         responsable_identidad = partes[2].strip() if len(partes) > 2 else str(responsable)
 
-    headers = ["No. Inventario", "Nombre del Bien", "Objeto de Gasto", "Categoría", "Ubicación"]
+    headers = ["No. Inventario", "Nombre del Bien", "Ubicación"]
     rows = []
     for asignacion in asignaciones:
         bien = asignacion.bien
+        empleado = asignacion.responsable
         rows.append([
             bien.numero_inventario,
             bien.nombre_bien,
-            bien.objeto_gasto,
-            bien.categoria,
-            bien.ubicacion,
+            empleado.dependencia,
 
         ])
 
@@ -414,15 +413,13 @@ def exportar_descargo_pdf(request, responsable_id):
         responsable_nombre = responsable_nombre.title()
         responsable_identidad = partes[2].strip() if len(partes) > 2 else str(responsable)
 
-    headers = ["No. Inventario", "Nombre del Bien", "Objeto de Gasto", "Categoría", "Ubicación"]
+    headers = ["No. Inventario", "Nombre del Bien", "Ubicación"]
     rows = []
     for asignacion in asignaciones:
         bien = asignacion.bien
         rows.append([
             bien.numero_inventario,
             bien.nombre_bien,
-            bien.objeto_gasto,
-            bien.categoria,
             bien.ubicacion,
         ])
 
