@@ -99,7 +99,6 @@ def agregar_mas_bienes(request):
                 categoria=bien_base.categoria,
                 subcategoria=bien_base.subcategoria,
                 numero_modelo=bien_base.numero_modelo,
-                estado_fisico=bien_base.estado_fisico,
                 manufacturera=bien_base.manufacturera,
                 fabricante=bien_base.fabricante,
                 proveedor=bien_base.proveedor,
@@ -114,7 +113,6 @@ def agregar_mas_bienes(request):
                 notas=bien_base.notas,
             )
             bien.save()
-            bien.estado_fisico.set(bien_base.estado_fisico.all())  # Copia los estados físicos
             nuevos_bienes.append(bien)
         return JsonResponse({'ok': True, 'msg': f'{cantidad} bienes agregados.'})
     return JsonResponse({'ok': False, 'error': 'Método no permitido.'}, status=405)

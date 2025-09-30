@@ -2,7 +2,7 @@ services:
   db:
     image: postgres:14
     env_file:
-      - core/.env/db_config.env
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:

@@ -18,7 +18,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ─── Lectura manual denventar .db_pass/db_config.env ───
-conf_path = Path(__file__).resolve().parent / ".env" / "db_config.env"
+conf_path = Path(__file__).resolve().parent.parent / ".env"
 db_vars = {}
 # Aquí usamos cp1252 (Windows-1252) para decodificar correctamente
 with open(conf_path, encoding="utf-8", errors="ignore") as f:

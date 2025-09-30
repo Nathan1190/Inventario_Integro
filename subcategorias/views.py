@@ -24,7 +24,6 @@ def subcategorias_por_categoria(request):
 
 class SubcategoriasList(PantallaRequiredMixin, ListView):
     template_name = 'Subcategorias/CRUD/index.html'
-    queryset = Subcategorias.objects.all().order_by('id')
     context_object_name = 'Subcategorias'
     pantalla_required = '0016'  # Cambia este código según tu sistema
 

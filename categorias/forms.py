@@ -1,7 +1,6 @@
 # categorias/forms.py
 from django import forms
-from .models import Categorias
-
+from .models import Categorias, ObjetoGasto
 
 class FormCategorias(forms.ModelForm):
     """
@@ -9,6 +8,7 @@ class FormCategorias(forms.ModelForm):
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['objeto_gasto'].queryset = ObjetoGasto.objects.filter(eliminado=False)
 
     class Meta:
         model  = Categorias

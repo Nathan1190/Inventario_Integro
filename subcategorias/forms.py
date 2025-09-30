@@ -1,9 +1,10 @@
 from django import forms
-from .models import Subcategorias
+from .models import Subcategorias, Categorias
 
 class FormSubcategorias(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['categoria'].queryset = Categorias.objects.filter(eliminado=False)
 
     class Meta:
         model  = Subcategorias

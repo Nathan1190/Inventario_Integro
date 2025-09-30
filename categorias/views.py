@@ -17,14 +17,17 @@ import os
 from django.http import JsonResponse
 
 
+
 def categorias_por_objeto_gasto(request):
     objeto_gasto_id = request.GET.get("objeto_gasto_id")
-    categorias = Categorias.objects.filter(objeto_gasto_id=objeto_gasto_id, eliminado=False).values("id", "nombre")
+    categorias = Categorias.objects.filter(
+        objeto_gasto_id=objeto_gasto_id,
+        eliminado=False
+    ).values("id", "nombre")
     return JsonResponse(list(categorias), safe=False)
 
 class CategoriasList(PantallaRequiredMixin, ListView):
     template_name = 'Categorias/CRUD/index.html'
-    queryset = Categorias.objects.all().order_by('id')
     context_object_name = 'Categorias'
     pantalla_required = '0012'
 
