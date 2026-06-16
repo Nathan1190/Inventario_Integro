@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'Base/base.html' %}
 {% block menu %}
 {% endblock %}
 {% block topbar %}
@@ -145,14 +145,14 @@
 
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{% static '/base/vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static '/base/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'base/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'base/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="{% static '/base/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'base/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{% static '/base/js/sb-admin-2.min.js' %}"></script>
+    <script src="{% static 'base/js/sb-admin-2.min.js' %}"></script>
     {% block javascript %}
     {% endblock%}
 {% endblock %}

@@ -85,3 +85,8 @@ urlpatterns = [
     path('objeto_gasto_history/',include('objeto_gasto_history.urls', namespace='objeto_gasto_history')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'core.views.error_404'
+handler500 = 'core.views.error_500'
+handler403 = 'core.views.error_403'
+handler400 = 'core.views.error_400'

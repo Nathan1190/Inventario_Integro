@@ -37,5 +37,35 @@ class HomeView(View):
             'category_labels': json.dumps(labels),
             'category_values': json.dumps(values),
         }
-        return render(request, 'Base/dashboard.html', context)
+        return render(request, 'Base/Dashboard.html', context)
     
+def error_404(request, exception):
+    return render(request, 'Errors/error.html', {
+        'codigo': '404',
+        'titulo': 'Página no encontrada',
+        'mensaje': 'La página que intentas abrir no existe o fue movida.',
+    }, status=404)
+
+
+def error_500(request):
+    return render(request, 'Errors/error.html', {
+        'codigo': '500',
+        'titulo': 'Error interno del sistema',
+        'mensaje': 'Ocurrió un problema inesperado. Intenta nuevamente o contacta al administrador.',
+    }, status=500)
+
+
+def error_403(request, exception):
+    return render(request, 'Errors/error.html', {
+        'codigo': '403',
+        'titulo': 'Acceso denegado',
+        'mensaje': 'No tienes permiso para acceder a esta sección.',
+    }, status=403)
+
+
+def error_400(request, exception):
+    return render(request, 'Errors/error.html', {
+        'codigo': '400',
+        'titulo': 'Solicitud incorrecta',
+        'mensaje': 'La solicitud no pudo ser procesada correctamente.',
+    }, status=400)

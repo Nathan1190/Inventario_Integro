@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'Base/base.html' %}
 {% block contenido %}
 <!-- Aqui -->
  
@@ -166,7 +166,7 @@
 </div>
 
 {% load static %}
-<script src="{% static '/base/vendor/jquery/jquery.js' %}"></script>
+<script src="{% static 'base/vendor/jquery/jquery.js' %}"></script>
 <script>
 $(document).ready(function() {
     var table = $('#dataTable').DataTable({

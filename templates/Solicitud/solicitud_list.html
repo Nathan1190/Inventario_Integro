@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'Base/base.html' %}
 {% block contenido %}
 <div class="card shadow">
     <h5 class="card-header text-center" style="background-color: #0b3873; color: white;">
@@ -100,7 +100,7 @@
 </div>
 
 {% load static %}
-<script src="{% static '/base/vendor/jquery/jquery.js' %}"></script>
+<script src="{% static 'base/vendor/jquery/jquery.js' %}"></script>
 <script>
 $(document).ready(function() {
     $('#tablaSolicitudes').DataTable({

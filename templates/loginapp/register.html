@@ -1,3 +1,4 @@
+{% load static %}
 <style>
 /* --- Fondo con imagen y overlay oscura --- */
 body {
@@ -16,7 +17,7 @@ body::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("../../static/assets/img/Fondo.png") no-repeat;
+  background: url("{% static 'assets/img/Fondo.png' %}") no-repeat;
   background-size: cover;
   z-index: 0;
 }

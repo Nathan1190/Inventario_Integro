@@ -42,7 +42,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2owa$=5)e5@k_y%q1nod$nwdq=3v7_-e*xwc8fouo4@0&4v$9='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -117,10 +117,10 @@ TEMPLATES = [
 ]
 
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+STATICFILES_DIRS = [BASE_DIR / 'staticfiles']
+STATIC_ROOT = BASE_DIR / 'static_collected'
 
-CSS_LOCATION = os.path.join(BASE_DIR,'static')
+CSS_LOCATION = BASE_DIR / 'staticfiles'
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
@@ -176,7 +176,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 LOGIN_URL        = 'loginapp:login'
 LOGIN_REDIRECT_URL = 'home'    
