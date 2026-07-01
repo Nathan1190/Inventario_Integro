@@ -1,5 +1,9 @@
 from django.core.management.base import BaseCommand
+from django.contrib.auth import get_user_model
+from decouple import config
+
 from roles.models import Pantalla, Roles
+
 
 PANTALLAS = [
     ("0000", "Roles y Permisos"),
@@ -28,10 +32,13 @@ PANTALLAS = [
     ("0025", "Historial de Objetos de Gasto"),
 ]
 
+
 class Command(BaseCommand):
-    help = "Crea pantallas y roles base del sistema"
+    help = "Crea pantallas, rol Administrador y asigna el superusuario al rol"
 
     def handle(self, *args, **options):
+        User = get_user_model()
+
         pantallas_creadas = []
 
         for identificador, nombre in PANTALLAS:
@@ -52,6 +59,24 @@ class Command(BaseCommand):
         admin_role.pantallas.set(pantallas_creadas)
         admin_role.save()
 
+        username = config("DJANGO_SUPERUSER_USERNAME", default="admin")
+
+        superuser = User.objects.filter(username=username, is_superuser=True).first()
+
+        if superuser:
+            admin_role.users.add(superuser)
+            self.stdout.write(
+                self.style.SUCCESS(
+                    f"El usuario '{username}' fue asignado al rol Administrador."
+                )
+            )
+        else:
+            self.stdout.write(
+                self.style.WARNING(
+                    f"No se encontró el superusuario '{username}'. Primero crea el superusuario."
+                )
+            )
+
         self.stdout.write(
-            self.style.SUCCESS("Pantallas y rol Administrador creados correctamente.")
+            self.style.SUCCESS("Pantallas y rol Administrador configurados correctamente.")
         )

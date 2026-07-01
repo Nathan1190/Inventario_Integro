@@ -58,12 +58,12 @@ echo Recolectando archivos estaticos...
 docker compose exec web python manage.py collectstatic --noinput
 
 echo.
-echo Creando pantallas y roles base...
-docker compose exec web python manage.py seed_roles
-
-echo.
 echo Creando usuario administrador inicial...
 docker compose exec web python manage.py createsuperuser --noinput
+
+echo.
+echo Creando pantallas, roles base y asignando administrador...
+docker compose exec web python manage.py seed_roles
 
 echo.
 echo ==========================================
